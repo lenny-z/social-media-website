@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -7,7 +8,17 @@ app.use(cors());
 app.use(express.json());
 
 //PG test
-const client = new Client();
+// const client = new Client();
+const pgUser = process.env.PGUSER;
+console.log(pgUser);
+const client = new Client({
+    user: process.env.PGUSER,
+    host: process.env.PGHOST,
+    database: process.env.PGDATABASE,
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT
+});
+// console.log(process.env.PGUSER);
 client.connect();
 // const res = await client.query('SELECT $1::TEXT AS MESSAGE', ['Hello, world!']);
 // console.log(res.rows[0].message);
