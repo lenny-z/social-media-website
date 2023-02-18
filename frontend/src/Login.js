@@ -42,14 +42,14 @@ export default class Login extends React.Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <label for='username'>Username: </label>
+                <label htmlFor='username'>Username: </label>
                 <input
                     id='username'
                     type='text'
                     value={this.state.username}
                     onChange={this.onChangeUsername}
                 />
-                <label for='password'>Password: </label>
+                <label htmlFor='password'>Password: </label>
                 <input
                     id='password'
                     type='password'

@@ -1,0 +1,53 @@
+/*Minimum accessible font size guideline: 16px*/
+:root {
+    --padding: 8px;
+    --small-font-size: 16px;
+    --medium-font-size: 24px;
+    --large-font-size: 36px;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    font-size: var(--small-font-size);
+    font-family: Arial;
+}
+
+header {
+    padding: var(--padding);
+    text-align: center;
+    font-size: var(--large-font-size);
+}
+
+form {
+    margin: auto;
+    width: 200px;
+}
+
+label[for='username'],
+label[for='password'] {
+    display: block;
+    padding-top: var(--padding);
+    padding-bottom: var(--padding);
+}
+
+#username,
+#password {
+    margin-top: var(--padding);
+    margin-bottom: var(--padding);
+    width: 100%;
+    padding: var(--padding);
+}
+
+input[value='Log In'] {
+    display: block;
+    margin: auto;
+    margin-top: var(--padding);
+    margin-bottom: var(--padding);
+    padding: var(--padding);
+}
+
+.error-message {
+    padding: var(--padding);
+    text-align: center;
+}
