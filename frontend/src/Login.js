@@ -23,10 +23,8 @@ export default class Login extends React.Component {
             password: this.state.password
         };
 
-        // console.log(process.env.REACT_APP_LOGIN);
-
         axios.post(process.env.REACT_APP_LOGIN, user)
-            .then(res => console.log('hello'));
+            .then(res => console.log(res.data));
     }
 
     onChangeUsername(event) {
