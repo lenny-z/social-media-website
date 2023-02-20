@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -15,7 +16,7 @@ export default class Login extends React.Component {
         };
     }
 
-    onSubmit(event){
+    onSubmit(event) {
         event.preventDefault();
 
         const user = {
@@ -60,6 +61,7 @@ export default class Login extends React.Component {
                     type='submit'
                     value='Log In'
                 />
+                <Link to={'register'}>Register</Link>
             </form>
         );
     }

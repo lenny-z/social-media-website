@@ -51,3 +51,9 @@ input[value='Log In'] {
     padding: var(--padding);
     text-align: center;
 }
+
+a[href='/register'] {
+    display: block;
+    padding: var(--padding);
+    text-align: center;
+}
