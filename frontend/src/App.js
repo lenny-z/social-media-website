@@ -1,16 +1,17 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Login from './Login.js';
-import Error from './Error.js';
+// import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+// import Login from './Login.js';
+// import Error from './Error.js';
+import { Outlet } from 'react-router-dom';
 import './App.css';
 
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <Login />,
-        errorElement: <Error />
-    }
-])
+// const router = createBrowserRouter([
+//     {
+//         path: '/',
+//         element: <Login />,
+//         errorElement: <Error />
+//     }
+// ])
 
 export default class App extends React.Component {
     render() {
@@ -19,7 +20,7 @@ export default class App extends React.Component {
                 <header>
                     {process.env.REACT_APP_NAME}
                 </header>
-                <RouterProvider router={router} />
+                <Outlet />
             </>
         );
     }
