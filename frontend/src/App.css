@@ -39,7 +39,8 @@ label[for='password'] {
     padding: var(--padding);
 }
 
-input[value='Log In'] {
+input[value='Log In'],
+input[value='Register'] {
     display: block;
     margin: auto;
     margin-top: var(--padding);
