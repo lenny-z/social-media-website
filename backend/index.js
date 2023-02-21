@@ -23,12 +23,25 @@ const client = new Client({
 //     }
 // });
 
-client.connect();
-client.query('SELECT NOW()')
-    .then(res => console.log(res))
-    .catch(err => console.error(err.stack))
-    .then(() => client.end());
+function testConnectDB(client) {
+    client.connect()
+        .then(() => console.log('Connected to PG database'))
+        .catch((err) => console.error(err.stack));
 
+    const query = 'SELECT $1::text as message';
+    const params = ['Queried PG database'];
+
+    client.query(query, params)
+        .then((res) => console.log(res.rows[0].message))
+        .catch((err) => console.error(err.stack))
+        .then(() => client.end());
+}
+// client.connect();
+// client.query('SELECT NOW()')
+//     .then(res => console.log(res))
+//     .catch(err => console.error(err.stack))
+//     .then(() => client.end());
+testConnectDB(client);
 // client.query('SELECT $1::text as message', ['Queried PG database'], (err, res) => {
 //     if (err) {
 //         console.log(err.stack);
