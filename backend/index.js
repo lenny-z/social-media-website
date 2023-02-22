@@ -31,6 +31,7 @@ function testConnectDB(credentials) {
         .then((res) => console.log(res.rows[0].message))
         .catch((err) => console.error(err.stack))
         .then(() => client.end());
+
 }
 
 testConnectDB(credentials);
@@ -39,45 +40,50 @@ function prettyJSON(jsonObj) {
     return JSON.stringify(jsonObj, null, 4);
 }
 
-//TODO: read up on JavaScript functions
-function queryDB(credentials, myQuery, myParams, myResponse) {
+//one connect/disconnect per query
+//to avoid injection attacks, don't directly concatenate parameters to query
+//instead, use parameterized queries
+function queryDB(credentials, myQuery, myParams, backendResponse) {
     const client = new Client(credentials);
     client.connect();
     client.query(myQuery, myParams)
-        .then((res) => myResponse(res))
+        .then((res) => backendResponse(res))
         .catch((err) => console.error(err.stack))
         .then(() => client.end());
 }
 
 app.post('/login', (req, res) => {
-    // console.log('POST to /login:');
-    // // console.log(JSON.stringify(req.body, null, 4));
-    // console.log(prettyJSON(req.body));
-    // console.log();
-    // res.send('yo');
+    console.log('POST to /login:');
+    console.log(prettyJSON(req.body));
+    console.log();
+    res.send('yo');
+    // const apiResponse = function(dbResponse){
 
+    // }
 });
 
 app.post('/register', (req, res) => {
     console.log('POST to /register:');
-    // console.log(JSON.stringify(req.body, null, 4));
     console.log(prettyJSON(req.body));
     console.log();
 
-    const client = new Client(credentials);
-    client.connect(); //one connect/disconnect per query
-    //to avoid injection attacks, don't directly concatenate parameters to query
-    //instead, use parameterized queries
+    // const client = new Client(credentials);
+    // client.connect();
     const query = 'SELECT email FROM users WHERE email = $1';
     const params = [req.body.username];
-    client.query(query, params, (err, res) => {
-        if (err) {
-            console.log(err.stack);
-        } else {
-            // console.log(res.rows[0]);
-            console.log(prettyJSON(res))
-        }
-    });
+    const backendResponse = function (dbResponse) {
+        // console.log(prettyJSON(dbResponse.rows[0]));
+        console.log(prettyJSON(dbResponse));
+    }
+    // client.query(query, params, (err, res) => {
+    //     if (err) {
+    //         console.log(err.stack);
+    //     } else {
+    //         // console.log(res.rows[0]);
+    //         console.log(prettyJSON(res))
+    //     }
+    // });
+    queryDB(credentials, query, params, backendResponse)
 });
 
 // require('dotenv').config();
