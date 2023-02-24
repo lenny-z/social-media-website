@@ -1,14 +1,12 @@
 require('dotenv').config(); //state this as early as possible to read .env files
-const express = require('express');
 const cors = require('cors');
+const express = require('express');
 const app = express();
 const { Client } = require('pg');
 
 app.use(cors());
 app.use(express.json());
 
-//TODO: get a backend response working first
-//TODO: use clients instead of pools in order to support transactions
 const credentials = {
     user: process.env.PGUSER,
     host: process.env.PGHOST,
@@ -57,33 +55,52 @@ app.post('/login', (req, res) => {
     console.log(prettyJSON(req.body));
     console.log();
     res.send('yo');
-    // const apiResponse = function(dbResponse){
-
-    // }
 });
 
-app.post('/register', (req, res) => {
+async function userExists(username) {
+    const query = 'SELECT email FROM users WHERE email = $1';
+    const params = [username];
+
+    // const onDBResponse = function (dbResponse) {
+    //     return dbResponse.rowCount > 0;
+    // }
+
+    // return queryDB(credentials, query, params, onDBResponse);
+    const client = new Client(credentials);
+    client.connect();
+    // client.query(query, params)
+    // .then((res) => {
+    //     // console.log(prettyJSON(res));
+    //     console.log(res.rowCount);
+    //     return res.rowCount > 0;
+    // })
+    // .catch((err) => console.error(err.stack))
+    // .then(() => client.end());
+
+    const res = await client.query(query, params);
+    return res.numRows > 0;
+}
+
+app.post('/register', async (req, res) => {
     console.log('POST to /register:');
     console.log(prettyJSON(req.body));
     console.log();
+    console.log(await userExists(req.body.username));
 
-    // const client = new Client(credentials);
-    // client.connect();
-    const query = 'SELECT email FROM users WHERE email = $1';
-    const params = [req.body.username];
-    const backendResponse = function (dbResponse) {
-        // console.log(prettyJSON(dbResponse.rows[0]));
-        console.log(prettyJSON(dbResponse));
-    }
-    // client.query(query, params, (err, res) => {
-    //     if (err) {
-    //         console.log(err.stack);
-    //     } else {
-    //         // console.log(res.rows[0]);
-    //         console.log(prettyJSON(res))
-    //     }
-    // });
-    queryDB(credentials, query, params, backendResponse)
+    // const query = 'SELECT email FROM users WHERE email = $1';
+    // const params = [req.body.username];
+
+    // const backendResponse = function (dbResponse) {
+    //     console.log(prettyJSON(dbResponse));
+    // }
+
+    // queryDB(credentials, query, params, backendResponse)
+    // console.log(userExists(req.body.username));
+    // await userExists(req.body.username);
+    // try {
+    //     const ye = await userExists(req.body.username);
+    //     console.log(await userExists(req.body.username));
+    // }catch{}
 });
 
 // require('dotenv').config();
