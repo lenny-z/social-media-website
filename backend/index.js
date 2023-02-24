@@ -41,14 +41,15 @@ function prettyJSON(jsonObj) {
 //one connect/disconnect per query
 //to avoid injection attacks, don't directly concatenate parameters to query
 //instead, use parameterized queries
-function queryDB(credentials, myQuery, myParams, backendResponse) {
-    const client = new Client(credentials);
-    client.connect();
-    client.query(myQuery, myParams)
-        .then((res) => backendResponse(res))
-        .catch((err) => console.error(err.stack))
-        .then(() => client.end());
-}
+
+// function queryDB(credentials, myQuery, myParams, backendResponse) {
+//     const client = new Client(credentials);
+//     client.connect();
+//     client.query(myQuery, myParams)
+//         .then((res) => backendResponse(res))
+//         .catch((err) => console.error(err.stack))
+//         .then(() => client.end());
+// }
 
 app.post('/login', (req, res) => {
     console.log('POST to /login:');
@@ -57,35 +58,43 @@ app.post('/login', (req, res) => {
     res.send('yo');
 });
 
+const USERS_TABLE = process.env.USERS_TABLE;
+const USERNAME_COLUMN = process.env.USERNAME_COLUMN;
+console.log(USERS_TABLE);
+
 async function userExists(username) {
-    const query = 'SELECT email FROM users WHERE email = $1';
+    const query = `SELECT ${USERNAME_COLUMN} FROM ${USERS_TABLE} WHERE ${USERNAME_COLUMN} = $1`;
     const params = [username];
-
-    // const onDBResponse = function (dbResponse) {
-    //     return dbResponse.rowCount > 0;
-    // }
-
-    // return queryDB(credentials, query, params, onDBResponse);
     const client = new Client(credentials);
     client.connect();
-    // client.query(query, params)
-    // .then((res) => {
-    //     // console.log(prettyJSON(res));
-    //     console.log(res.rowCount);
-    //     return res.rowCount > 0;
-    // })
-    // .catch((err) => console.error(err.stack))
-    // .then(() => client.end());
-
     const res = await client.query(query, params);
+    client.end();
     return res.numRows > 0;
 }
+
+// const bcrypt = require('bcrypt');
+//https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+// by default, argon2id hash stores its own salt
+const argon2 = require('argon2');
 
 app.post('/register', async (req, res) => {
     console.log('POST to /register:');
     console.log(prettyJSON(req.body));
     console.log();
-    console.log(await userExists(req.body.username));
+    // console.log(await userExists(req.body.username));
+
+    if (await userExists(req.body.username)) {
+        res.status(200).json({ error: 'Username already exists' });
+    } else {
+        const query = `BEGIN; INSERT INTO ${USERS_TABLE}(${USERNAME_COLUMN}) VALUES ($1); COMMIT;`;
+        // const password_hash_salt = await argon2.hash(req.body.password);
+        // const params = [req.body.username, password_hash_salt];
+        const params = [req.body.username];
+        const client = new Client(credentials);
+        client.connect();
+        await client.query(query, params);
+        client.end();
+    }
 
     // const query = 'SELECT email FROM users WHERE email = $1';
     // const params = [req.body.username];

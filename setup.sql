@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS password_hash_salts;
 
 CREATE TABLE users (
-    id      SERIAL PRIMARY KEY,
-    email   VARCHAR(320)
+    id          SERIAL PRIMARY KEY,
+    username    VARCHAR(320)
 );
 
 CREATE TABLE password_hash_salts (
