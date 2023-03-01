@@ -50,16 +50,19 @@ app.post('/login', (req, res) => {
 
 const USERS_TABLE = process.env.USERS_TABLE;
 const USERNAME_COLUMN = process.env.USERNAME_COLUMN;
-console.log(USERS_TABLE);
+// console.log(USERS_TABLE);
 
 async function userExists(username) {
+    console.log(`userExists(${username})`);
     const query = `SELECT ${USERNAME_COLUMN} FROM ${USERS_TABLE} WHERE ${USERNAME_COLUMN} = $1;`;
+    console.log(`query: ${query}`);
     const params = [username];
     const client = new Client(CREDENTIALS);
-    client.connect();
+    await client.connect();
     const res = await client.query(query, params);
+    console.log(prettyJSON(res));
     client.end();
-    return res.numRows > 0;
+    return res.rowCount > 0;
 }
 
 // const bcrypt = require('bcrypt');
@@ -73,7 +76,8 @@ app.post('/register', async (req, res) => {
     console.log();
 
     if (await userExists(req.body.username)) {
-        res.status(200).json({ error: 'Username already exists' });
+        // res.status(200).json({ error: 'Username already exists' });
+        res.sendStatus(409);
     } else {
         // const query = `BEGIN; INSERT INTO ${USERS_TABLE}(${USERNAME_COLUMN}) VALUES ($1); COMMIT;`;
         // const password_hash_salt = await argon2.hash(req.body.password);
