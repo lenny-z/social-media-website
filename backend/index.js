@@ -2,8 +2,7 @@ require('dotenv').config(); //state this as early as possible to read .env files
 const cors = require('cors');
 const express = require('express');
 const app = express();
-const { Client } = require('pg');
-
+// const { Client } = require('pg');
 app.use(cors());
 app.use(express.json());
 
@@ -15,29 +14,43 @@ const CREDENTIALS = {
     port: process.env.PGPORT
 }
 
-function testConnectDB(credentials) {
-    const client = new Client(credentials);
+const { Pool } = require('pg');
+const pool = new Pool(CREDENTIALS);
 
-    client.connect()
-        .then(() => console.log('DB test connection successful'))
-        .catch((err) => console.error(err.stack));
+// function testConnectDB(credentials) {
+//     const client = new Client(credentials);
 
+//     client.connect()
+//         .then(() => console.log('DB test connection successful'))
+//         .catch((err) => console.error(err.stack));
+
+//     const query = 'SELECT $1::text as message;';
+//     const params = ['DB test query successful'];
+
+//     client.query(query, params)
+//         .then((res) => console.log(res.rows[0].message))
+//         .catch((err) => console.error(err.stack))
+//         .then(() => client.end());
+// }
+
+function testConnectDB(pool) {
     const query = 'SELECT $1::text as message;';
     const params = ['DB test query successful'];
 
-    client.query(query, params)
+    pool.query(query, params)
         .then((res) => console.log(res.rows[0].message))
-        .catch((err) => console.error(err.stack))
-        .then(() => client.end());
+        .catch((err) => console.error(err.stack));
+    // .then(() => client.end());
+
+    // pool.query()
 }
 
-testConnectDB(CREDENTIALS);
+testConnectDB(pool);
 
 function prettyJSON(jsonObj) {
     return JSON.stringify(jsonObj, null, 4);
 }
 
-//one connect/disconnect per query
 //to avoid injection attacks, don't directly concatenate parameters to query
 //instead, use parameterized queries
 
@@ -50,7 +63,7 @@ app.post('/login', (req, res) => {
 
 const USERS_TABLE = process.env.USERS_TABLE;
 const USERNAME_COLUMN = process.env.USERNAME_COLUMN;
-const SALTED_PASSWORD_HASHES_TABLE = process.env.PASSWORD_HASH_SALTS_TABLE;
+const SALTED_PASSWORD_HASHES_TABLE = process.env.SALTED_PASSWORD_HASHES_TABLE;
 
 //todo
 // async function getUser(username){
@@ -59,16 +72,18 @@ const SALTED_PASSWORD_HASHES_TABLE = process.env.PASSWORD_HASH_SALTS_TABLE;
 //     const client = new Clien
 // }
 
-async function userExists(username) {
+// async function userExists(username) {
+async function userExists(username, pool) {
     console.log(`userExists(${username}):`);
     const query = `SELECT ${USERNAME_COLUMN} FROM ${USERS_TABLE} WHERE ${USERNAME_COLUMN} = $1;`;
     console.log(`query: ${query}`);
     const params = [username];
-    const client = new Client(CREDENTIALS);
-    await client.connect();
-    const res = await client.query(query, params);
+    // const client = new Client(CREDENTIALS);
+    // await client.connect();
+    // const res = await client.query(query, params);
+    const res = await pool.query(query, params);
     console.log(prettyJSON(res));
-    client.end();
+    // client.end();
     return res.rowCount > 0;
 }
 
@@ -81,7 +96,7 @@ app.post('/register', async (req, res) => {
     console.log(prettyJSON(req.body));
     console.log();
 
-    if (await userExists(req.body.username)) {
+    if (await userExists(req.body.username, pool)) {
         res.sendStatus(409);
     } else {
         // const query = `BEGIN; INSERT INTO ${USERS_TABLE}(${USERNAME_COLUMN}) VALUES ($1); COMMIT;`;
@@ -89,8 +104,9 @@ app.post('/register', async (req, res) => {
         // const params = [req.body.username, password_hash_salt];
         // const params = [req.body.username];
         // const client = new Client(CREDENTIALS);
-        const client = new Client(CREDENTIALS);
-        await client.connect();
+        // const client = new Client(CREDENTIALS);
+        // await client.connect();
+        const client = await pool.connect();
         try {
             await client.query('BEGIN;');
             var query = `INSERT INTO ${USERS_TABLE}(${USERNAME_COLUMN}) VALUES ($1);`;
@@ -102,7 +118,8 @@ app.post('/register', async (req, res) => {
             await client.query('ROLLBACK;');
             console.error(err);
         } finally {
-            client.end();
+            // client.end();
+            client.release();
         }
     }
 });
