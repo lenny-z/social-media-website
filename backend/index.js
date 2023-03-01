@@ -50,10 +50,17 @@ app.post('/login', (req, res) => {
 
 const USERS_TABLE = process.env.USERS_TABLE;
 const USERNAME_COLUMN = process.env.USERNAME_COLUMN;
-// console.log(USERS_TABLE);
+const SALTED_PASSWORD_HASHES_TABLE = process.env.PASSWORD_HASH_SALTS_TABLE;
+
+//todo
+// async function getUser(username){
+//     const query = `SELECT ${USERNAME_COLUMN} FROM ${USERS_TABLE} WHERE ${USERNAME_COLUMN} = $1;`;
+//     const params = [username];
+//     const client = new Clien
+// }
 
 async function userExists(username) {
-    console.log(`userExists(${username})`);
+    console.log(`userExists(${username}):`);
     const query = `SELECT ${USERNAME_COLUMN} FROM ${USERS_TABLE} WHERE ${USERNAME_COLUMN} = $1;`;
     console.log(`query: ${query}`);
     const params = [username];
@@ -65,7 +72,6 @@ async function userExists(username) {
     return res.rowCount > 0;
 }
 
-// const bcrypt = require('bcrypt');
 //https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
 // by default, argon2id hash stores its own salt
 const argon2 = require('argon2');
@@ -76,7 +82,6 @@ app.post('/register', async (req, res) => {
     console.log();
 
     if (await userExists(req.body.username)) {
-        // res.status(200).json({ error: 'Username already exists' });
         res.sendStatus(409);
     } else {
         // const query = `BEGIN; INSERT INTO ${USERS_TABLE}(${USERNAME_COLUMN}) VALUES ($1); COMMIT;`;
@@ -91,6 +96,7 @@ app.post('/register', async (req, res) => {
             var query = `INSERT INTO ${USERS_TABLE}(${USERNAME_COLUMN}) VALUES ($1);`;
             var params = [req.body.username];
             await client.query(query, params);
+            // query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}()`;
             await client.query('COMMIT;');
         } catch (err) {
             await client.query('ROLLBACK;');
