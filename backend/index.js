@@ -17,6 +17,9 @@ const CREDENTIALS = {
 const { Pool } = require('pg');
 const pool = new Pool(CREDENTIALS);
 
+//To avoid injection attacks, don't directly concatenate parameters to query
+//Instead, use parameterized queries
+
 function testConnectDB(pool) {
     const query = 'SELECT $1::text as message;';
     const params = ['DB test query successful'];
@@ -29,28 +32,31 @@ function testConnectDB(pool) {
 testConnectDB(pool);
 
 function prettyJSON(jsonObj) {
-    return JSON.stringify(jsonObj, null, 4);
+    const out = JSON.stringify(jsonObj, null, 4);
+
+    if (out.length > 256) {
+        return `${out.substring(0, 256)} ...`;
+    }
+
+    // return JSON.stringify(jsonObj, null, 4).substring(0, 256);
+    return out;
 }
 
-//to avoid injection attacks, don't directly concatenate parameters to query
-//instead, use parameterized queries
-
+//Don't log passwords
 app.post('/login', (req, res) => {
-    console.log('POST to /login:');
-    console.log(prettyJSON(req.body));
-    console.log();
+    // console.log('POST to /login:');
+    // console.log(prettyJSON(req.body));
+    // console.log();
     res.send('yo');
 });
 
 const USERS_TABLE = process.env.USERS_TABLE;
-const USERNAME_COLUMN = process.env.USERNAME_COLUMN;
-const SALTED_PASSWORD_HASHES_TABLE = process.env.SALTED_PASSWORD_HASHES_TABLE;
+const EMAIL_COLUMN = process.env.EMAIL_COLUMN;
 
-//todo
 async function getUser(username, pool) {
     console.log(`getUser(${username}, pool):`);
 
-    const query = `SELECT ${USERNAME_COLUMN} FROM ${USERS_TABLE} WHERE ${USERNAME_COLUMN} = $1;`;
+    const query = `SELECT ${EMAIL_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1;`;
     console.log(`query: ${query}`)
 
     const params = [username];
@@ -58,31 +64,22 @@ async function getUser(username, pool) {
 
     const res = await pool.query(query, params);
     console.log(`res: ${prettyJSON(res)}`);
-    // const client = new Clien
+
     return res;
 }
 
-// async function userExists(username, pool) {
-//     console.log(`userExists(${username}, pool):`);
-//     const query = `SELECT ${USERNAME_COLUMN} FROM ${USERS_TABLE} WHERE ${USERNAME_COLUMN} = $1;`;
-//     console.log(`query: ${query}`);
-//     const params = [username];
-//     const res = await pool.query(query, params);
-//     console.log(prettyJSON(res));
-//     return res.rowCount > 0;
-// }
-
 //https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
-// by default, argon2id hash stores its own salt
+//By default, argon2id hash stores its own salt
 const argon2 = require('argon2');
+const SALTED_PASSWORD_HASHES_TABLE = process.env.SALTED_PASSWORD_HASHES_TABLE;
+const SALTED_PASSWORD_HASH_COLUMN = process.env.SALTED_PASSWORD_HASH_COLUMN;
 
 app.post('/register', async (req, res) => {
     console.log('POST to /register:');
-    console.log(`req.body: ${prettyJSON(req.body)}`);
-    // console.log();
-
+    // console.log(`req.body: ${prettyJSON(req.body)}`);
     const user = await getUser(req.body.username, pool);
-    // if (await userExists(req.body.username, pool)) {
+    console.log(prettyJSON(user));
+
     if (user.rowCount > 0) {
         res.sendStatus(409);
     } else {
@@ -96,9 +93,13 @@ app.post('/register', async (req, res) => {
         const client = await pool.connect();
         try {
             await client.query('BEGIN;');
-            var query = `INSERT INTO ${USERS_TABLE}(${USERNAME_COLUMN}) VALUES ($1);`;
+            var query = `INSERT INTO ${USERS_TABLE}(${EMAIL_COLUMN}) VALUES ($1);`;
             var params = [req.body.username];
             await client.query(query, params);
+            // const salted_password_hash = await argon2.hash(req.body.password);
+            // query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}(${USER_ID_COLUMN}, ${SALTED_PASSWORD_HASH_COLUMN})
+            // VALUES(${user.})`
+
             // query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}()`;
             await client.query('COMMIT;');
         } catch (err) {
