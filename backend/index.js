@@ -1,4 +1,4 @@
-require('dotenv').config(); //state this as early as possible to read .env files
+require('dotenv').config(); // State this as early as possible to read .env files
 const cors = require('cors');
 const express = require('express');
 const app = express();
@@ -17,8 +17,8 @@ const CREDENTIALS = {
 const { Pool } = require('pg');
 const pool = new Pool(CREDENTIALS);
 
-//To avoid injection attacks, don't directly concatenate parameters to query
-//Instead, use parameterized queries
+// To avoid injection attacks, don't directly concatenate parameters to query
+// Instead, use parameterized queries
 
 function testConnectDB(pool) {
     const query = 'SELECT $1::text as message;';
@@ -31,33 +31,34 @@ function testConnectDB(pool) {
 
 testConnectDB(pool);
 
-const PRETTY_JSON_MAX_LENGTH = 256;
+// const PRETTY_JSON_MAX_LENGTH = 256;
 
-function prettyJSON(jsonObj) {
-    const out = JSON.stringify(jsonObj, null, 4);
+// function prettyJSON(jsonObj) {
+//     const out = JSON.stringify(jsonObj, null, 4);
 
-    if (out.length > PRETTY_JSON_MAX_LENGTH) {
-        return `${out.substring(0, PRETTY_JSON_MAX_LENGTH)} ...\n`;
-    }
+//     if (out.length > PRETTY_JSON_MAX_LENGTH) {
+//         return `${out.substring(0, PRETTY_JSON_MAX_LENGTH)} ...\n`;
+//     }
 
-    // out += '\n';
-    return out + '\n';
-}
+//     // out += '\n';
+//     return out + '\n';
+// }
 
-//Don't log passwords
+// Don't log passwords
 
 app.post('/login', (req, res) => {
     res.send('yo');
 });
 
 const USERS_TABLE = process.env.USERS_TABLE;
-const ID_COLUMN = process.env.ID_COLUMN; //Assumes that all serial primary key columns share the same name
+const ID_COLUMN = process.env.ID_COLUMN; // Assumes that all serial primary key columns share the same name
 const EMAIL_COLUMN = process.env.EMAIL_COLUMN;
+const util = require('./util.js');
+// import prettyJSON from './util.js';
 
 async function userExists(username, pool) {
     console.log(`userExists(${username}, pool):`);
 
-    // const query = `SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1;`;
     const query = `SELECT EXISTS(SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1);`;
     console.log(`query: ${query}`)
 
@@ -65,13 +66,13 @@ async function userExists(username, pool) {
     console.log(`params: ${params}`);
 
     const res = await pool.query(query, params);
-    console.log(`res: ${prettyJSON(res)}`);
+    console.log(`res: ${util.prettyJSON(res)}`);
 
     return res.rows[0].exists;
 }
 
-//https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
-//By default, argon2id digest stores its own salt
+// https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+// By default, argon2id digest stores its own salt
 const argon2 = require('argon2');
 const SALTED_PASSWORD_HASHES_TABLE = process.env.SALTED_PASSWORD_HASHES_TABLE;
 const SALTED_PASSWORD_HASH_COLUMN = process.env.SALTED_PASSWORD_HASH_COLUMN;
@@ -79,31 +80,30 @@ const USER_ID_COLUMN = process.env.USER_ID_COLUMN;
 
 app.post('/register', async (req, res) => {
     console.log('POST to /register:');
-    // const user = await userExists(req.body.username, pool);
-    // console.log(prettyJSON(user));
 
-    // if (user.rowCount > 0) {
     if (await userExists(req.body.username, pool)) {
-        console.log("oop");
-        res.sendStatus(409);
+        res.sendStatus(409); // 409 Conflict
     } else {
         const client = await pool.connect();
         try {
             await client.query('BEGIN;');
+
             var query = `INSERT INTO ${USERS_TABLE}(${EMAIL_COLUMN}) VALUES ($1);`;
             var params = [req.body.username];
             await client.query(query, params);
+
             const salted_password_hash = await argon2.hash(req.body.password);
-            // query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}(${USER_ID_COLUMN}, ${SALTED_PASSWORD_HASH_COLUMN}) VALUES(${user.id}, ${salted_password_hash});`;
             query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}(${USER_ID_COLUMN}, ${SALTED_PASSWORD_HASH_COLUMN}) VALUES
             ((SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1), $2);`;
             params = [req.body.username, salted_password_hash];
             await client.query(query, params);
-            // query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}()`;
+
             await client.query('COMMIT;');
+            res.sendStatus(201); // 201 Created
         } catch (err) {
             await client.query('ROLLBACK;');
             console.error(err);
+            res.sendStatus(500); // 500 Internal Server Error
         } finally {
             client.release();
         }
