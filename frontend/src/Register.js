@@ -1,22 +1,36 @@
-import React from 'react';
+// import React from 'react';
+import {useState} from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 const util = require('./util.js');
+// const navigate = useNavigate();
 
-export default class Register extends React.Component {
-    constructor(props) {
-        super(props);
+// function goHome(){
+//     const navigate = useNavigate();
+//     navigate('/home');
+// }
 
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onChangeUsername = this.onChangeUsername.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
+// export default class Register extends React.Component {
+export default function Register() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    // constructor(props) {
+    //     super(props);
 
-        this.state = {
-            username: '',
-            password: ''
-        };
-    }
+    //     this.onSubmit = this.onSubmit.bind(this);
+    //     this.onChangeUsername = this.onChangeUsername.bind(this);
+    //     this.onChangePassword = this.onChangePassword.bind(this);
 
-    async onSubmit(event) {
+    //     this.state = {
+    //         username: '',
+    //         password: ''
+    //     };
+    // }
+
+    // async onSubmit(event) {
+    async function handleSubmit(event){
         event.preventDefault();
 
         const user = {
@@ -25,43 +39,60 @@ export default class Register extends React.Component {
         };
 
         try {
-            const res = await axios.post(process.env.REACT_APP_REGISTER, user)
-            console.log(util.prettyJSON(res));
+            const res = await axios.post(process.env.REACT_APP_REGISTER, user);
+
+            if (res.status === 201) {
+                // const navigate = useNavigate();
+                navigate('/home');
+                // goHome();
+                // useNavigate('/home');
+            }
+            // console.log(util.prettyJSON(res));
         } catch (err) {
-            console.error(err);
+            // console.error(util.prettyJSON(err));
+            // console.error(err);
         }
-        // .then(res => console.log(res.data));
-        // console.log(util.prettyJSON(res));
     }
 
-    onChangeUsername(event) {
-        this.setState({
-            username: event.target.value
-        });
+    // function onChangeUsername(event) {
+    //     this.setState({
+    //         username: event.target.value
+    //     });
+    // }
+    function handleUsername(event){
+        setUsername(event.target.value);
     }
 
-    onChangePassword(event) {
-        this.setState({
-            password: event.target.value
-        });
+    // function onChangePassword(event) {
+    //     this.setState({
+    //         password: event.target.value
+    //     });
+    // }
+    function handlePassword(event){
+        setPassword(event.target.value);
     }
 
-    render() {
+    // render() {
         return (
-            <form onSubmit={this.onSubmit}>
+            // <form onSubmit={this.onSubmit}>
+            <form onSubmit={handleSubmit}>
                 <label htmlFor='username'>Username: </label>
                 <input
                     id='username'
                     type='text'
-                    value={this.state.username}
-                    onChange={this.onChangeUsername}
+                    // value={this.state.username}
+                    value={username}
+                    // onChange={this.onChangeUsername}
+                    onChange={handleUsername}
                 />
                 <label htmlFor='password'>Password: </label>
                 <input
                     id='password'
                     type='password'
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
+                    // value={this.state.password}
+                    value={password}
+                    // onChange={this.onChangePassword}
+                    onChange={handlePassword}
                 />
                 <input
                     type='submit'
@@ -70,5 +101,5 @@ export default class Register extends React.Component {
                 {/* <Link to={'register'}>Register</Link> */}
             </form>
         );
-    }
+    // }
 }
