@@ -31,15 +31,17 @@ function testConnectDB(pool) {
 
 testConnectDB(pool);
 
+const PRETTY_JSON_MAX_LENGTH = 256;
+
 function prettyJSON(jsonObj) {
     const out = JSON.stringify(jsonObj, null, 4);
 
-    if (out.length > 512) {
-        return `${out.substring(0, 512)} ...`;
+    if (out.length > PRETTY_JSON_MAX_LENGTH) {
+        return `${out.substring(0, PRETTY_JSON_MAX_LENGTH)} ...\n`;
     }
 
-    out += '\n';
-    return out;
+    // out += '\n';
+    return out + '\n';
 }
 
 //Don't log passwords
@@ -52,11 +54,11 @@ const USERS_TABLE = process.env.USERS_TABLE;
 const ID_COLUMN = process.env.ID_COLUMN; //Assumes that all serial primary key columns share the same name
 const EMAIL_COLUMN = process.env.EMAIL_COLUMN;
 
-async function getUser(username, pool) {
-    console.log(`getUser(${username}, pool):`);
+async function userExists(username, pool) {
+    console.log(`userExists(${username}, pool):`);
 
-    // const query = `SELECT ${ID_COLUMN}, ${EMAIL_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1;`;
-    const query = `SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1;`;
+    // const query = `SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1;`;
+    const query = `SELECT EXISTS(SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1);`;
     console.log(`query: ${query}`)
 
     const params = [username];
@@ -65,7 +67,7 @@ async function getUser(username, pool) {
     const res = await pool.query(query, params);
     console.log(`res: ${prettyJSON(res)}`);
 
-    return res;
+    return res.rows[0].exists;
 }
 
 //https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
@@ -77,10 +79,12 @@ const USER_ID_COLUMN = process.env.USER_ID_COLUMN;
 
 app.post('/register', async (req, res) => {
     console.log('POST to /register:');
-    const user = await getUser(req.body.username, pool);
-    console.log(prettyJSON(user));
+    // const user = await userExists(req.body.username, pool);
+    // console.log(prettyJSON(user));
 
-    if (user.rowCount > 0) {
+    // if (user.rowCount > 0) {
+    if (await userExists(req.body.username, pool)) {
+        console.log("oop");
         res.sendStatus(409);
     } else {
         const client = await pool.connect();
