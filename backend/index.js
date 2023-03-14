@@ -31,21 +31,6 @@ function testConnectDB(pool) {
 
 testConnectDB(pool);
 
-// const PRETTY_JSON_MAX_LENGTH = 256;
-
-// function prettyJSON(jsonObj) {
-//     const out = JSON.stringify(jsonObj, null, 4);
-
-//     if (out.length > PRETTY_JSON_MAX_LENGTH) {
-//         return `${out.substring(0, PRETTY_JSON_MAX_LENGTH)} ...\n`;
-//     }
-
-//     // out += '\n';
-//     return out + '\n';
-// }
-
-// Don't log passwords
-
 app.post('/login', (req, res) => {
     res.send('yo');
 });
@@ -54,7 +39,6 @@ const USERS_TABLE = process.env.USERS_TABLE;
 const ID_COLUMN = process.env.ID_COLUMN; // Assumes that all serial primary key columns share the same name
 const EMAIL_COLUMN = process.env.EMAIL_COLUMN;
 const util = require('./util.js');
-// import prettyJSON from './util.js';
 
 async function userExists(username, pool) {
     console.log(`userExists(${username}, pool):`);

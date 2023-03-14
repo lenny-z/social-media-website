@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+const util = require('./util.js');
 
 export default class Register extends React.Component {
     constructor(props) {
@@ -15,7 +16,7 @@ export default class Register extends React.Component {
         };
     }
 
-    onSubmit(event) {
+    async onSubmit(event) {
         event.preventDefault();
 
         const user = {
@@ -23,8 +24,14 @@ export default class Register extends React.Component {
             password: this.state.password
         };
 
-        axios.post(process.env.REACT_APP_REGISTER, user)
-            .then(res => console.log(res.data));
+        try {
+            const res = await axios.post(process.env.REACT_APP_REGISTER, user)
+            console.log(util.prettyJSON(res));
+        } catch (err) {
+            console.error(err);
+        }
+        // .then(res => console.log(res.data));
+        // console.log(util.prettyJSON(res));
     }
 
     onChangeUsername(event) {
