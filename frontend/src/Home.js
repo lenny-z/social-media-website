@@ -2,20 +2,6 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-// export default class Home extends React.Component {
-//     constructor(props) {
-//         super(props);
-//     }
-
-//     render() {
-//         return (
-//             <>
-//                 Home
-//             </>
-//         );
-//     }
-// }
-
 export default function Home() {
     const [text, setText] = useState('');
 
@@ -34,17 +20,22 @@ export default function Home() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                id='post'
-                type='text'
+        <form
+            id='post-form'
+            onSubmit={handleSubmit}
+        >
+            <textarea
+                id='post-input'
+                // type='textarea'
                 value={text}
                 onChange={handleText}
             />
-            <input
-                type='submit'
-                value='Post'
-            />
+            {/* <div class='post-button-div'> */}
+                <input
+                    type='submit'
+                    value='Post'
+                />
+            {/* </div> */}
         </form>
     );
 }

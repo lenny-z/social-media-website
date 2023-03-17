@@ -4,6 +4,9 @@
     --small-font-size: 16px;
     --medium-font-size: 24px;
     --large-font-size: 36px;
+    --id-password-width: 200px;
+    --feed-width: 400px;
+    --post-input-height: 100px;
 }
 
 * {
@@ -19,9 +22,21 @@ header {
     font-size: var(--large-font-size);
 }
 
-form {
+/* form {
     margin: auto;
     width: 200px;
+} */
+
+#login-form{
+    margin: auto;
+    /* width: 200px; */
+    width: var(--id-password-width);
+}
+
+#post-form{
+    /* display: block; */
+    margin: auto;
+    width: var(--feed-width);
 }
 
 label[for='username'],
@@ -31,11 +46,25 @@ label[for='password'] {
     padding-bottom: var(--padding);
 }
 
-#username,
-#password {
+#username-input,
+#password-input {
     margin-top: var(--padding);
     margin-bottom: var(--padding);
+    box-sizing: border-box;
     width: 100%;
+    padding: var(--padding);
+}
+
+/* #post-button-div{
+    text-align: right;
+} */
+
+#post-input{
+    margin-top: var(--padding);
+    margin-bottom: var(--padding);
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--post-input-height);
     padding: var(--padding);
 }
 
@@ -45,6 +74,18 @@ input[value='Register'] {
     margin: auto;
     margin-top: var(--padding);
     margin-bottom: var(--padding);
+    padding: var(--padding);
+}
+
+input[value='Post']{
+    /* display: inline-block; */
+    display: block;
+    /* float: right; */
+    /* float: inline-end; */
+    margin-top: var(--padding);
+    margin-bottom: var(--padding);
+    margin-left: auto;
+    margin-right: 0;
     padding: var(--padding);
 }
 
