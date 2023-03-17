@@ -13,21 +13,15 @@ export default function Register() {
         event.preventDefault();
 
         const user = {
-            // username: this.state.username,
             username: username,
             password: password
-            // password: this.state.password
         };
 
-        // try {
         const res = await axios.post(process.env.REACT_APP_REGISTER, user);
 
         if (res.status === 201) {
             navigate('/home');
         }
-        // } catch (err) {
-        // console.error(err);
-        // }
     }
 
     function handleUsername(event) {
