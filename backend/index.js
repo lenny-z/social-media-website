@@ -6,16 +6,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const CREDENTIALS = {
-    user: process.env.PGUSER,
-    host: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    password: process.env.PGPASSWORD,
-    port: process.env.PGPORT
-}
+// const CREDENTIALS = {
+//     user: process.env.PGUSER,
+//     host: process.env.PGHOST,
+//     database: process.env.PGDATABASE,
+//     password: process.env.PGPASSWORD,
+//     port: process.env.PGPORT
+// }
 
-const { Pool } = require('pg');
-const pool = new Pool(CREDENTIALS);
+// const { Pool } = require('pg');
+// const pool = new Pool(CREDENTIALS);
+
+const pool = require('./pool.js').pool;
 
 // To avoid injection attacks, don't directly concatenate parameters to query
 // Instead, use parameterized queries

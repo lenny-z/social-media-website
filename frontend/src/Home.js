@@ -1,4 +1,3 @@
-// import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -26,16 +25,13 @@ export default function Home() {
         >
             <textarea
                 id='post-input'
-                // type='textarea'
                 value={text}
                 onChange={handleText}
             />
-            {/* <div class='post-button-div'> */}
                 <input
                     type='submit'
                     value='Post'
                 />
-            {/* </div> */}
         </form>
     );
 }

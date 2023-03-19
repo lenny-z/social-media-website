@@ -5,7 +5,7 @@
     --medium-font-size: 24px;
     --large-font-size: 36px;
     --id-password-width: 200px;
-    --feed-width: 400px;
+    --feed-width: 600px;
     --post-input-height: 100px;
 }
 
@@ -22,19 +22,12 @@ header {
     font-size: var(--large-font-size);
 }
 
-/* form {
-    margin: auto;
-    width: 200px;
-} */
-
 #login-form{
     margin: auto;
-    /* width: 200px; */
     width: var(--id-password-width);
 }
 
 #post-form{
-    /* display: block; */
     margin: auto;
     width: var(--feed-width);
 }
@@ -50,14 +43,10 @@ label[for='password'] {
 #password-input {
     margin-top: var(--padding);
     margin-bottom: var(--padding);
-    box-sizing: border-box;
+    box-sizing: border-box; /*Prevent extension past parent*/
     width: 100%;
     padding: var(--padding);
 }
-
-/* #post-button-div{
-    text-align: right;
-} */
 
 #post-input{
     margin-top: var(--padding);
@@ -78,10 +67,7 @@ input[value='Register'] {
 }
 
 input[value='Post']{
-    /* display: inline-block; */
     display: block;
-    /* float: right; */
-    /* float: inline-end; */
     margin-top: var(--padding);
     margin-bottom: var(--padding);
     margin-left: auto;
