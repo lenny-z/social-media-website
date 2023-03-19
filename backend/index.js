@@ -2,22 +2,14 @@ require('dotenv').config(); // State this as early as possible to read .env file
 const cors = require('cors');
 const express = require('express');
 const app = express();
+const util = require('./util.js');
+// const pool = require('./pool.js').pool;
+const pool = require('./pool.js');
+
+util.prettyJSON(pool);
 
 app.use(cors());
 app.use(express.json());
-
-// const CREDENTIALS = {
-//     user: process.env.PGUSER,
-//     host: process.env.PGHOST,
-//     database: process.env.PGDATABASE,
-//     password: process.env.PGPASSWORD,
-//     port: process.env.PGPORT
-// }
-
-// const { Pool } = require('pg');
-// const pool = new Pool(CREDENTIALS);
-
-const pool = require('./pool.js').pool;
 
 // To avoid injection attacks, don't directly concatenate parameters to query
 // Instead, use parameterized queries
@@ -40,7 +32,6 @@ app.post('/login', (req, res) => {
 const USERS_TABLE = process.env.USERS_TABLE;
 const ID_COLUMN = process.env.ID_COLUMN; // Assumes that all serial primary key columns share the same name
 const EMAIL_COLUMN = process.env.EMAIL_COLUMN;
-const util = require('./util.js');
 
 async function userExists(username, pool) {
     console.log(`userExists(${username}, pool):`);

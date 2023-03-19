@@ -7,5 +7,10 @@ const CREDENTIALS = {
 }
 
 const { Pool } = require('pg');
-// const pool = new Pool(CREDENTIALS);
-exports.pool = new Pool(CREDENTIALS);
+const pool = new Pool(CREDENTIALS);
+// exports.pool = new Pool(CREDENTIALS);
+// exports = new Pool(CREDENTIALS);
+// exports = pool;
+exports.query = (query, params) => {
+    return pool.query(query, params)
+};
