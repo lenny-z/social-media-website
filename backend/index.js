@@ -4,9 +4,10 @@ const express = require('express');
 const session = require('express-session'); // Consider Redis as session store
 const crypto = require('crypto');
 const queries = require('./queries.js');
+const argon2 = require('argon2');
 // const util = require('./util.js');
 
-const sessionSecret = crypto.randomBytes(256);
+const sessionSecret = crypto.randomBytes(256).toString('hex');
 
 const sessionOptions = {
     secret: sessionSecret,
@@ -30,14 +31,27 @@ app.post('/login', async (req, res) => {
 
     const userID = await queries.getUserID(req.body.username);
 
-    // if(await queries.getUserID(req.body.username) === null){
     if(userID === null){
-        // if
         console.log('bleh');
     }else{
-        // console.log('yey');
         const saltedPasswordHash = await queries.getSaltedPasswordHash(userID);
-        console.log(saltedPasswordHash);
+
+        if(await argon2.verify(saltedPasswordHash, req.body.password)){
+            req.session.regenerate((err) => { // TODO: clean up this block
+                if(err){
+                    next(err);
+                }
+
+                req.session.userID = userID;
+                req.session.save((err) => {
+                    if(err){
+                        return next(err);
+                    }
+
+                    res.redirect('/home');
+                });
+            });
+        }
     }
 });
 

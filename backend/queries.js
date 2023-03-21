@@ -37,21 +37,21 @@ exports.getUserID = async (email) => {
     console.log(`params: ${params}`);
 
     // TODO: put in try/catch block
-    const res = await pool.query(query, params);
-    console.log(`res: ${util.prettyJSON(res)}`);
+    try {
+        const res = await pool.query(query, params);
+        console.log(`res: ${util.prettyJSON(res)}`);
 
-    if (res.rowCount === 0) {
+        if (res.rowCount === 0) {
+            return null;
+        } else {
+            return res.rows[0][ID_COLUMN];
+        }
+    } catch (err) {
+        console.error(err.stack);
         return null;
-    } else {
-        // return res.rows[0].id;
-        return res.rows[0][ID_COLUMN];
     }
-}
 
-// exports.getSaltedPasswordHash = async (username) => {
-//     const query = `SELECT ${SALTED_PASSWORD_HASH_COLUMN} FROM ${SALTED_PASSWORD_HASHES_TABLE}
-//     WHERE ${USER_ID} = (SELECT ${ID_})`
-// };
+}
 
 exports.getSaltedPasswordHash = async (userID) => {
     const query = `SELECT ${SALTED_PASSWORD_HASH_COLUMN} FROM ${SALTED_PASSWORD_HASHES_TABLE}
@@ -65,5 +65,4 @@ exports.getSaltedPasswordHash = async (userID) => {
     } catch (err) {
         return null;
     }
-    // console.log(util.prettyJSON(res));
 }
