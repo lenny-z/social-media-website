@@ -6,21 +6,6 @@ const USERS_TABLE = process.env.USERS_TABLE;
 const ID_COLUMN = process.env.ID_COLUMN; // Assumes that all serial primary key columns share the same name
 const EMAIL_COLUMN = process.env.EMAIL_COLUMN;
 
-// async function userExists(username, pool) {
-//     console.log(`userExists(${username}, pool):`);
-
-//     const query = `SELECT EXISTS(SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1);`;
-//     console.log(`query: ${query}`)
-
-//     const params = [username];
-//     console.log(`params: ${params}`);
-
-//     const res = await pool.query(query, params);
-//     console.log(`res: ${util.prettyJSON(res)}`);
-
-//     return res.rows[0].exists;
-// }
-
 const argon2 = require('argon2');
 const SALTED_PASSWORD_HASHES_TABLE = process.env.SALTED_PASSWORD_HASHES_TABLE;
 const SALTED_PASSWORD_HASH_COLUMN = process.env.SALTED_PASSWORD_HASH_COLUMN;
@@ -29,10 +14,12 @@ const USER_ID_COLUMN = process.env.USER_ID_COLUMN;
 router.post('/', async (req, res) => {
     console.log('POST to /register:');
 
-    if (await util.userExists(req.body.username, pool)) {
+    // if (await util.userExists(req.body.username, pool)) {
+    if (await util.userExists(req.body.username)) {
         res.sendStatus(409); // 409 Conflict
     } else {
         const client = await pool.connect();
+
         try {
             await client.query('BEGIN;');
 
