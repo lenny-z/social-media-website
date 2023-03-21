@@ -28,12 +28,16 @@ queries.testConnect();
 app.post('/login', async (req, res) => {
     console.log('POST to /login:');
 
-    // if (await queries.userExists(req.body.username)){
-    if(await queries.getUserID(req.body.username) === null){
+    const userID = await queries.getUserID(req.body.username);
+
+    // if(await queries.getUserID(req.body.username) === null){
+    if(userID === null){
         // if
         console.log('bleh');
     }else{
-        console.log('yey');
+        // console.log('yey');
+        const saltedPasswordHash = await queries.getSaltedPasswordHash(userID);
+        console.log(saltedPasswordHash);
     }
 });
 
