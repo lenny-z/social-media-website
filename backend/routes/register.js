@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const pool = require('../pool.js');
+const queries = require('../queries.js');
 const util = require('../util.js');
 
 const USERS_TABLE = process.env.USERS_TABLE;
@@ -14,8 +15,8 @@ const USER_ID_COLUMN = process.env.USER_ID_COLUMN;
 router.post('/', async (req, res) => {
     console.log('POST to /register:');
 
-    // if (await util.userExists(req.body.username, pool)) {
-    if (await util.userExists(req.body.username)) {
+    // if (await util.userExists(req.body.username)) {
+    if (await queries.userExists(req.body.username)) {
         res.sendStatus(409); // 409 Conflict
     } else {
         const client = await pool.connect();

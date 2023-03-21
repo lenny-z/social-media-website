@@ -4,9 +4,7 @@ const express = require('express');
 const session = require('express-session'); // Consider Redis as session store
 const crypto = require('crypto');
 const queries = require('./queries.js');
-const util = require('./util.js');
-
-// const pool = require('./pool.js');
+// const util = require('./util.js');
 
 const sessionSecret = crypto.randomBytes(256);
 
@@ -22,27 +20,20 @@ app.use(cors());
 app.use(express.json());
 app.use(session(sessionOptions));
 
+queries.testConnect();
+
 // To avoid injection attacks, don't directly concatenate parameters to query
 // Instead, use parameterized queries
 
-// function testConnectDB(pool) {
-    // const query = 'SELECT $1::text as message;';
-    // const params = ['DB test query successful'];
-
-    // pool.query(query, params)
-    //     .then((res) => console.log(res.rows[0].message + '\n'))
-    //     .catch((err) => console.error(err.stack));
-// }
-
-// testConnectDB(pool);
-queries.testConnect();
-
 app.post('/login', async (req, res) => {
-    // res.send('yo');
     console.log('POST to /login:');
 
-    if (await util.userExists(req.body.username)){
-        // if()
+    // if (await queries.userExists(req.body.username)){
+    if(await queries.getUserID(req.body.username) === null){
+        // if
+        console.log('bleh');
+    }else{
+        console.log('yey');
     }
 });
 
