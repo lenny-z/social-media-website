@@ -1,13 +1,10 @@
 require('dotenv').config(); // State this as early as possible to read .env files
 const cors = require('cors');
 const express = require('express');
-const RedisStore = require('connect-redis').default;
-const session = require('express-session'); // Consider Redis as session store
-const redis = require('redis');
 
-// import RedisStore from 'connect-redis';
-// import session from 'express-session';
-// import {createClient} from 'redis';
+const redis = require('redis');
+const RedisStore = require('connect-redis').default;
+const session = require('express-session');
 
 const crypto = require('crypto');
 const queries = require('./queries.js');
@@ -15,17 +12,6 @@ const argon2 = require('argon2');
 
 const sessionSecret = crypto.randomBytes(256).toString('hex');
 
-const sessionOptions = {
-	secret: sessionSecret,
-	resave: false, // Enable only for session stores that don't support 'touch' command
-	rolling: false, // 'Force the session identifier cookie to be set on every response' (express-session)
-	saveUninitialized: true,
-
-	cookie: {
-		secure: false, // Set to true once HTTPS enabled
-		maxAge: 60 * 24 * 60 * 60 * 1000
-	}
-};
 
 const redisClient = redis.createClient({
 	socket:{
@@ -33,6 +19,28 @@ const redisClient = redis.createClient({
 		port: process.env.REDIS_PORT
 	}
 });
+
+// console.log(process.env.APP_NAME);
+
+const redisStore = new RedisStore({
+	client: redisClient,
+	prefix: process.env.APP_NAME
+});
+
+const sessionOptions = {
+	resave: false, // Enable only for session stores that don't support 'touch' command
+	rolling: false, // 'Force the session identifier cookie to be set on every response' (express-session)
+	saveUninitialized: true,
+	secret: sessionSecret,
+	store: redisStore,
+
+	cookie: {
+		secure: false, // Set to true once HTTPS enabled
+		maxAge: 60 * 24 * 60 * 60 * 1000
+	}
+};
+// const redisClient = redis.createClient();
+// redisClient.connect().catch(console.error);
 
 const app = express();
 app.use(cors());
