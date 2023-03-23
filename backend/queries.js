@@ -36,7 +36,6 @@ exports.getUserID = async (email) => {
     const params = [email];
     console.log(`params: ${params}`);
 
-    // TODO: put in try/catch block
     try {
         const res = await pool.query(query, params);
         console.log(`res: ${util.prettyJSON(res)}`);
@@ -52,6 +51,8 @@ exports.getUserID = async (email) => {
     }
 
 }
+
+// Don't log passwords
 
 exports.getSaltedPasswordHash = async (userID) => {
     const query = `SELECT ${SALTED_PASSWORD_HASH_COLUMN} FROM ${SALTED_PASSWORD_HASHES_TABLE}
