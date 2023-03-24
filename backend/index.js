@@ -10,9 +10,6 @@ const crypto = require('crypto');
 const queries = require('./queries.js');
 const argon2 = require('argon2');
 
-const sessionSecret = crypto.randomBytes(256).toString('hex');
-
-
 const redisClient = redis.createClient({
 	socket:{
 		host: process.env.REDIS_HOST,
@@ -20,12 +17,14 @@ const redisClient = redis.createClient({
 	}
 });
 
-// console.log(process.env.APP_NAME);
+redisClient.connect().catch(console.error);
 
 const redisStore = new RedisStore({
 	client: redisClient,
 	prefix: process.env.APP_NAME
 });
+
+const sessionSecret = crypto.randomBytes(256).toString('hex');
 
 const sessionOptions = {
 	resave: false, // Enable only for session stores that don't support 'touch' command
@@ -39,8 +38,6 @@ const sessionOptions = {
 		maxAge: 60 * 24 * 60 * 60 * 1000
 	}
 };
-// const redisClient = redis.createClient();
-// redisClient.connect().catch(console.error);
 
 const app = express();
 app.use(cors());
@@ -49,8 +46,10 @@ app.use(session(sessionOptions));
 
 queries.testConnect();
 
-function isAuthenticated(req, res, next){
-	// if()
+async function isAuthenticated(req, res, next){
+	if(await redisStore.get(req.session.id)){
+		console.log('pog');
+	}
 }
 
 // To avoid injection attacks, don't directly concatenate parameters to query
@@ -75,12 +74,16 @@ app.post('/login', async (req, res) => {
 				req.session.userID = userID;
 				req.session.save((err) => {
 					if (err) {
+						console.error(err);
 						return next(err);
 					}
 
-					res.redirect('/home');
+					// res.redirect('/home');
+					res.sendStatus(200); // 200 OK
 				});
 			});
+		}else{
+			res.sendStatus(401); // 401 Unauthorized
 		}
 	}
 });

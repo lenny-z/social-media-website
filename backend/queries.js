@@ -14,8 +14,6 @@ const util = require('./util.js');
 // Instead, use parameterized queries
 
 exports.testConnect = async () => {
-    console.log('testConnect():');
-
     const query = 'SELECT $1::text as message;';
     const params = ['DB test query successful'];
 

@@ -5,58 +5,86 @@ import { useNavigate, Link } from 'react-router-dom';
 // const util = require('./util.js');
 
 export default function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const navigate = useNavigate();
 
-    async function handleSubmit(event) {
-        event.preventDefault();
+	async function handleSubmit(event) {
+		event.preventDefault();
 
-        const user = {
-            username: username,
-            password: password
-        };
+		const user = {
+			username: username,
+			password: password
+		};
 
-        const res = await axios.post(process.env.REACT_APP_LOGIN, user);
-        console.log(res.data);
+		try{
+			const res = await axios.post(process.env.REACT_APP_LOGIN, user);
+			console.log(res.data);
+			if(res.status === 200){
+				navigate('/home');
+			}
+		}catch(err){
+			if(err.response){
+				// switch(err.response.statu)
+				if(err.response.status === 401){
+					setUsername('');
+					setPassword('');
+				}
+			}
+		}
 
-        if (res.status === 201) {
-            navigate('/home');
-        }
-    }
+		// if (res.status === 200) {
+		// navigate('/home');
+		// }
+		// switch (res.status) {
+		// 	case 200: // OK
+		// 		navigate('/home');
+		// 		break;
+		// 	case 401: // Unauthorized
+		// 		console.log('case');
+		// 		setUsername('');
+		// 		setPassword('');
+		// 		break;
 
-    function handleUsername(event) {
-        setUsername(event.target.value);
-    }
+		// 	default:
+		// 		setUsername('');
+		// 		setPassword('');
+		// 		break;
+		// }
+	}
 
-    function handlePassword(event) {
-        setPassword(event.target.value);
-    }
+	function handleUsername(event) {
+		setUsername(event.target.value);
+	}
 
-    return (
-        <form 
-            id='login-form'
-            onSubmit={handleSubmit}
-        >
-            <label htmlFor='username-input'>Username: </label>
-            <input
-                id='username-input'
-                type='text'
-                value={username}
-                onChange={handleUsername}
-            />
-            <label htmlFor='password-input'>Password: </label>
-            <input
-                id='password-input'
-                type='password'
-                value={password}
-                onChange={handlePassword}
-            />
-            <input
-                type='submit'
-                value='Log In'
-            />
-            <Link to={'register'}>Register</Link>
-        </form>
-    );
+	function handlePassword(event) {
+		setPassword(event.target.value);
+	}
+
+	return (
+		<form
+			id='login-form'
+			onSubmit={handleSubmit}
+		>
+			<label htmlFor='username-input'>Username: </label>
+			<input
+				id='username-input'
+				type='text'
+				value={username}
+				onChange={handleUsername}
+			/>
+			<label htmlFor='password-input'>Password: </label>
+			<input
+				id='password-input'
+				type='password'
+				value={password}
+				onChange={handlePassword}
+			/>
+			<input
+				type='submit'
+				value='Log In'
+			/>
+			<Link to={'register'}>Register</Link>
+		</form>
+	);
 }
