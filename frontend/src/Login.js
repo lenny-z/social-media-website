@@ -2,14 +2,13 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
-// const util = require('./util.js');
-
 export default function Login() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const navigate = useNavigate();
 
 	async function handleSubmit(event) {
+		// console.log('asdf');
 		event.preventDefault();
 
 		const user = {
@@ -17,40 +16,21 @@ export default function Login() {
 			password: password
 		};
 
-		try{
-			const res = await axios.post(process.env.REACT_APP_LOGIN, user);
+		try {
+			const res = await axios.post(process.env.REACT_APP_LOGIN, user, {withCredentials: true});
 			console.log(res.data);
-			if(res.status === 200){
+
+			if (res.status === 200) {
 				navigate('/home');
 			}
-		}catch(err){
-			if(err.response){
-				// switch(err.response.statu)
-				if(err.response.status === 401){
+		} catch (err) {
+			if (err.response) {
+				if (err.response.status === 401) {
 					setUsername('');
 					setPassword('');
 				}
 			}
 		}
-
-		// if (res.status === 200) {
-		// navigate('/home');
-		// }
-		// switch (res.status) {
-		// 	case 200: // OK
-		// 		navigate('/home');
-		// 		break;
-		// 	case 401: // Unauthorized
-		// 		console.log('case');
-		// 		setUsername('');
-		// 		setPassword('');
-		// 		break;
-
-		// 	default:
-		// 		setUsername('');
-		// 		setPassword('');
-		// 		break;
-		// }
 	}
 
 	function handleUsername(event) {
