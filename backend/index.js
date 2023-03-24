@@ -32,21 +32,20 @@ const sessionOptions = {
 	rolling: false, // 'Force the session identifier cookie to be set on every response' (express-session)
 	saveUninitialized: true,
 	secret: sessionSecret,
-	// store: new session.MemoryStore(),
 	store: redisStore,
 
 	cookie: {
-		// domain: 'localhost:3000',
-		httpOnly: false,
+		httpOnly: true,
 		maxAge: 60 * 24 * 60 * 60 * 1000,
-		// expires: false,
-		// sameSite: 'none',
 		secure: false, // Set to true once HTTPS enabled
 	}
 };
 
 const app = express();
-app.use(cors());
+app.use(cors({
+	credentials: true,
+	origin: 'http://localhost:3000'
+}));
 app.use(express.json());
 app.use(session(sessionOptions));
 

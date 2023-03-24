@@ -8,7 +8,6 @@ export default function Login() {
 	const navigate = useNavigate();
 
 	async function handleSubmit(event) {
-		// console.log('asdf');
 		event.preventDefault();
 
 		const user = {
