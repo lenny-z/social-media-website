@@ -13,36 +13,40 @@ const SALTED_PASSWORD_HASH_COLUMN = process.env.SALTED_PASSWORD_HASH_COLUMN;
 const USER_ID_COLUMN = process.env.USER_ID_COLUMN;
 
 router.post('/', async (req, res) => {
-    console.log('POST to /register:');
+	console.log('POST to /register:');
+	const userID = await queries.getUserID(req.body.username);
 
-    if (await queries.userExists(req.body.username)) {
-        res.sendStatus(409); // 409 Conflict
-    } else {
-        const client = await pool.connect();
+	// if (await queries.userExists(req.body.username)) {
+	// if (await queries.)
+	if (userID === null) {
+		const saltedPasswordHash = await argon2.hash(req.body.password);
+		await queries.registerUser(req.body.username, saltedPasswordHash);
+	} else {
+		res.sendStatus(409); // 409 Conflict
+		// const client = await pool.connect();
 
-        try {
-            await client.query('BEGIN;');
+		// try {
+		//     await client.query('BEGIN;');
 
-            var query = `INSERT INTO ${USERS_TABLE}(${EMAIL_COLUMN}) VALUES ($1);`;
-            var params = [req.body.username];
-            await client.query(query, params);
+		//     var query = `INSERT INTO ${USERS_TABLE}(${EMAIL_COLUMN}) VALUES ($1);`;
+		//     var params = [req.body.username];
+		//     await client.query(query, params);
 
-            const salted_password_hash = await argon2.hash(req.body.password);
-            query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}(${USER_ID_COLUMN}, ${SALTED_PASSWORD_HASH_COLUMN}) VALUES
-            ((SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1), $2);`;
-            params = [req.body.username, salted_password_hash];
-            await client.query(query, params);
+		//     query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}(${USER_ID_COLUMN}, ${SALTED_PASSWORD_HASH_COLUMN}) VALUES
+		//     ((SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1), $2);`;
+		//     params = [req.body.username, salted_password_hash];
+		//     await client.query(query, params);
 
-            await client.query('COMMIT;');
-            res.sendStatus(201); // 201 Created
-        } catch (err) {
-            await client.query('ROLLBACK;');
-            console.error(err);
-            res.sendStatus(500); // 500 Internal Server Error
-        } finally {
-            client.release();
-        }
-    }
+		//     await client.query('COMMIT;');
+		//     res.sendStatus(201); // 201 Created
+		// } catch (err) {
+		//     await client.query('ROLLBACK;');
+		//     console.error(err);
+		//     res.sendStatus(500); // 500 Internal Server Error
+		// } finally {
+		//     client.release();
+		// }
+	}
 });
 
 module.exports = router;
