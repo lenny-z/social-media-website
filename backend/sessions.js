@@ -34,17 +34,6 @@ const sessionOptions = {
 	}
 };
 
-// exports.sessions = () => {
-// exports = () => {
-// 	return session(sessionOptions);
-// };
-
-// module.exports = class Sessions{
-// 	constructor(){
-// 		return session(sessionOptions);
-// 	}
-// }
-
 exports.manager = () => {
 	return session(sessionOptions);
 };
