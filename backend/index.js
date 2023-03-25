@@ -1,45 +1,46 @@
 require('dotenv').config(); // State this as early as possible to read .env files
 const cors = require('cors');
 const express = require('express');
+const sessions = require('./sessions.js');
 
-const redis = require('redis');
-const RedisStore = require('connect-redis').default;
-const session = require('express-session');
+// const redis = require('redis');
+// const RedisStore = require('connect-redis').default;
+// const session = require('express-session');
 
-const crypto = require('crypto');
+// const crypto = require('crypto');
 const queries = require('./queries.js');
 const argon2 = require('argon2');
 
-const redisClient = redis.createClient({
-	socket: {
-		host: process.env.REDIS_HOST,
-		port: process.env.REDIS_PORT
-	}
-});
+// const redisClient = redis.createClient({
+// 	socket: {
+// 		host: process.env.REDIS_HOST,
+// 		port: process.env.REDIS_PORT
+// 	}
+// });
 
-redisClient.connect().catch(console.error);
+// redisClient.connect().catch(console.error);
 
-const redisStore = new RedisStore({
-	client: redisClient,
-	prefix: process.env.APP_NAME
-});
+// const redisStore = new RedisStore({
+// 	client: redisClient,
+// 	prefix: process.env.APP_NAME
+// });
 
-const sessionSecret = crypto.randomBytes(256).toString('hex');
+// const sessionSecret = crypto.randomBytes(256).toString('hex');
 
-const sessionOptions = {
-	name: process.env.APP_NAME,
-	resave: false, // Enable only for session stores that don't support 'touch' command
-	rolling: false, // 'Force the session identifier cookie to be set on every response' (express-session)
-	saveUninitialized: true,
-	secret: sessionSecret,
-	store: redisStore,
+// const sessionOptions = {
+// 	name: process.env.APP_NAME,
+// 	resave: false, // Enable only for session stores that don't support 'touch' command
+// 	rolling: false, // 'Force the session identifier cookie to be set on every response' (express-session)
+// 	saveUninitialized: true,
+// 	secret: sessionSecret,
+// 	store: redisStore,
 
-	cookie: {
-		httpOnly: true,
-		maxAge: 60 * 24 * 60 * 60 * 1000,
-		secure: false, // Set to true once HTTPS enabled
-	}
-};
+// 	cookie: {
+// 		httpOnly: true,
+// 		maxAge: 60 * 24 * 60 * 60 * 1000,
+// 		secure: false, // Set to true once HTTPS enabled
+// 	}
+// };
 
 const app = express();
 app.use(cors({
@@ -47,7 +48,9 @@ app.use(cors({
 	origin: 'http://localhost:3000'
 }));
 app.use(express.json());
-app.use(session(sessionOptions));
+// app.use(session(sessionOptions));
+// app.use(new Sessions());
+app.use(sessions.manager());
 
 queries.testConnect();
 
@@ -77,7 +80,6 @@ app.post('/login', async (req, res) => {
 				}
 
 				req.session.userID = userID;
-				// res.send(req.session.id);
 				req.session.save((err) => {
 					if (err) {
 						console.error(err);
@@ -87,8 +89,6 @@ app.post('/login', async (req, res) => {
 					res.sendStatus(200); // 200 OK
 				});
 			});
-			// req.session.userID = userID;
-			// res.sendStatus(200);
 		} else {
 			res.sendStatus(401); // 401 Unauthorized
 		}
