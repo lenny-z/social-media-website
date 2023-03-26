@@ -13,10 +13,9 @@ router.post('/', async (req, res) => {
 			const saltedPasswordHash = await queries.getSaltedPasswordHash(userID);
 
 			if (await argon2.verify(saltedPasswordHash, req.body.password)) {
-				req.session.regenerate((err) => { // TODO: clean up this block
+				req.session.regenerate((err) => {
 					if (err) {
-						// next(err);
-						res.sendStatus(500);
+						res.sendStatus(500); // 500 Internal Server Error
 					} else {
 						req.session.userID = userID;
 						console.log(`req.session.userID: ${req.session.userID}`);
@@ -24,30 +23,22 @@ router.post('/', async (req, res) => {
 						req.session.save((err) => {
 							if (err) {
 								console.error(err);
-								// return next(err);
-								res.sendStatus(500) // 500 Internal Server Error
+								res.sendStatus(500)
 							} else {
 								res.sendStatus(200); // 200 OK
 							}
 						});
-						// await req.session.save();
-						// res.sendStatus(200);
 					}
 				});
 			} else {
 				res.sendStatus(401); // 401 Unauthorized
 			}
 		} else {
-			res.sendStatus(401); // 401 Unauthorized
+			res.sendStatus(401);
 		}
-
-		// if (userID === null) {
-		// 	// console.log('bleh');
-		// 	res.sendStatus(401); // 401 Unauthorized
-		// } else {
-		// }
 	} catch (err) {
 		console.error(err);
+		res.sendStatus(500);
 	}
 });
 

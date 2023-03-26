@@ -12,10 +12,9 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(sessions);
-// app.use(sessions.manager);
+app.use(sessions); // Use this route immediately after express.json() route
 
-queries.testConnect();
+// queries.testConnect();
 
 
 const loginRouter = require('./routes/login.js');
