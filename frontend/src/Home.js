@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 export default function Home() {
     const [text, setText] = useState('');
+	const navigate = useNavigate();
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -11,7 +13,15 @@ export default function Home() {
             text: text
         };
 
-        const res = await axios.post(process.env.REACT_APP_POST, post);
+		try{
+			const res = await axios.post(process.env.REACT_APP_POST, post, {withCredentials: true});
+		}catch(err){
+			if(err.response){
+				if(err.response.status === 401){
+					navigate('/');
+				}
+			}
+		}
     }
 
     function handleText(event) {
