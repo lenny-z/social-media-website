@@ -12,15 +12,16 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(sessions.manager());
+// app.use(sessions.manager());
+app.use(sessions());
 
 queries.testConnect();
 
-async function isAuthenticated(req, res, next) {
-	if (await redisStore.get(req.session.id)) {
-		console.log('pog');
-	}
-}
+// async function isAuthenticated(req, res, next) {
+// 	if (await redisStore.get(req.session.id)) {
+// 		console.log('pog');
+// 	}
+// }
 
 const loginRouter = require('./routes/login.js');
 const registerRouter = require('./routes/register.js');

@@ -47,7 +47,6 @@ exports.getUserID = async (email) => {
 		console.error(err.stack);
 		return null;
 	}
-
 }
 
 // Don't log passwords
@@ -73,23 +72,17 @@ exports.registerUser = async (email, saltedPasswordHash) => {
 		await client.query('BEGIN;');
 
 		var query = `INSERT INTO ${USERS_TABLE}(${EMAIL_COLUMN}) VALUES ($1);`;
-		// var params = [req.body.username];
 		var params = [email];
 		await client.query(query, params);
 
-		// const salted_password_hash = await argon2.hash(req.body.password);
 		query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}(${USER_ID_COLUMN}, ${SALTED_PASSWORD_HASH_COLUMN}) VALUES
             ((SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1), $2);`;
-		// params = [req.body.username, salted_password_hash];
 		params = [email, saltedPasswordHash];
 		await client.query(query, params);
 
 		await client.query('COMMIT;');
-		// res.sendStatus(201); // 201 Created
 	} catch (err) {
 		await client.query('ROLLBACK;');
-		// console.error(err);
-		// res.sendStatus(500); // 500 Internal Server Error
 		throw err;
 	} finally {
 		client.release();
