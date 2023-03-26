@@ -2,7 +2,7 @@ require('dotenv').config(); // State this as early as possible to read .env file
 const cors = require('cors');
 const express = require('express');
 const sessions = require('./sessions.js');
-const queries = require('./queries.js');
+// const queries = require('./queries.js');
 
 const app = express();
 
@@ -13,9 +13,6 @@ app.use(cors({
 
 app.use(express.json());
 app.use(sessions); // Use this route immediately after express.json() route
-
-// queries.testConnect();
-
 
 const loginRouter = require('./routes/login.js');
 const registerRouter = require('./routes/register.js');

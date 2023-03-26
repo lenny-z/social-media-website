@@ -17,7 +17,7 @@ export default function Login() {
 
 		try {
 			const res = await axios.post(process.env.REACT_APP_LOGIN, user, {withCredentials: true});
-			console.log(res.data);
+			// console.log(res.data);
 
 			if (res.status === 200) {
 				navigate('/home');

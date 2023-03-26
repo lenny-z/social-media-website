@@ -12,10 +12,6 @@ const POST_COLUMN = process.env.POST_COLUMN;
 const pool = require('./pool.js');
 const util = require('./util.js');
 
-// To avoid injection attacks, don't directly concatenate parameters to query
-// Instead, use parameterized queries
-
-// exports.testConnect = async () => {
 async function testConnect() {
 	const query = 'SELECT $1::text as message;';
 	const params = ['DB test query successful'];
@@ -31,13 +27,13 @@ async function testConnect() {
 testConnect();
 
 exports.getUserID = async (email) => {
-	console.log(`getUserID(${email}):`);
+	// console.log(`getUserID(${email}):`);
 
 	const query = `SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1;`;
-	console.log(`query: ${query}`);
+	// console.log(`query: ${query}`);
 
 	const params = [email];
-	console.log(`params: ${params}`);
+	// console.log(`params: ${params}`);
 
 	try {
 		const res = await pool.query(query, params);
