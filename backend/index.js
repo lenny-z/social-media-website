@@ -12,7 +12,8 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(sessions());
+// app.use(sessions());
+app.use(sessions.manager);
 
 queries.testConnect();
 
@@ -24,9 +25,11 @@ queries.testConnect();
 
 const loginRouter = require('./routes/login.js');
 const registerRouter = require('./routes/register.js');
+const postsRouter = require('./routes/posts.js');
 
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
+app.use('/posts', postsRouter);
 
 const PORT = process.env.PORT;
 
