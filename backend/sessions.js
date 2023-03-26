@@ -32,5 +32,6 @@ const sessionOptions = {
 	}
 };
 
-exports.manager = session(sessionOptions);
-exports.store = redisStore;
+// exports.manager = session(sessionOptions);
+// exports.store = redisStore;
+module.exports = session(sessionOptions);
