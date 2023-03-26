@@ -34,10 +34,6 @@ const sessionOptions = {
 	}
 };
 
-exports.manager = () => {
-	return session(sessionOptions);
-};
-
 module.exports = () => {
 	return session(sessionOptions);
 }
