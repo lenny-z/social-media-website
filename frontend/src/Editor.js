@@ -3,14 +3,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function Editor() {
-	const [text, setText] = useState('');
+	const [post, setPost] = useState('');
 	const navigate = useNavigate();
 
 	async function handleSubmit(event) {
 		event.preventDefault();
 
 		const post = {
-			text: text
+			post: post
 		};
 
 		try {
@@ -26,7 +26,7 @@ export default function Editor() {
 	}
 
 	function handleText(event) {
-		setText(event.target.value);
+		setPost(event.target.value);
 	}
 
 	return (
@@ -36,7 +36,7 @@ export default function Editor() {
 		>
 			<textarea
 				id='post-input'
-				value={text}
+				value={post}
 				onChange={handleText}
 			/>
 			<input

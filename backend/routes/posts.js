@@ -16,7 +16,7 @@ router.post('/', authorize, async (req, res) => {
 	console.log('POST to /posts');
 
 	try{
-		await queries.post(req.session.userID, req.body.text);
+		await queries.post(req.session.userID, req.body.post);
 		res.sendStatus(201); // 201 Created
 	}catch(err){
 		console.error(err);

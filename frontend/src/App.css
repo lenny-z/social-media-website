@@ -1,4 +1,5 @@
-/*Minimum accessible font size guideline: 16px*/
+/* Minimum accessible font size guideline: 16px */
+
 :root {
     --padding: 8px;
     --small-font-size: 16px;
@@ -22,49 +23,61 @@ header {
     font-size: var(--large-font-size);
 }
 
+/* Login.js, Register.js */
+
 #login-form{
     margin: auto;
     width: var(--id-password-width);
 }
+
+label[for='username'],
+label[for='password'] {
+	display: block;
+	padding-top: var(--padding);
+	padding-bottom: var(--padding);
+}
+
+#username-input,
+#password-input {
+	margin-top: var(--padding);
+	margin-bottom: var(--padding);
+	box-sizing: border-box; /* Prevent extension past parent */
+	width: 100%;
+	padding: var(--padding);
+}
+
+input[value='Log In'],
+input[value='Register'] {
+	display: block;
+	margin: auto;
+	margin-top: var(--padding);
+	margin-bottom: var(--padding);
+	padding: var(--padding);
+}
+
+a[href='/register'] {
+	display: block;
+	padding: var(--padding);
+	text-align: center;
+}
+
+/* Editor.js */
 
 #post-form{
     margin: auto;
     width: var(--feed-width);
 }
 
-label[for='username'],
-label[for='password'] {
-    display: block;
-    padding-top: var(--padding);
-    padding-bottom: var(--padding);
-}
-
-#username-input,
-#password-input {
-    margin-top: var(--padding);
-    margin-bottom: var(--padding);
-    box-sizing: border-box; /*Prevent extension past parent*/
-    width: 100%;
-    padding: var(--padding);
-}
 
 #post-input{
     margin-top: var(--padding);
-    margin-bottom: var(--padding);
+	margin-bottom: var(--padding);
     box-sizing: border-box;
     width: 100%;
     height: var(--post-input-height);
     padding: var(--padding);
 }
 
-input[value='Log In'],
-input[value='Register'] {
-    display: block;
-    margin: auto;
-    margin-top: var(--padding);
-    margin-bottom: var(--padding);
-    padding: var(--padding);
-}
 
 input[value='Post']{
     display: block;
@@ -75,13 +88,19 @@ input[value='Post']{
     padding: var(--padding);
 }
 
-.error-message {
-    padding: var(--padding);
-    text-align: center;
+/* Post.js */
+
+.post{
+	margin: auto;
+	box-sizing: border-box;
+	padding: var(--padding);
+	width: var(--feed-width);
+	border: 1px solid;
 }
 
-a[href='/register'] {
-    display: block;
+/* Error.js */
+
+.error-message {
     padding: var(--padding);
     text-align: center;
 }

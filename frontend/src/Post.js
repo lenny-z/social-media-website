@@ -1,12 +1,9 @@
 import { useState } from 'react';
 
-export default function Post({text}) {
-	// const [text, setText] = useState('');
-
+export default function Post({post}) {
 	return (
 		<div className='post'>
-			{/* <p>{text}</p> */}
-			{text}
+			{post}
 		</div>
 	);
 }
