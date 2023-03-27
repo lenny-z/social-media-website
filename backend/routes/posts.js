@@ -25,12 +25,11 @@ router.post('/', authorize, async (req, res) => {
 });
 
 router.get('/profile', async(req, res) => {
-	console.log('GET to /posts/profile');
+	console.log('GET to /posts/profile:\n');
 
 	try{
 		const dbRes = await queries.getProfilePosts(req.session.userID);
-		// console.log(dbRes);
-		res.status(200).json(dbRes.rows); // 200 OK
+		res.status(200).send(dbRes.rows); // 200 OK
 	}catch(err){
 		console.error(err);
 		res.sendStatus(500);
