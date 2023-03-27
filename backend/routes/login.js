@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
 
 	try {
 		const userID = await queries.getUserID(req.body.username);
-		console.log(`userID: ${userID}`);
+		console.log(`\tuserID: ${userID}`);
 
 		if (userID) {
 			const saltedPasswordHash = await queries.getSaltedPasswordHash(userID);
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 						res.sendStatus(500); // 500 Internal Server Error
 					} else {
 						req.session.userID = userID;
-						console.log(`req.session.userID: ${req.session.userID}`);
+						console.log(`\treq.session.userID: ${req.session.userID}\n`);
 
 						req.session.save((err) => {
 							if (err) {

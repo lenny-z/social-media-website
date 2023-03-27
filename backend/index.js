@@ -2,7 +2,6 @@ require('dotenv').config(); // State this as early as possible to read .env file
 const cors = require('cors');
 const express = require('express');
 const sessions = require('./sessions.js');
-// const queries = require('./queries.js');
 
 const app = express();
 

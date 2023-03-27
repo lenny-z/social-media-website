@@ -22,7 +22,7 @@ async function testConnect() {
 	} catch (err) {
 		console.error(err.stack);
 	}
-};
+}
 
 testConnect();
 
@@ -37,7 +37,7 @@ exports.getUserID = async (email) => {
 
 	try {
 		const res = await pool.query(query, params);
-		console.log(`res: ${util.prettyJSON(res)}`);
+		// console.log(`res: ${util.prettyJSON(res)}`);
 
 		if (res.rowCount === 0) {
 			return null;
@@ -48,7 +48,7 @@ exports.getUserID = async (email) => {
 		console.error(err.stack);
 		return null;
 	}
-}
+};
 
 // Don't log passwords
 
@@ -60,11 +60,18 @@ exports.getSaltedPasswordHash = async (userID) => {
 
 	try {
 		const res = await pool.query(query, params);
-		return res.rows[0][SALTED_PASSWORD_HASH_COLUMN];
+
+		if (res.rowCount === 1) {
+			return res.rows[0][SALTED_PASSWORD_HASH_COLUMN];
+		} else {
+			return null;
+		}
 	} catch (err) {
-		return null;
+		// return null;
+		console.error(err);
+		throw err;
 	}
-}
+};
 
 exports.registerUser = async (email, saltedPasswordHash) => {
 	const client = await pool.connect();
@@ -88,7 +95,7 @@ exports.registerUser = async (email, saltedPasswordHash) => {
 	} finally {
 		client.release();
 	}
-}
+};
 
 exports.post = async (userID, post) => {
 	const query = `INSERT INTO ${POSTS_TABLE}(${USER_ID_COLUMN}, ${POST_COLUMN}) VALUES($1, $2);`;
@@ -97,6 +104,21 @@ exports.post = async (userID, post) => {
 	try {
 		await pool.query(query, params);
 	} catch (err) {
+		throw err;
+	}
+};
+
+exports.getProfilePosts = async (userID) => {
+	const query = `SELECT ${ID_COLUMN}, ${POST_COLUMN} FROM
+	${POSTS_TABLE} WHERE ${USER_ID_COLUMN} = $1;`;
+
+	const params = [userID];
+
+	try {
+		const res = await pool.query(query, params);
+		return res;
+	} catch (err) {
+		console.error(err);
 		throw err;
 	}
 }

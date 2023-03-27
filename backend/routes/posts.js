@@ -24,4 +24,17 @@ router.post('/', authorize, async (req, res) => {
 	}
 });
 
+router.get('/profile', async(req, res) => {
+	console.log('GET to /posts/profile');
+
+	try{
+		const dbRes = await queries.getProfilePosts(req.session.userID);
+		// console.log(dbRes);
+		res.status(200).json(dbRes.rows); // 200 OK
+	}catch(err){
+		console.error(err);
+		res.sendStatus(500);
+	}
+});
+
 module.exports = router;

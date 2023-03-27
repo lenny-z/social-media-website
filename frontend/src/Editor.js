@@ -14,8 +14,9 @@ export default function Editor() {
 		};
 
 		try {
-			const res = await axios.post(process.env.REACT_APP_POST, post, { withCredentials: true });
+			const res = await axios.post(process.env.REACT_APP_POSTS, post, { withCredentials: true });
 		} catch (err) {
+			console.log(err);
 			if (err.response) {
 				if (err.response.status === 401) {
 					navigate('/');
