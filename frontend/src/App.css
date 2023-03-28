@@ -1,33 +1,33 @@
 /* Minimum accessible font size guideline: 16px */
 
 :root {
-    --padding: 8px;
-    --small-font-size: 16px;
-    --medium-font-size: 24px;
-    --large-font-size: 36px;
-    --id-password-width: 200px;
-    --feed-width: 600px;
-    --post-input-height: 100px;
+	--padding: 8px;
+	--small-font-size: 16px;
+	--medium-font-size: 24px;
+	--large-font-size: 36px;
+	--id-password-width: 200px;
+	--feed-width: 600px;
+	--post-input-height: 100px;
 }
 
 * {
-    margin: 0px;
-    padding: 0px;
-    font-size: var(--small-font-size);
-    font-family: Arial;
+	margin: 0px;
+	padding: 0px;
+	font-size: var(--small-font-size);
+	font-family: Arial;
 }
 
 header {
-    padding: var(--padding);
-    text-align: center;
-    font-size: var(--large-font-size);
+	padding: var(--padding);
+	text-align: center;
+	font-size: var(--large-font-size);
 }
 
 /* Login.js, Register.js */
 
-#login-form{
-    margin: auto;
-    width: var(--id-password-width);
+#login-form {
+	margin: auto;
+	width: var(--id-password-width);
 }
 
 label[for='username'],
@@ -41,7 +41,8 @@ label[for='password'] {
 #password-input {
 	margin-top: var(--padding);
 	margin-bottom: var(--padding);
-	box-sizing: border-box; /* Prevent extension past parent */
+	box-sizing: border-box;
+	/* Prevent extension past parent */
 	width: 100%;
 	padding: var(--padding);
 }
@@ -63,34 +64,34 @@ a[href='/register'] {
 
 /* Editor.js */
 
-#post-form{
-    margin: auto;
-    width: var(--feed-width);
+#post-form {
+	margin: auto;
+	width: var(--feed-width);
 }
 
 
-#post-input{
-    margin-top: var(--padding);
+#post-input {
+	margin-top: var(--padding);
 	margin-bottom: var(--padding);
-    box-sizing: border-box;
-    width: 100%;
-    height: var(--post-input-height);
-    padding: var(--padding);
+	box-sizing: border-box;
+	width: 100%;
+	height: var(--post-input-height);
+	padding: var(--padding);
 }
 
 
-input[value='Post']{
-    display: block;
-    margin-top: var(--padding);
-    margin-bottom: var(--padding);
-    margin-left: auto;
-    margin-right: 0;
-    padding: var(--padding);
+input[value='Post'] {
+	display: block;
+	margin-top: var(--padding);
+	margin-bottom: var(--padding);
+	margin-left: auto;
+	margin-right: 0;
+	padding: var(--padding);
 }
 
 /* Post.js */
 
-.post{
+.post {
 	margin: auto;
 	box-sizing: border-box;
 	padding: var(--padding);
@@ -98,9 +99,15 @@ input[value='Post']{
 	border: 1px solid;
 }
 
+/* PostsList.js */
+
+#posts-list {
+	padding-top: var(--padding);
+}
+
 /* Error.js */
 
 .error-message {
-    padding: var(--padding);
-    text-align: center;
+	padding: var(--padding);
+	text-align: center;
 }

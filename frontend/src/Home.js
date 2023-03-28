@@ -1,44 +1,34 @@
-// import { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import {useNavigate} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Editor from './Editor.js';
-// import Post from './Post.js';
 import PostsList from './PostsList.js';
 
 export default function Home() {
-	// const maxNumPosts = process.env.REACT_APP_INIT_MAX_NUM_POSTS;
-	// const [feed, setFeed] = useState([]);
+	const [posts, setPosts] = useState([]);
 
-	// async function getFeed() {
-	// 	console.log('getFeed():');
+	async function getPosts() {
+		console.log('getPosts():');
 
-	// 	try {
-	// 		const res = await axios.get(process.env.REACT_APP_PROFILE_POSTS, { withCredentials: true });
-	// 		setFeed(res.data);
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// }
+		try {
+			const res = await axios.get(
+				process.env.REACT_APP_PROFILE_POSTS,
+				{ withCredentials: true }
+			);
 
-	// useEffect(() => {
-	// 	getFeed();
-	// }, []);
+			setPosts(res.data);
+		} catch (err) {
+			console.log(err);
+		}
+	}
 
-	// const renderFeed = feed.map(post =>
-	// 	<li key={post.id}>
-	// 		<Post post={post.post} />
-	// 	</li>
-	// );
-
-	// console.log(renderFeed);
+	useEffect(() => {
+		getPosts();
+	}, []);
 
 	return (
 		<>
 			<Editor />
-			{/* <ol>
-				{renderFeed}
-			</ol> */}
-			<PostsList />
+			<PostsList posts={posts} />
 		</>
 	);
 }
