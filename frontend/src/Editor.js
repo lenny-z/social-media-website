@@ -2,19 +2,23 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-export default function Editor() {
+export default function Editor({getPosts}) {
 	const [post, setPost] = useState('');
 	const navigate = useNavigate();
 
 	async function handleSubmit(event) {
 		event.preventDefault();
 
-		const post = {
+		const req = {
 			post: post
 		};
 
 		try {
-			const res = await axios.post(process.env.REACT_APP_POSTS, post, { withCredentials: true });
+			const res = await axios.post(process.env.REACT_APP_POSTS, req, { withCredentials: true });
+
+			if(res.status === 201){
+				getPosts();
+			}
 		} catch (err) {
 			console.log(err);
 			if (err.response) {

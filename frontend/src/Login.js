@@ -20,12 +20,12 @@ export default function Login() {
 			const res = await axios.post(process.env.REACT_APP_LOGIN, user, {withCredentials: true});
 			console.log(`\tres.data: ${res.data}`);
 
-			if (res.status === 200) {
+			if (res.status === 200) { // 200 OK
 				navigate('/home');
 			}
 		} catch (err) {
 			if (err.response) {
-				if (err.response.status === 401) {
+				if (err.response.status === 401) { // 401 Unauthorized
 					setUsername('');
 					setPassword('');
 				}

@@ -4,6 +4,7 @@ import Editor from './Editor.js';
 import PostsList from './PostsList.js';
 
 export default function Home() {
+	const maxNumPosts = process.env.REACT_APP_INIT_MAX_NUM_POSTS;
 	const [posts, setPosts] = useState([]);
 
 	async function getPosts() {
@@ -27,7 +28,7 @@ export default function Home() {
 
 	return (
 		<>
-			<Editor />
+			<Editor getPosts={getPosts} />
 			<PostsList posts={posts} />
 		</>
 	);
