@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
-export default function Post({post}) {
+export default function Post({ post, timePosted }) {
 	return (
 		<div className='post'>
+			{timePosted}
+			<br />
 			{post}
 		</div>
 	);

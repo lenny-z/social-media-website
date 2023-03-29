@@ -16,7 +16,10 @@ export default function Home() {
 				{ withCredentials: true }
 			);
 
-			setPosts(res.data);
+			if(res.status === 200){
+				console.log(`\tres.data: ${JSON.stringify(res.data)}`);
+				setPosts(res.data);
+			}
 		} catch (err) {
 			console.log(err);
 		}

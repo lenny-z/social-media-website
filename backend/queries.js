@@ -113,7 +113,7 @@ exports.post = async (userID, post, timePosted) => {
 };
 
 exports.getProfilePosts = async (userID) => {
-	const query = `SELECT ${ID_COLUMN}, ${POST_COLUMN} FROM
+	const query = `SELECT ${ID_COLUMN}, ${POST_COLUMN}, ${TIME_POSTED_COLUMN} FROM
 	${POSTS_TABLE} WHERE ${USER_ID_COLUMN} = $1;`;
 
 	const params = [userID];
