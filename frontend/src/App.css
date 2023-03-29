@@ -92,19 +92,26 @@ input[value='Post'] {
 
 /* Post.js */
 
+.post-li{
+	padding-top: var(--padding);
+	padding-bottom: var(--padding);
+}
+
 .post {
 	margin: auto;
 	box-sizing: border-box;
 	padding: var(--padding);
+	/* margin-top: var(--padding); */
+	/* margin-bottom: var(--padding); */
 	width: var(--feed-width);
 	border: 1px solid;
 }
 
 /* PostsList.js */
 
-#posts-list {
+/* #posts-list {
 	padding-top: var(--padding);
-}
+} */
 
 /* Error.js */
 

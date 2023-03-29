@@ -9,16 +9,17 @@ CREATE TABLE users (
 
 CREATE TABLE salted_password_hashes (
     id                      SERIAL PRIMARY KEY,
-    user_id                 INT REFERENCES users (id) ON DELETE CASCADE,
+    user_id                 INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     -- argon2id digest
     salted_password_hash    VARCHAR NOT NULL
 );
 
 CREATE TABLE posts (
     id      	SERIAL PRIMARY KEY,
-    user_id 	INT REFERENCES users (id) ON DELETE CASCADE,
+    user_id 	INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+	parent		INT REFERENCES posts (id) ON DELETE CASCADE,
     post    	VARCHAR(40000) NOT NULL,
-	time_posted	TIMESTAMPTZ
+	time_posted	TIMESTAMPTZ NOT NULL
 );
 
 REASSIGN OWNED BY social_network_backend TO postgres;

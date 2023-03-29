@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const queries = require('../queries.js');
+const db = require('../db-names.js');
 const argon2 = require('argon2');
+
+console.log(db);
 
 router.post('/', async (req, res) => {
 	console.log('POST to /register:');
