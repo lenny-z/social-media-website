@@ -4,14 +4,14 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id          SERIAL PRIMARY KEY,
-    email       VARCHAR(254) UNIQUE NOT NULL
+    email       VARCHAR(254) UNIQUE NOT NULL,
+	username	VARCHAR(32) UNIQUE NOT NULL
 );
 
 CREATE TABLE salted_password_hashes (
     id                      SERIAL PRIMARY KEY,
     user_id                 INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    -- argon2id digest
-    salted_password_hash    VARCHAR NOT NULL
+    salted_password_hash    VARCHAR NOT NULL -- argon2id digest
 );
 
 CREATE TABLE posts (
