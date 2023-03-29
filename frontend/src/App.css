@@ -25,7 +25,8 @@ header {
 
 /* Login.js, Register.js */
 
-#login-form {
+#login-form,
+#register-form {
 	margin: auto;
 	width: var(--id-password-width);
 }

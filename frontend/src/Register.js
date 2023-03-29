@@ -2,8 +2,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-// const util = require('./util.js');
-
 export default function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -33,17 +31,17 @@ export default function Register() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label htmlFor='username'>Username: </label>
+        <form id='register-form' onSubmit={handleSubmit}>
+            <label htmlFor='username-input'>Username: </label>
             <input
-                id='username'
+                id='username-input'
                 type='text'
                 value={username}
                 onChange={handleUsername}
             />
-            <label htmlFor='password'>Password: </label>
+            <label htmlFor='password-input'>Password: </label>
             <input
-                id='password'
+                id='password-input'
                 type='password'
                 value={password}
                 onChange={handlePassword}

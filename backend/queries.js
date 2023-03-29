@@ -8,6 +8,7 @@ const USER_ID_COLUMN = process.env.USER_ID_COLUMN;
 const EMAIL_COLUMN = process.env.EMAIL_COLUMN;
 const SALTED_PASSWORD_HASH_COLUMN = process.env.SALTED_PASSWORD_HASH_COLUMN;
 const POST_COLUMN = process.env.POST_COLUMN;
+const TIME_POSTED_COLUMN = process.env.TIME_POSTED_COLUMN;
 
 const pool = require('./pool.js');
 const util = require('./util.js');
@@ -67,7 +68,6 @@ exports.getSaltedPasswordHash = async (userID) => {
 			return null;
 		}
 	} catch (err) {
-		// return null;
 		console.error(err);
 		throw err;
 	}
@@ -83,8 +83,10 @@ exports.registerUser = async (email, saltedPasswordHash) => {
 		var params = [email];
 		await client.query(query, params);
 
-		query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}(${USER_ID_COLUMN}, ${SALTED_PASSWORD_HASH_COLUMN})
-		VALUES((SELECT ${ID_COLUMN} FROM ${USERS_TABLE} WHERE ${EMAIL_COLUMN} = $1), $2);`;
+		query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}(${USER_ID_COLUMN},
+			${SALTED_PASSWORD_HASH_COLUMN}) VALUES((SELECT ${ID_COLUMN} FROM ${USERS_TABLE}
+			WHERE ${EMAIL_COLUMN} = $1), $2);`;
+
 		params = [email, saltedPasswordHash];
 		await client.query(query, params);
 
@@ -97,9 +99,11 @@ exports.registerUser = async (email, saltedPasswordHash) => {
 	}
 };
 
-exports.post = async (userID, post) => {
-	const query = `INSERT INTO ${POSTS_TABLE}(${USER_ID_COLUMN}, ${POST_COLUMN}) VALUES($1, $2);`;
-	const params = [userID, post];
+exports.post = async (userID, post, timePosted) => {
+	const query = `INSERT INTO ${POSTS_TABLE}(${USER_ID_COLUMN}, ${POST_COLUMN},
+		${TIME_POSTED_COLUMN}) VALUES($1, $2, to_timestamp($3 / 1000.0));`;
+
+	const params = [userID, post, timePosted];
 
 	try {
 		await pool.query(query, params);

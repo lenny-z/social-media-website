@@ -42,10 +42,7 @@ export default function Login() {
 	}
 
 	return (
-		<form
-			id='login-form'
-			onSubmit={handleSubmit}
-		>
+		<form id='login-form' onSubmit={handleSubmit}>
 			<label htmlFor='username-input'>Username: </label>
 			<input
 				id='username-input'
