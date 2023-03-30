@@ -1,9 +1,14 @@
 const router = require('express').Router();
+const util = require('../util.js');
 const queries = require('../queries.js');
 
+const POST_COL = process.env.POST_COL;
+
 async function authorize(req, res, next) {
-	console.log('authorize(req, res, next):');
-	console.log(`req.session.userID: ${req.session.userID}`);
+	// console.log('authorize(req, res, next):');
+	// console.log(`req.session.userID: ${req.session.userID}`);
+	util.devLog('authorize(req, res, next):');
+	util.devLog(`\treq.session.userID: ${req.session.userID}`);
 
 	if (req.session.userID) {
 		next();
@@ -13,10 +18,10 @@ async function authorize(req, res, next) {
 }
 
 router.post('/', authorize, async (req, res) => {
-	console.log('POST to /posts');
+	console.log('POST to /posts:');
 
 	try{
-		await queries.post(req.session.userID, req.body.post, Date.now());
+		await queries.post(req.session.userID, req.body[POST_COL], Date.now());
 		res.sendStatus(201); // 201 Created
 	}catch(err){
 		console.error(err);
@@ -25,7 +30,7 @@ router.post('/', authorize, async (req, res) => {
 });
 
 router.get('/profile', async(req, res) => {
-	console.log('GET to /posts/profile:\n');
+	console.log('GET to /posts/profile:');
 
 	try{
 		const dbRes = await queries.getProfilePosts(req.session.userID);

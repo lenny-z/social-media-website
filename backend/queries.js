@@ -8,11 +8,12 @@ const USER_ID_COL = process.env.USER_ID_COLUMN;
 const EMAIL_COL = process.env.EMAIL_COL;
 const USERNAME_COL = process.env.USERNAME_COL;
 const SALTED_PASSWORD_HASH_COL = process.env.SALTED_PASSWORD_HASH_COLUMN;
-const POST_COL = process.env.POST_COLUMN;
+const POST_COL = process.env.POST_COL;
 const TIME_POSTED_COL = process.env.TIME_POSTED_COLUMN;
 
-const POOL = require('./pool.js');
-// const util = require('./util.js');
+const pool = require('./pool.js');
+const util = require('./util.js');
+
 const EMAIL_REGEX = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/);
 
 async function testConnect() {
@@ -20,8 +21,8 @@ async function testConnect() {
 	const params = ['DB test query successful'];
 
 	try {
-		const res = await POOL.query(query, params);
-		console.log(`${res.rows[0].message}\n`);
+		const res = await pool.query(query, params);
+		console.log(`${res.rows[0].message}`);
 	} catch (err) {
 		console.error(err.stack);
 	}
@@ -30,11 +31,12 @@ async function testConnect() {
 testConnect();
 
 exports.getUserID = async (identifier) => {
-	var identifierCol= '';
+	util.devLog(`getUserID:`)
+	var identifierCol = '';
 
-	if(EMAIL_REGEX.test(identifier)){
+	if (EMAIL_REGEX.test(identifier)) {
 		identifierCol = EMAIL_COL;
-	}else{
+	} else {
 		identifierCol = USERNAME_COL;
 	}
 
@@ -42,7 +44,7 @@ exports.getUserID = async (identifier) => {
 	const params = [identifier];
 
 	try {
-		const res = await POOL.query(query, params);
+		const res = await pool.query(query, params);
 
 		if (res.rowCount === 0) {
 			return null;
@@ -64,7 +66,7 @@ exports.getSaltedPasswordHash = async (userID) => {
 	const params = [userID];
 
 	try {
-		const res = await POOL.query(query, params);
+		const res = await pool.query(query, params);
 
 		if (res.rowCount === 1) {
 			return res.rows[0][SALTED_PASSWORD_HASH_COL];
@@ -78,9 +80,11 @@ exports.getSaltedPasswordHash = async (userID) => {
 };
 
 exports.registerUser = async (email, username, saltedPasswordHash) => {
-	const client = await POOL.connect();
+	// var client;
+	const client = await pool.connect();
 
 	try {
+		// client = await pool.connect();
 		await client.query('BEGIN;');
 
 		var query = `INSERT INTO ${USERS_TABLE}(${EMAIL_COL}, ${USERNAME_COL}) VALUES ($1, $2);`;
@@ -93,7 +97,6 @@ exports.registerUser = async (email, username, saltedPasswordHash) => {
 
 		params = [email, saltedPasswordHash];
 		await client.query(query, params);
-
 		await client.query('COMMIT;');
 	} catch (err) {
 		await client.query('ROLLBACK;');
@@ -110,7 +113,7 @@ exports.post = async (userID, post, timePosted) => {
 	const params = [userID, post, timePosted];
 
 	try {
-		await POOL.query(query, params);
+		await pool.query(query, params);
 	} catch (err) {
 		throw err;
 	}
@@ -123,7 +126,7 @@ exports.getProfilePosts = async (userID) => {
 	const params = [userID];
 
 	try {
-		const res = await POOL.query(query, params);
+		const res = await pool.query(query, params);
 		return res;
 	} catch (err) {
 		console.error(err);

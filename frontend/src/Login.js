@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
 export default function Login() {
-	const [username, setUsername] = useState('');
+	const [identifier, setIdentifier] = useState('');
 	const [password, setPassword] = useState('');
 	const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ export default function Login() {
 		console.log('handleSubmit(event):');
 
 		const user = {
-			username: username,
+			identifier: identifier,
 			password: password
 		};
 
@@ -24,17 +24,15 @@ export default function Login() {
 				navigate('/home');
 			}
 		} catch (err) {
-			if (err.response && err.response.status === 401) {
-				// if (err.response.status === 401) { // 401 Unauthorized
-				setUsername('');
+			if (err.response && err.response.status === 401) { // 401 Unauthorized
+				setIdentifier('');
 				setPassword('');
-				// }
 			}
 		}
 	}
 
-	function handleUsername(event) {
-		setUsername(event.target.value);
+	function handleIdentifier(event) {
+		setIdentifier(event.target.value);
 	}
 
 	function handlePassword(event) {
@@ -43,12 +41,12 @@ export default function Login() {
 
 	return (
 		<form id='login-form' onSubmit={handleSubmit}>
-			<label htmlFor='username-input'>Username: </label>
+			<label htmlFor='identifier-input'>Email or username: </label>
 			<input
-				id='username-input'
+				id='identifier-input'
 				type='text'
-				value={username}
-				onChange={handleUsername}
+				value={identifier}
+				onChange={handleIdentifier}
 			/>
 			<label htmlFor='password-input'>Password: </label>
 			<input

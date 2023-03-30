@@ -31,17 +31,19 @@ header {
 	width: var(--id-password-width);
 }
 
+label[for='identifier-input'],
+label[for='email-input'],
 label[for='username-input'],
-label[for='password-input'],
-label[for='email-input'] {
+label[for='password-input'] {
 	display: block;
 	padding-top: var(--padding);
 	padding-bottom: var(--padding);
 }
 
+#identifier-input,
+#email-input,
 #username-input,
-#password-input,
-#email-input {
+#password-input {
 	margin-top: var(--padding);
 	margin-bottom: var(--padding);
 	box-sizing: border-box;
@@ -94,7 +96,7 @@ input[value='Post'] {
 
 /* Post.js */
 
-.post-li{
+.post-li {
 	padding-top: var(--padding);
 	padding-bottom: var(--padding);
 }

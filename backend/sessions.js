@@ -28,7 +28,8 @@ const sessionOptions = {
 		httpOnly: true,
 		maxAge: 60 * 24 * 60 * 60 * 1000,
 		path: '/',
-		secure: false, // Set to true once HTTPS enabled
+		// secure: false, // Set to true once HTTPS enabled
+		secure: process.env.NODE_ENV === 'development'
 	}
 };
 

@@ -15,10 +15,6 @@ export default function Register() {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        // const user = {
-            // username: username,
-            // password: password
-        // };
 		const user = {};
 		user[EMAIL_COL] = email;
 		user[USERNAME_COL] = username;
@@ -32,8 +28,7 @@ export default function Register() {
 			}
 		}catch(err){
 			if(err.response && err.response.status === 500){
-				// if()
-				window.alert('foo');
+				window.alert('Sorry, please try again.');
 			}
 		}
     }
