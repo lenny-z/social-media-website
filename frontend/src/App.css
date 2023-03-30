@@ -31,15 +31,17 @@ header {
 	width: var(--id-password-width);
 }
 
-label[for='username'],
-label[for='password'] {
+label[for='username-input'],
+label[for='password-input'],
+label[for='email-input'] {
 	display: block;
 	padding-top: var(--padding);
 	padding-bottom: var(--padding);
 }
 
 #username-input,
-#password-input {
+#password-input,
+#email-input {
 	margin-top: var(--padding);
 	margin-bottom: var(--padding);
 	box-sizing: border-box;

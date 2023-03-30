@@ -24,11 +24,18 @@ export default function Register() {
 		user[USERNAME_COL] = username;
 		user['password'] = password;
 
-        const res = await axios.post(process.env.REACT_APP_REGISTER, user);
-
-        if (res.status === 201) {
-            navigate('/home');
-        }
+		try{
+			const res = await axios.post(process.env.REACT_APP_REGISTER, user);
+	
+			if (res.status === 201) {
+				navigate('/home');
+			}
+		}catch(err){
+			if(err.response && err.response.status === 500){
+				// if()
+				window.alert('foo');
+			}
+		}
     }
 
     function handleUsername(event) {
@@ -37,7 +44,7 @@ export default function Register() {
 
 	function handleEmail(event){
 		setEmail(event.target.value);
-		console.log(EMAIL_REGEX.test(email));
+		// console.log(EMAIL_REGEX.test(email));
 	}
 
     function handlePassword(event) {
@@ -46,13 +53,6 @@ export default function Register() {
 
     return (
         <form id='register-form' onSubmit={handleSubmit}>
-            <label htmlFor='username-input'>Username: </label>
-            <input
-                id='username-input'
-                type='text'
-                value={username}
-                onChange={handleUsername}
-            />
 			<label htmlFor='email-input'>Email: </label>
 			<input
 				id='email-input'
@@ -60,6 +60,13 @@ export default function Register() {
 				value={email}
 				onChange={handleEmail}
 			/>
+            <label htmlFor='username-input'>Username: </label>
+            <input
+                id='username-input'
+                type='text'
+                value={username}
+                onChange={handleUsername}
+            />
             <label htmlFor='password-input'>Password: </label>
             <input
                 id='password-input'
