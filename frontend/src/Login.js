@@ -17,7 +17,9 @@ export default function Login() {
 		};
 
 		try {
-			const res = await axios.post(process.env.REACT_APP_LOGIN, user, { withCredentials: true });
+			const res = await axios.post(process.env.REACT_APP_LOGIN, user,
+				{ withCredentials: true });
+
 			console.log(`\tres.data: ${res.data}`);
 
 			if (res.status === 200) { // 200 OK

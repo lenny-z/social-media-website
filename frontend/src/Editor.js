@@ -14,7 +14,8 @@ export default function Editor({getPosts}) {
 		};
 
 		try {
-			const res = await axios.post(process.env.REACT_APP_POSTS, req, { withCredentials: true });
+			const res = await axios.post(process.env.REACT_APP_POSTS, req,
+				{ withCredentials: true });
 
 			if(res.status === 201){
 				getPosts();

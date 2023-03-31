@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const queries = require('../queries.js');
+const util = require('../util.js');
 const argon2 = require('argon2');
 
 router.post('/', async (req, res) => {
@@ -7,6 +8,7 @@ router.post('/', async (req, res) => {
 
 	try {
 		const userID = await queries.getUserID(req.body.identifier);
+		util.devLog(`\tuserID: ${userID}`);
 
 		if (userID) {
 			const saltedPasswordHash = await queries.getSaltedPasswordHash(userID);
