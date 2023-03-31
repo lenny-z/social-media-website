@@ -21,7 +21,7 @@ export default function Register() {
 		user['password'] = password;
 
 		try {
-			const res = await axios.post(process.env.REACT_APP_REGISTER, user, { withCredential: true });
+			const res = await axios.post(process.env.REACT_APP_REGISTER, user, { withCredentials: true });
 
 			if (res.status === 201) {
 				navigate('/home');

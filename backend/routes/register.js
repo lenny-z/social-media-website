@@ -20,16 +20,16 @@ router.post('/', async (req, res) => {
 			await queries.registerUser(req.body[EMAIL_COL], req.body[USERNAME_COL],
 				saltedPasswordHash);
 
-			req.session.userID = await queries.getUserID(req.body[EMAIL_COL]);
-			util.log(`\treq.session.userID: ${req.session.userID}`);
+			// req.session.userID = await queries.getUserID(req.body[EMAIL_COL]);
+			// util.log(`\treq.session.userID: ${req.session.userID}`);
 
-			req.session.save((err) => {
-				if(err){
-					res.sendStatus(500); // 500 Internal Server Error
-				}else{
-					res.sendStatus(201);
-				}
-			});
+			// req.session.save((err) => {
+			// 	if(err){
+			// 		res.sendStatus(500); // 500 Internal Server Error
+			// 	}else{
+			// 		res.sendStatus(201);
+			// 	}
+			// });
 			// req.session.destroy(async (err) => {
 			// 	if (err) {
 			// 		res.sendStatus(500);
@@ -46,6 +46,28 @@ router.post('/', async (req, res) => {
 			// 	}
 			// });
 			// res.sendStatus(201); // 201 Created
+			const newUserID = await queries.getUserID(req.body[EMAIL_COL]);
+			util.log(`\newUserID: ${newUserID}`);
+
+			// req.session.regenerate(async (err) => {
+			req.session.regenerate((err) => {
+				if (err) {
+					res.sendStatus(500);
+				} else {
+					// req.session.userID = await queries.getUserID(req.body[EMAIL_COL]);
+					req.session.userID = newUserID;
+					util.log(`\treq.session.userID: ${req.session.userID}`);
+
+					req.session.save((err) => {
+						if (err) {
+							console.error(err);
+							res.sendStatus(500);
+						} else {
+							res.sendStatus(201);
+						}
+					})
+				}
+			});
 		} else {
 			res.sendStatus(409); // 409 Conflict
 		}
