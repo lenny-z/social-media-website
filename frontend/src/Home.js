@@ -16,7 +16,7 @@ export default function Home() {
 				{ withCredentials: true }
 			);
 
-			if(res.status === 200){
+			if (res.status === 200) {
 				console.log(`\tres.data: ${JSON.stringify(res.data)}`);
 				setPosts(res.data);
 			}
@@ -30,9 +30,12 @@ export default function Home() {
 	}, []);
 
 	return (
-		<>
-			<Editor getPosts={getPosts} />
-			<PostsList posts={posts} />
-		</>
+		<div id='app-container'>
+			<nav id='nav-panel'>foo</nav>
+			<div id='content-panel'>
+				<Editor getPosts={getPosts} />
+				<PostsList posts={posts} />
+			</div>
+		</div>
 	);
 }

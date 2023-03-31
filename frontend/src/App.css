@@ -6,7 +6,8 @@
 	--medium-font-size: 24px;
 	--large-font-size: 36px;
 	--id-password-width: 200px;
-	--feed-width: 600px;
+	--content-panel-width: 600px;
+	--nav-panel-width: 300px;
 	--post-input-height: 100px;
 }
 
@@ -67,11 +68,36 @@ a[href='/register'] {
 	text-align: center;
 }
 
+/* Home.js */
+
+#app-container{
+	/* width: 100%; */
+	/* display: inline-block; */
+	/* margin: auto; */
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: flex-start;
+	/* overflow: auto; */
+}
+
+#nav-panel {
+	/* float: left; */
+	width: var(--nav-panel-width);
+}
+
+#content-panel {
+	/* float: right; */
+	/* float: left; */
+	width: var(--content-panel-width);
+}
+
 /* Editor.js */
 
 #post-form {
 	margin: auto;
-	width: var(--feed-width);
+	width: var(--content-panel-width);
 }
 
 
@@ -105,19 +131,9 @@ input[value='Post'] {
 	margin: auto;
 	box-sizing: border-box;
 	padding: var(--padding);
-	/* margin-top: var(--padding); */
-	/* margin-bottom: var(--padding); */
-	width: var(--feed-width);
+	width: var(--content-panel-width);
 	border: 1px solid;
 }
-
-/* PostsList.js */
-
-/* #posts-list {
-	padding-top: var(--padding);
-} */
-
-/* Error.js */
 
 .error-message {
 	padding: var(--padding);
