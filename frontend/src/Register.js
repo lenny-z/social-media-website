@@ -8,46 +8,46 @@ const EMAIL_REGEX = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&
 
 export default function Register() {
 	const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const navigate = useNavigate();
 
-    async function handleSubmit(event) {
-        event.preventDefault();
+	async function handleSubmit(event) {
+		event.preventDefault();
 
 		const user = {};
 		user[EMAIL_COL] = email;
 		user[USERNAME_COL] = username;
 		user['password'] = password;
 
-		try{
-			const res = await axios.post(process.env.REACT_APP_REGISTER, user);
-	
+		try {
+			const res = await axios.post(process.env.REACT_APP_REGISTER, user, { withCredential: true });
+
 			if (res.status === 201) {
 				navigate('/home');
 			}
-		}catch(err){
-			if(err.response && err.response.status === 500){
+		} catch (err) {
+			if (err.response && err.response.status === 500) {
 				window.alert('Sorry, please try again.');
 			}
 		}
-    }
+	}
 
-    function handleUsername(event) {
-        setUsername(event.target.value);
-    }
+	function handleUsername(event) {
+		setUsername(event.target.value);
+	}
 
-	function handleEmail(event){
+	function handleEmail(event) {
 		setEmail(event.target.value);
 		// console.log(EMAIL_REGEX.test(email));
 	}
 
-    function handlePassword(event) {
-        setPassword(event.target.value);
-    }
+	function handlePassword(event) {
+		setPassword(event.target.value);
+	}
 
-    return (
-        <form id='register-form' onSubmit={handleSubmit}>
+	return (
+		<form id='register-form' onSubmit={handleSubmit}>
 			<label htmlFor='email-input'>Email: </label>
 			<input
 				id='email-input'
@@ -55,24 +55,24 @@ export default function Register() {
 				value={email}
 				onChange={handleEmail}
 			/>
-            <label htmlFor='username-input'>Username: </label>
-            <input
-                id='username-input'
-                type='text'
-                value={username}
-                onChange={handleUsername}
-            />
-            <label htmlFor='password-input'>Password: </label>
-            <input
-                id='password-input'
-                type='password'
-                value={password}
-                onChange={handlePassword}
-            />
-            <input
-                type='submit'
-                value='Register'
-            />
-        </form>
-    );
+			<label htmlFor='username-input'>Username: </label>
+			<input
+				id='username-input'
+				type='text'
+				value={username}
+				onChange={handleUsername}
+			/>
+			<label htmlFor='password-input'>Password: </label>
+			<input
+				id='password-input'
+				type='password'
+				value={password}
+				onChange={handlePassword}
+			/>
+			<input
+				type='submit'
+				value='Register'
+			/>
+		</form>
+	);
 }

@@ -8,14 +8,13 @@ exports.prettyJSON = (jsonObj) => {
 	}
 
 	return out + '\n';
-}
+};
 
-exports.devLog = (log) => {
-	if (process.env.NODE_ENV === 'development') {
+// exports.setIndent
+
+exports.log = (log) => {
+	// if (process.env.NODE_ENV === 'development') {
+	if (process.env.NODE_ENV === process.env.NODE_DEV_ENV) {
 		console.log(log);
 	}
 }
-
-// exports.indent = (string, numSpaces) => {
-// 	return string.replace(/^/gm, (' ').repeat(numSpaces));
-// }

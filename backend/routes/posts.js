@@ -1,14 +1,14 @@
 const router = require('express').Router();
-const util = require('../util.js');
 const queries = require('../queries.js');
+const util = require('../util.js');
+// const util = new Util();
 
 const POST_COL = process.env.POST_COL;
 
 async function authorize(req, res, next) {
-	// console.log('authorize(req, res, next):');
-	// console.log(`req.session.userID: ${req.session.userID}`);
-	util.devLog('authorize(req, res, next):');
-	util.devLog(`\treq.session.userID: ${req.session.userID}`);
+	util.log('authorize(req, res, next):');
+	// util.setIndent(4);
+	util.log(`\treq.session.userID: ${req.session.userID}`);
 
 	if (req.session.userID) {
 		next();
@@ -29,8 +29,10 @@ router.post('/', authorize, async (req, res) => {
 	}
 });
 
-router.get('/profile', async(req, res) => {
-	console.log('GET to /posts/profile:');
+router.get('/profile', authorize, async(req, res) => {
+	// console.log('GET to /posts/profile:');
+	util.log(`GET to /posts/profile:`);
+	util.log(`\treq.session.userID: ${req.session.userID}`);
 
 	try{
 		const dbRes = await queries.getProfilePosts(req.session.userID);

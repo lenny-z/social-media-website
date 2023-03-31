@@ -1,5 +1,4 @@
 import Post from './Post.js';
-// import db from './db.js';
 
 const POST_COL = process.env.REACT_APP_POST_COL;
 const ID_COL = process.env.REACT_APP_ID_COL;

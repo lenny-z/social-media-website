@@ -16,9 +16,6 @@ const redisStore = new RedisStore({
 	prefix: process.env.APP_NAME
 });
 
-// const cookieSecure = process.env.NODE_ENV === 'production';
-// console.log(cookieSecure);
-
 const sessionOptions = {
 	name: process.env.APP_NAME,
 	resave: false, // Enable only for session stores that don't support 'touch' command
@@ -31,14 +28,9 @@ const sessionOptions = {
 		httpOnly: true,
 		maxAge: 60 * 24 * 60 * 60 * 1000,
 		path: '/',
-		// secure: false, // Set to true once HTTPS enabled
-		secure: process.env.NODE_ENV === 'production'
-		// secure: cookieSecure
+		// secure: process.env.NODE_ENV === 'production'
+		secure: process.env.NODE_ENV === process.env.NODE_PROD_ENV
 	}
 };
 
-console.log(sessionOptions.cookie);
-
-// exports.manager = session(sessionOptions);
-// exports.store = redisStore;
 module.exports = session(sessionOptions);
