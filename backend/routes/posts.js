@@ -18,23 +18,23 @@ async function authorize(req, res, next) {
 router.post('/', authorize, async (req, res) => {
 	console.log('POST to /posts:');
 
-	try{
+	try {
 		await queries.post(req.session.userID, req.body[POST_COL], Date.now());
 		res.sendStatus(201); // 201 Created
-	}catch(err){
+	} catch (err) {
 		console.error(err);
 		res.sendStatus(500); // 500 Internal Server Error
 	}
 });
 
-router.get('/profile', authorize, async(req, res) => {
-	util.log(`GET to /posts/profile:`);
+router.get('/profile', authorize, async (req, res) => {
+	util.log('GET to /posts/profile:');
 	util.log(`\treq.session.userID: ${req.session.userID}`);
 
-	try{
+	try {
 		const dbRes = await queries.getProfilePosts(req.session.userID);
 		res.status(200).send(dbRes.rows); // 200 OK
-	}catch(err){
+	} catch (err) {
 		console.error(err);
 		res.sendStatus(500);
 	}

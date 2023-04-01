@@ -145,13 +145,11 @@ exports.getProfilePosts = async (userID) => {
 };
 
 exports.getIdentifiers = async () => {
-	// const query = `SELECT ${EMAIL_COL}, ${USERNAME_COL} FROM ${USERS_TABLE}`
-	const query = `SELECT ${EMAIL_COL} FROM ${USERS_TABLE} UNION
+	const query = `SELECT ${EMAIL_COL} AS identifier FROM ${USERS_TABLE} UNION
 		SELECT ${USERNAME_COL} FROM ${USERS_TABLE};`;
 
 	try {
 		const res = await pool.query(query);
-		util.log(res);
 		return res.rows;
 	} catch (err) {
 		console.error(err);
