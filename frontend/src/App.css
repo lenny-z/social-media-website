@@ -16,6 +16,7 @@
 	padding: 0px;
 	font-size: var(--small-font-size);
 	font-family: Arial;
+	list-style: none;
 }
 
 header {
@@ -70,26 +71,24 @@ a[href='/register'] {
 
 /* Home.js */
 
-#app-container{
-	/* width: 100%; */
-	/* display: inline-block; */
-	/* margin: auto; */
+#app-container {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: center;
 	align-items: flex-start;
-	/* overflow: auto; */
 }
 
 #nav-panel {
-	/* float: left; */
 	width: var(--nav-panel-width);
 }
 
+#nav-panel>ol>li>a {
+	padding: var(--padding);
+	font-size: var(--medium-font-size);
+}
+
 #content-panel {
-	/* float: right; */
-	/* float: left; */
 	width: var(--content-panel-width);
 }
 

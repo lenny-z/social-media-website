@@ -1,7 +1,7 @@
 require('dotenv').config(); // State this as early as possible to read .env files
 const cors = require('cors');
 const express = require('express');
-const sessions = require('./sessions.js');
+const session = require('./session.js');
 
 const app = express();
 
@@ -11,7 +11,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(sessions); // Use this route immediately after express.json() route
+app.use(session.manager); // Use this route immediately after express.json() route
 
 const loginRouter = require('./routes/login.js');
 const registerRouter = require('./routes/register.js');
