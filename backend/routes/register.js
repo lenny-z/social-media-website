@@ -2,6 +2,7 @@ const router = require('express').Router();
 const queries = require('../queries.js');
 const argon2 = require('argon2');
 const util = require('../util.js');
+const session = require('../session.js');
 
 const USERNAME_COL = process.env.USERNAME_COL;
 const EMAIL_COL = process.env.EMAIL_COL;
@@ -20,26 +21,32 @@ router.post('/', async (req, res) => {
 			await queries.registerUser(req.body[EMAIL_COL], req.body[USERNAME_COL],
 				saltedPasswordHash);
 
-			// const newUserID = await queries.getUserID(req.body[EMAIL_COL]);
-			// util.log(`\newUserID: ${newUserID}`);
+			const newUserID = await queries.getUserID(req.body[EMAIL_COL]);
+			util.log(`\newUserID: ${newUserID}`);
 
-			req.session.regenerate(async (err) => {
-				if (err) {
-					res.sendStatus(500);
-				} else {
-					req.session.userID = await queries.getUserID(req.body[EMAIL_COL]);
-					util.log(`\treq.session.userID: ${req.session.userID}`);
+			// req.session.regenerate(async (err) => {
+			// 	if (err) {
+			// 		res.sendStatus(500);
+			// 	} else {
+			// 		req.session.userID = await queries.getUserID(req.body[EMAIL_COL]);
+			// 		util.log(`\treq.session.userID: ${req.session.userID}`);
 
-					req.session.save((err) => {
-						if (err) {
-							console.error(err);
-							res.sendStatus(500); // 500 Internal Server Error
-						} else {
-							res.sendStatus(201); // 201 Created
-						}
-					});
-				}
-			});
+			// 		req.session.save((err) => {
+			// 			if (err) {
+			// 				console.error(err);
+			// 				res.sendStatus(500); // 500 Internal Server Error
+			// 			} else {
+			// 				res.sendStatus(201); // 201 Created
+			// 			}
+			// 		});
+			// 	}
+			// });
+			if (await session.set(req, newUserID)) {
+				res.sendStatus(201); // 201 Created
+			} else {
+				res.sendStatus(500);
+			}
+
 		} else {
 			res.sendStatus(409); // 409 Conflict
 		}
