@@ -17,9 +17,6 @@ router.post('/', async (req, res) => {
 			const saltedPasswordHash = await queries.getSaltedPasswordHash(userID);
 
 			if (await argon2.verify(saltedPasswordHash, req.body.password)) {
-				// const result = await session.set(req, userID);
-				// util.log(result);
-				// if (result) {
 				if (await session.set(req, userID)) {
 					res.sendStatus(200); // 200 OK
 				} else {

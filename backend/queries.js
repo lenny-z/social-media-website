@@ -13,9 +13,8 @@ const TIME_POSTED_COL = process.env.TIME_POSTED_COLUMN;
 
 const pool = require('./pool.js');
 const util = require('./util.js');
-// const util = new Util();
 
-const EMAIL_REGEX = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/);
+const emailRegex = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/);
 
 async function testConnect() {
 	const query = 'SELECT $1::text as message;';
@@ -35,13 +34,15 @@ exports.getUserID = async (identifier) => {
 	util.log(`getUserID:`);
 	var identifierCol = '';
 
-	if (EMAIL_REGEX.test(identifier)) {
+	if (emailRegex.test(identifier)) {
 		identifierCol = EMAIL_COL;
 	} else {
 		identifierCol = USERNAME_COL;
 	}
 
-	const query = `SELECT ${ID_COL} FROM ${USERS_TABLE} WHERE ${identifierCol} = $1;`;
+	const query = `SELECT ${ID_COL} FROM ${USERS_TABLE} WHERE
+		${identifierCol} = $1;`;
+
 	const params = [identifier];
 
 	try {
@@ -61,8 +62,8 @@ exports.getUserID = async (identifier) => {
 // Don't log passwords
 
 exports.getSaltedPasswordHash = async (userID) => {
-	const query = `SELECT ${SALTED_PASSWORD_HASH_COL} FROM ${SALTED_PASSWORD_HASHES_TABLE}
-    WHERE ${USER_ID_COL} = $1;`;
+	const query = `SELECT ${SALTED_PASSWORD_HASH_COL} FROM
+		${SALTED_PASSWORD_HASHES_TABLE} WHERE ${USER_ID_COL} = $1;`;
 
 	const params = [userID];
 
@@ -81,14 +82,21 @@ exports.getSaltedPasswordHash = async (userID) => {
 };
 
 exports.registerUser = async (email, username, saltedPasswordHash) => {
-	// var client;
-	const client = await pool.connect();
+	var client;
 
 	try {
-		// client = await pool.connect();
+		client = await pool.connect();
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+
+	try {
 		await client.query('BEGIN;');
 
-		var query = `INSERT INTO ${USERS_TABLE}(${EMAIL_COL}, ${USERNAME_COL}) VALUES ($1, $2);`;
+		var query = `INSERT INTO ${USERS_TABLE}(${EMAIL_COL}, ${USERNAME_COL})
+			VALUES ($1, $2);`;
+
 		var params = [email, username];
 		await client.query(query, params);
 
@@ -101,6 +109,7 @@ exports.registerUser = async (email, username, saltedPasswordHash) => {
 		await client.query('COMMIT;');
 	} catch (err) {
 		await client.query('ROLLBACK;');
+		console.error(err);
 		throw err;
 	} finally {
 		client.release();
@@ -122,13 +131,28 @@ exports.post = async (userID, post, timePosted) => {
 
 exports.getProfilePosts = async (userID) => {
 	const query = `SELECT ${ID_COL}, ${POST_COL}, ${TIME_POSTED_COL} FROM
-	${POSTS_TABLE} WHERE ${USER_ID_COL} = $1;`;
+		${POSTS_TABLE} WHERE ${USER_ID_COL} = $1;`;
 
 	const params = [userID];
 
 	try {
 		const res = await pool.query(query, params);
 		return res;
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+};
+
+exports.getIdentifiers = async () => {
+	// const query = `SELECT ${EMAIL_COL}, ${USERNAME_COL} FROM ${USERS_TABLE}`
+	const query = `SELECT ${EMAIL_COL} FROM ${USERS_TABLE} UNION
+		SELECT ${USERNAME_COL} FROM ${USERS_TABLE};`;
+
+	try {
+		const res = await pool.query(query);
+		util.log(res);
+		return res.rows;
 	} catch (err) {
 		console.error(err);
 		throw err;

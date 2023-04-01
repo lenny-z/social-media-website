@@ -1,13 +1,11 @@
 const router = require('express').Router();
 const queries = require('../queries.js');
 const util = require('../util.js');
-// const util = new Util();
 
 const POST_COL = process.env.POST_COL;
 
 async function authorize(req, res, next) {
 	util.log('authorize(req, res, next):');
-	// util.setIndent(4);
 	util.log(`\treq.session.userID: ${req.session.userID}`);
 
 	if (req.session.userID) {
@@ -30,7 +28,6 @@ router.post('/', authorize, async (req, res) => {
 });
 
 router.get('/profile', authorize, async(req, res) => {
-	// console.log('GET to /posts/profile:');
 	util.log(`GET to /posts/profile:`);
 	util.log(`\treq.session.userID: ${req.session.userID}`);
 

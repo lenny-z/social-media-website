@@ -24,29 +24,11 @@ router.post('/', async (req, res) => {
 			const newUserID = await queries.getUserID(req.body[EMAIL_COL]);
 			util.log(`\newUserID: ${newUserID}`);
 
-			// req.session.regenerate(async (err) => {
-			// 	if (err) {
-			// 		res.sendStatus(500);
-			// 	} else {
-			// 		req.session.userID = await queries.getUserID(req.body[EMAIL_COL]);
-			// 		util.log(`\treq.session.userID: ${req.session.userID}`);
-
-			// 		req.session.save((err) => {
-			// 			if (err) {
-			// 				console.error(err);
-			// 				res.sendStatus(500); // 500 Internal Server Error
-			// 			} else {
-			// 				res.sendStatus(201); // 201 Created
-			// 			}
-			// 		});
-			// 	}
-			// });
 			if (await session.set(req, newUserID)) {
 				res.sendStatus(201); // 201 Created
 			} else {
-				res.sendStatus(500);
+				res.sendStatus(500); // 500 Internal Server Error
 			}
-
 		} else {
 			res.sendStatus(409); // 409 Conflict
 		}

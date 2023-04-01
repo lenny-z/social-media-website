@@ -15,10 +15,12 @@ app.use(session.manager); // Use this route immediately after express.json() rou
 
 const loginRouter = require('./routes/login.js');
 const registerRouter = require('./routes/register.js');
+const searchRouter = require('./routes/search.js');
 const postsRouter = require('./routes/posts.js');
 
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
+app.use('/search', searchRouter);
 app.use('/posts', postsRouter);
 
 const PORT = process.env.PORT;
