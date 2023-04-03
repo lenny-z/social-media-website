@@ -6,6 +6,7 @@ import Error from './Error.js';
 import Login from './Login.js';
 import Register from './Register.js';
 import Home from './Home.js';
+import Search from './Search.js';
 
 const router = createBrowserRouter([
     {
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
             {
                 path: '/home',
                 element: <Home />
-            }
+            },
+			{
+				path: '/search',
+				element: <Search />
+			}
         ]
     }
 ]);
