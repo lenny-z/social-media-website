@@ -4,7 +4,6 @@ const argon2 = require('argon2');
 
 const util = require('../util.js');
 const session = require('../session.js');
-// const util = new Util();
 
 router.post('/', async (req, res) => {
 	console.log('POST to /login:');

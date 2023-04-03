@@ -149,13 +149,11 @@ input[value='Post'] {
 }
 
 #search-input {
-	/* width: 100%; */
 	flex-grow: 1;
 	padding: var(--padding);
 }
 
 input[value='Search'] {
 	flex-grow: 0;
-	/* display: inline; */
 	padding: var(--padding);
 }

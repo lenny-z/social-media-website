@@ -12,7 +12,7 @@ export default function PostsList({posts}) {
 	);
 
 	return (
-		<ol id="posts-list">
+		<ol id='posts-list'>
 			{renderPosts}
 		</ol>
 	);

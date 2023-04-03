@@ -145,8 +145,12 @@ exports.getProfilePosts = async (userID) => {
 };
 
 exports.getIdentifiers = async () => {
-	const query = `SELECT ${EMAIL_COL} AS identifier FROM ${USERS_TABLE} UNION
-		SELECT ${USERNAME_COL} FROM ${USERS_TABLE};`;
+	// const query = `SELECT ${EMAIL_COL} AS identifier FROM ${USERS_TABLE} UNION
+	// 	SELECT ${USERNAME_COL} FROM ${USERS_TABLE};`;
+
+	// Protect email search; for now just return usernames
+
+	const query = `SELECT ${ID_COL}, ${USERNAME_COL} FROM ${USERS_TABLE};`;
 
 	try {
 		const res = await pool.query(query);
