@@ -2,13 +2,18 @@ import { useState } from 'react';
 import axios from 'axios';
 import SearchResult from './SearchResult.js';
 
-const ID_COL = process.env.ID_COL;
-const USERNAME_COL = process.env.USERNAME_COL;
+const ID_COL = process.env.REACT_APP_ID_COL;
+const USERNAME_COL = process.env.REACT_APP_USERNAME_COL;
 
 export default function Search() {
 	const [terms, setTerms] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
-	// var renderResults;
+	// var renderResults = [];
+	const renderResults = searchResults.map(searchResult =>
+		<li key={searchResult[ID_COL]}>
+			<SearchResult username={searchResult[USERNAME_COL]} />
+		</li>
+	);
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -23,15 +28,16 @@ export default function Search() {
 				{ withCredentials: true });
 
 			if (res.status === 200) {
-				console.log(`\tres.data: ${JSON.stringify(res.data)}`);
+				// console.log(`\tres.data: ${JSON.stringify(res.data)}`);
 				setSearchResults(res.data);
+				// console.log(searchResults);
 
-				// renderResults = searchResults.map(searchResult =>
+				// this.renderResults = searchResults.map(searchResult =>
 				// 	<li key={searchResult[ID_COL]}>
 				// 		<SearchResult username={searchResult[USERNAME_COL]} />
 				// 	</li>
 				// );
-				// console.log(searchResults);
+				// console.log(this.renderResults);
 			}
 		} catch (err) {
 			if (err.response) {
@@ -44,11 +50,6 @@ export default function Search() {
 		setTerms(event.target.value);
 	}
 
-	const renderResults = searchResults.map(searchResult =>
-		<li key={searchResult[ID_COL]}>
-			<SearchResult username={searchResult[USERNAME_COL]} />
-		</li>
-	);
 	// console.log(renderResults);
 
 	return (
