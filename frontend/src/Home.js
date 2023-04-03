@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import Editor from './Editor.js';
 import PostsList from './PostsList.js';
@@ -32,21 +32,9 @@ export default function Home() {
 	}, []);
 
 	return (
-		<div id='app-container'>
-			<nav id='nav-panel'>
-				<ol>
-					<li><Link to={'/home'}>Home</Link></li>
-					<li>Profile</li>
-					<li>Collections</li>
-					<li><Link to={'/search'}>Search</Link></li>
-					<li>Notifications</li>
-					<li>Messages</li>
-				</ol>
-			</nav>
-			<div id='content-panel'>
-				<Editor getPosts={getPosts} />
-				<PostsList posts={posts} />
-			</div>
-		</div>
+		<>
+			<Editor getPosts={getPosts} />
+			<PostsList posts={posts} />
+		</>
 	);
 }
