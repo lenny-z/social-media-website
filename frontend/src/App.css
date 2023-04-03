@@ -139,3 +139,23 @@ input[value='Post'] {
 	padding: var(--padding);
 	text-align: center;
 }
+
+/* Search.js */
+
+#search-form{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+
+#search-input {
+	/* width: 100%; */
+	flex-grow: 1;
+	padding: var(--padding);
+}
+
+input[value='Search'] {
+	flex-grow: 0;
+	/* display: inline; */
+	padding: var(--padding);
+}

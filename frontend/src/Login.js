@@ -9,7 +9,7 @@ export default function Login() {
 
 	async function handleSubmit(event) {
 		event.preventDefault();
-		console.log('handleSubmit(event):');
+		console.log('Login.handleSubmit:');
 
 		const user = {
 			identifier: identifier,
