@@ -35,10 +35,10 @@ export default function Home() {
 		<div id='app-container'>
 			<nav id='nav-panel'>
 				<ol>
-					<li><Link to={'home'}>Home</Link></li>
+					<li><Link to={'/home'}>Home</Link></li>
 					<li>Profile</li>
 					<li>Collections</li>
-					<li>Search</li>
+					<li><Link to={'/search'}>Search</Link></li>
 					<li>Notifications</li>
 					<li>Messages</li>
 				</ol>
