@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import './css/App.css';
 
-export default class App extends React.Component {
-	render() {
+// export default class App extends React.Component {
+	export default function App(){
+	// render() {
 		return (
 			<>
 				<Header />
@@ -26,5 +27,5 @@ export default class App extends React.Component {
 				</div>
 			</>
 		);
-	}
+	// }
 }

@@ -13,11 +13,13 @@ app.use(cors({
 app.use(express.json());
 app.use(session.manager); // Use this route immediately after express.json() route
 
+const rootRouter = require('./routes/auth.js');
 const loginRouter = require('./routes/login.js');
 const registerRouter = require('./routes/register.js');
 const searchRouter = require('./routes/search.js');
 const postsRouter = require('./routes/posts.js');
 
+app.use('/', rootRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/search', searchRouter);

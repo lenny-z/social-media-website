@@ -31,7 +31,7 @@ async function testConnect() {
 testConnect();
 
 exports.getUserID = async (identifier) => {
-	util.log(`getUserID:`);
+	util.log('getUserID:');
 	var identifierCol = '';
 
 	if (emailRegex.test(identifier)) {
@@ -52,6 +52,28 @@ exports.getUserID = async (identifier) => {
 			return null;
 		} else {
 			return res.rows[0][ID_COL];
+		}
+	} catch (err) {
+		console.error(err.stack);
+		return null;
+	}
+};
+
+exports.getUsername = async (id) => {
+	util.log('getUsername:');
+
+	const query = `SELECT ${USERNAME_COL} FROM ${USERS_TABLE} WHERE
+		${ID_COL} = $1;`;
+
+	const params = [id];
+
+	try {
+		const res = await pool.query(query, params);
+
+		if (res.rowCount === 0) {
+			return null;
+		} else {
+			return res.rows[0][USERNAME_COL];
 		}
 	} catch (err) {
 		console.error(err.stack);
