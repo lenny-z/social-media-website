@@ -27,7 +27,7 @@ header {
 
 /* Login.js, Register.js */
 
-#login-form,
+/* #login-form,
 #register-form {
 	margin: auto;
 	width: var(--id-password-width);
@@ -50,7 +50,7 @@ label[for='password-input'] {
 	margin-bottom: var(--padding);
 	box-sizing: border-box;
 	/* Prevent extension past parent */
-	width: 100%;
+	/* width: 100%;
 	padding: var(--padding);
 }
 
@@ -67,7 +67,7 @@ a[href='/register'] {
 	display: block;
 	padding: var(--padding);
 	text-align: center;
-}
+} */
 
 /* Home.js */
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import './css/Login.css';
 
 export default function Login() {
 	const [identifier, setIdentifier] = useState('');
@@ -61,7 +62,7 @@ export default function Login() {
 				type='submit'
 				value='Log In'
 			/>
-			<Link to={'register'}>Register</Link>
+			<Link to={'/register'}>Register</Link>
 		</form>
 	);
 }

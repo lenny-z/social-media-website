@@ -9,34 +9,39 @@ import Home from './Home.js';
 import Search from './Search.js';
 
 const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <App />,
-        errorElement: <Error />,
-        children: [
-            {
-                path: '/',
-                element: <Login />
-            },
-            {
-                path: '/register',
-                element: <Register />
-            },
-            {
-                path: '/home',
-                element: <Home />
-            },
+	{
+		path: '/login',
+		element: <Login />
+	},
+	{
+		path: '/',
+		element: <App />,
+		errorElement: <Error />,
+		children: [
+			// {
+			// 	path: '/',
+			// 	element: <Login />
+			// },
+			{
+				path: '/register',
+				element: <Register />
+			},
+			{
+				path: '/home',
+				element: <Home />
+			},
 			{
 				path: '/search',
 				element: <Search />
 			}
-        ]
-    }
+		]
+	}
 ]);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-        <RouterProvider router={router} />
-    </React.StrictMode>
+	<React.StrictMode>
+		<RouterProvider router={router} />
+	</React.StrictMode>
 );

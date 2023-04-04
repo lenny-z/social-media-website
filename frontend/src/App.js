@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header.js';
 import { Link } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
-import './App.css';
+import './css/App.css';
 
 export default class App extends React.Component {
 	render() {
