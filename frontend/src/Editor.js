@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-export default function Editor({getPosts}) {
+export default function Editor({ getPosts }) {
 	const [post, setPost] = useState('');
 	const navigate = useNavigate();
 
@@ -17,15 +17,13 @@ export default function Editor({getPosts}) {
 			const res = await axios.post(process.env.REACT_APP_POSTS, req,
 				{ withCredentials: true });
 
-			if(res.status === 201){
+			if (res.status === 201) {
 				getPosts();
 			}
 		} catch (err) {
 			console.log(err);
-			if (err.response) {
-				if (err.response.status === 401) {
-					navigate('/');
-				}
+			if (err.response && err.response.status === 401) {
+				navigate('/');
 			}
 		}
 	}

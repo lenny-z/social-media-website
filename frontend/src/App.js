@@ -1,31 +1,57 @@
-import React from 'react';
+// import React from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+// import { Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import Header from './Header.js';
-import { Link } from 'react-router-dom';
-import { Outlet } from 'react-router-dom';
 import './css/App.css';
 
-// export default class App extends React.Component {
-	export default function App(){
-	// render() {
-		return (
-			<>
-				<Header />
-				<div id='app-container'>
-					<nav id='nav-panel'>
-						<ol>
-							<li><Link to={'/home'}>Home</Link></li>
-							<li>Profile</li>
-							<li>Collections</li>
-							<li><Link to={'/search'}>Search</Link></li>
-							<li>Notifications</li>
-							<li>Messages</li>
-						</ol>
-					</nav>
-					<div id='content-panel'>
-						<Outlet />
-					</div>
+export default function App() {
+	const [isAuthorized, setAuthorized] = useState(false);
+	const navigate = useNavigate();
+
+	async function getAuthorized() {
+		console.log('isAuthorized:');
+
+		try {
+			const res = await axios.get(
+				process.env.REACT_APP_ROOT,
+				{ withCredentials: true }
+			);
+
+			if (res.status === 200) {
+				setAuthorized(true);
+			}
+		} catch (err) {
+			if (err.response && err.response.status === 401) {
+				// setAuthorized(false);
+				navigate('/login'); //implement a better flow later
+			}
+		}
+	}
+
+	useEffect(() => {
+		getAuthorized();
+	}, []);
+
+	return (
+		<>
+			<Header />
+			<div id='app-container'>
+				<nav id='nav-panel'>
+					<ol>
+						<li><Link to={'/home'}>Home</Link></li>
+						<li>Profile</li>
+						<li>Collections</li>
+						<li><Link to={'/search'}>Search</Link></li>
+						<li>Notifications</li>
+						<li>Messages</li>
+					</ol>
+				</nav>
+				<div id='content-panel'>
+					<Outlet />
 				</div>
-			</>
-		);
-	// }
+			</div>
+		</>
+	);
 }

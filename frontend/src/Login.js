@@ -24,7 +24,7 @@ export default function Login() {
 			console.log(`\tres.data: ${res.data}`);
 
 			if (res.status === 200) { // 200 OK
-				navigate('/home');
+				navigate('/');
 			}
 		} catch (err) {
 			if (err.response && err.response.status === 401) { // 401 Unauthorized
