@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const queries = require('../queries.js');
-const util = require('../util.js');
+const queries = require('../lib/queries.js');
+const util = require('../lib/util.js');
 const distance = require('fastest-levenshtein').distance;
 
 const MAX_NUM_RESULTS = process.env.USER_SEARCH_MAX_NUM_RESULTS;

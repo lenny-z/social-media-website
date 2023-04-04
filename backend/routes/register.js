@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const queries = require('../queries.js');
 const argon2 = require('argon2');
-const util = require('../util.js');
-const session = require('../session.js');
+const queries = require('../lib/queries.js');
+const util = require('../lib/util.js');
+const session = require('../lib/session.js');
 
 const USERNAME_COL = process.env.USERNAME_COL;
 const EMAIL_COL = process.env.EMAIL_COL;

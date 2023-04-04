@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const queries = require('../queries.js');
+const queries = require('../lib/queries.js');
 const argon2 = require('argon2');
 
-const util = require('../util.js');
-const session = require('../session.js');
+const util = require('../lib/util.js');
+const session = require('../lib/session.js');
 
 router.post('/', async (req, res) => {
 	console.log('POST to /login:');
