@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './css/Register.css';
 
 const EMAIL_COL = process.env.REACT_APP_EMAIL_COL;
 const USERNAME_COL = process.env.REACT_APP_USERNAME_COL;
@@ -39,7 +40,6 @@ export default function Register() {
 
 	function handleEmail(event) {
 		setEmail(event.target.value);
-		// console.log(EMAIL_REGEX.test(email));
 	}
 
 	function handlePassword(event) {
