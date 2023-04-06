@@ -18,12 +18,14 @@ const loginRouter = require('./routes/login.js');
 const registerRouter = require('./routes/register.js');
 const searchRouter = require('./routes/search.js');
 const postsRouter = require('./routes/posts.js');
+const logoutRouter = require('./routes/logout.js');
 
 app.use('/', rootRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/search', searchRouter);
 app.use('/posts', postsRouter);
+app.use('/logout', logoutRouter);
 
 const PORT = process.env.PORT;
 

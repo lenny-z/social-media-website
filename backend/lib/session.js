@@ -20,7 +20,7 @@ const redisStore = new RedisStore({
 const sessionOptions = {
 	name: process.env.APP_NAME,
 	resave: false, // Enable only for session stores that don't support 'touch' command
-	rolling: false, // 'Force the session identifier cookie to be set on every response' (express-session)
+	rolling: true, // 'Force the session identifier cookie to be set on every response' (express-session)
 	saveUninitialized: true,
 	secret: process.env.SESSION_SECRET,
 	store: redisStore,
