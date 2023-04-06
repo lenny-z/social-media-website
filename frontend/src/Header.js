@@ -1,17 +1,17 @@
-import React from 'react';
+import {useState} from 'react';
+import './css/Header.css';
 
-// export default class Header extends React.Component {
 export default function Header() {
-	// render() {
-		return (
-			<header>
-				{/* {process.env.REACT_APP_NAME} */}
-				<div id='nav-header'>
-					{process.env.REACT_APP_NAME}
-				</div>
-				<div id='content-header'>
-				</div>
-			</header>
-		);
-	// }
+	const [contentHeader, setContentHeader] = useState('test header');
+
+	return (
+		<header>
+			<div id='nav-header'>
+				{process.env.REACT_APP_NAME}
+			</div>
+			<div id='content-header'>
+				{contentHeader}
+			</div>
+		</header>
+	);
 }

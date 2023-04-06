@@ -1,0 +1,24 @@
+header {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: flex-start;
+	/* padding: var(--padding); */
+	/* text-align: center; */
+	/* font-size: var(--large-font-size); */
+}
+
+#nav-header {
+	width: var(--nav-panel-width);
+	box-sizing: border-box;
+	padding: var(--padding);
+	font-size: var(--large-font-size);
+}
+
+#content-header {
+	width: var(--content-panel-width);
+	box-sizing: border-box;
+	padding: var(--padding);
+	font-size: var(--large-font-size);
+}
