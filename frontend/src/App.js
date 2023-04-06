@@ -6,6 +6,7 @@ import './css/App.css';
 
 export default function App() {
 	const [isAuthorized, setAuthorized] = useState(false);
+	const [contentHeader, setContentHeader] = useState('content header');
 	const navigate = useNavigate();
 
 	async function getAuthorized() {
@@ -34,7 +35,7 @@ export default function App() {
 
 	return (
 		<>
-			<Header />
+			<Header contentHeader={contentHeader} />
 			<div id='app-container'>
 				<nav id='nav-panel'>
 					<ol>

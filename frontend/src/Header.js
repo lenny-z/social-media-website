@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import './css/Header.css';
 
-export default function Header() {
-	const [contentHeader, setContentHeader] = useState('test header');
+export default function Header({contentHeader}) {
+	// const [contentHeader, setContentHeader] = useState('test header');
 
 	return (
 		<header>
