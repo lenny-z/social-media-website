@@ -8,6 +8,7 @@ import Register from './Register.js';
 import Home from './Home.js';
 import Search from './Search.js';
 import Profile from './Profile.js';
+import Settings from './Settings.js';
 
 const router = createBrowserRouter([
 	{
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
 			{
 				path: '/:username',
 				element: <Profile />
+			},
+			{
+				path: '/settings',
+				element: <Settings />
 			}
 		]
 	}

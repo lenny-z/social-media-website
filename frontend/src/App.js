@@ -40,11 +40,11 @@ export default function App() {
 				<nav id='nav-panel'>
 					<ol>
 						<li><Link to={'/'}>Home</Link></li>
-						<li>Profile</li>
-						<li>Collections</li>
+						{isAuthorized && <li>Profile</li>}
+						{isAuthorized && <li>Collections</li>}
 						<li><Link to={'/search'}>Search</Link></li>
-						<li>Notifications</li>
-						<li>Messages</li>
+						{isAuthorized && <li>Notifications</li>}
+						{isAuthorized && <li>Messages</li>}
 						<li><Link to={'/settings'}>Settings</Link></li>
 					</ol>
 				</nav>
