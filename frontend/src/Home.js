@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
-
 import Editor from './Editor.js';
 import PostsList from './PostsList.js';
 
@@ -10,7 +8,7 @@ export default function Home() {
 	const [posts, setPosts] = useState([]);
 
 	async function getPosts() {
-		console.log('getPosts:');
+		console.log('Home.getPosts:');
 
 		try {
 			const res = await axios.get(

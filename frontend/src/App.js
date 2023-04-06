@@ -1,8 +1,6 @@
-// import React from 'react';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-// import { Link } from 'react-router-dom';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Header from './Header.js';
 import './css/App.css';
 
@@ -40,12 +38,13 @@ export default function App() {
 			<div id='app-container'>
 				<nav id='nav-panel'>
 					<ol>
-						<li><Link to={'/home'}>Home</Link></li>
+						<li><Link to={'/'}>Home</Link></li>
 						<li>Profile</li>
 						<li>Collections</li>
 						<li><Link to={'/search'}>Search</Link></li>
 						<li>Notifications</li>
 						<li>Messages</li>
+						<li><Link to={'/settings'}>Settings</Link></li>
 					</ol>
 				</nav>
 				<div id='content-panel'>

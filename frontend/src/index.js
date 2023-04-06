@@ -9,17 +9,6 @@ import Home from './Home.js';
 import Search from './Search.js';
 import Profile from './Profile.js';
 
-// const profileRoute = <Route
-// 	path='/:username'
-
-// 	loader={({params}) => {
-// 		console.log(params.username);
-// 		return params.username;
-// 	}}
-
-// 	element={<Profile />}
-// />;
-
 const router = createBrowserRouter([
 	{
 		path: '/login',

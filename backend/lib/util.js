@@ -10,10 +10,7 @@ exports.prettyJSON = (jsonObj) => {
 	return out + '\n';
 };
 
-// exports.setIndent
-
 exports.log = (log) => {
-	// if (process.env.NODE_ENV === 'development') {
 	if (process.env.NODE_ENV === process.env.NODE_DEV_ENV) {
 		console.log(log);
 	}
