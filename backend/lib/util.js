@@ -10,8 +10,13 @@ exports.prettyJSON = (jsonObj) => {
 	return out + '\n';
 };
 
-exports.log = (log) => {
+function indent(str, numSpaces){
+	return str.replace(/^/gm, (' ').repeat(numSpaces));
+}
+
+exports.log = (log, numSpaces=0) => {
 	if (process.env.NODE_ENV === process.env.NODE_DEV_ENV) {
-		console.log(log);
+		const out = indent(log, numSpaces);
+		console.log(out);
 	}
 }
