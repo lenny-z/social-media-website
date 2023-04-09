@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Outlet, Link, useNavigate, useRouteLoaderData } from 'react-router-dom';
 import axios from 'axios';
-// import Header from './Header.js';
 import './css/App.css';
 
 export default function App() {
-	const data = useRouteLoaderData('root');
-	console.log('App.data: ' + data);
+	// const data = useRouteLoaderData('root');
+	// console.log('App.data: ' + data);
 	const [isAuthorized, setAuthorized] = useState(false);
-	const [contentHeader, setContentHeader] = useState('content header');
+	// const [contentHeader, setContentHeader] = useState('content header');
 	const navigate = useNavigate();
 
 	async function getAuthorized() {

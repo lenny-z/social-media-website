@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import ContentHeader from './ContentHeader.js';
 import SearchResult from './SearchResult.js';
 
 const ID_COL = process.env.REACT_APP_ID_COL;
@@ -43,6 +44,7 @@ export default function Search() {
 
 	return (
 		<>
+			<ContentHeader contentHeader='Search' />
 			<form id='search-form' onSubmit={handleSubmit}>
 				<input
 					id='search-input'

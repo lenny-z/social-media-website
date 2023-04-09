@@ -48,20 +48,20 @@ const router = createBrowserRouter([
 		errorElement: <Error />,
 		children: [
 			{
-				// path: '/',
+				path: '/',
 				element: <Home />
 			},
 			{
-				path: 'search',
+				path: '/search',
 				element: <Search />
 			},
 			{
-				path: ':username',
+				path: '/:username',
 				element: <Profile />,
 				loader: profileLoader
 			},
 			{
-				path: 'settings',
+				path: '/settings',
 				element: <Settings />
 			}
 		]
