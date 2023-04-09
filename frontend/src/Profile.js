@@ -1,36 +1,21 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { useParams, useLoaderData } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import ContentHeader from './ContentHeader.js';
 import PostsList from './PostsList.js';
 
 export default function Profile() {
-	// const { username } = useParams();
-	// const [posts, setPosts] = useState([]);
+	// console.log(useLoaderData());
+	const data = useLoaderData();
+	const contentHeader = data.contentHeader;
+	const posts = data.posts;
 
-	// async function getPosts() {
-	// 	console.log('Profile.getPosts:');
-
-	// 	try {
-	// 		const res = await axios.get(
-	// 			process.env.REACT_APP_PROFILE_POSTS,
-	// 			{ withCredentials: true }
-	// 		);
-
-	// 		if (res.status === 200) {
-	// 			setPosts(res.data);
-	// 		}
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// }
-	const posts = useLoaderData();
-	console.log(posts);
-
-	// useEffect(() => {
-	// 	// getPosts();
-	// }, []);
+	// const posts = useLoaderData().posts;
 
 	return (
-		<PostsList posts={posts} />
+		<>
+			<ContentHeader contentHeader={contentHeader} />
+			<PostsList posts={posts} />
+		</>
 	);
 }

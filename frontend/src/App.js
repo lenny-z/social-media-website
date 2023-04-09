@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { Outlet, Link, useNavigate, useRouteLoaderData } from 'react-router-dom';
 import axios from 'axios';
-import Header from './Header.js';
+// import Header from './Header.js';
 import './css/App.css';
 
 export default function App() {
+	const data = useRouteLoaderData('root');
+	console.log('App.data: ' + data);
 	const [isAuthorized, setAuthorized] = useState(false);
 	const [contentHeader, setContentHeader] = useState('content header');
 	const navigate = useNavigate();
@@ -34,24 +36,22 @@ export default function App() {
 	}, []);
 
 	return (
-		<>
-			<Header contentHeader={contentHeader} />
-			<div id='app-container'>
-				<nav id='nav-panel'>
-					<ol>
-						<li><Link to={'/'}>Home</Link></li>
-						{isAuthorized && <li>Profile</li>}
-						{isAuthorized && <li>Collections</li>}
-						<li><Link to={'/search'}>Search</Link></li>
-						{isAuthorized && <li>Notifications</li>}
-						{isAuthorized && <li>Messages</li>}
-						<li><Link to={'/settings'}>Settings</Link></li>
-					</ol>
-				</nav>
-				<div id='content-panel'>
-					<Outlet />
-				</div>
+		<div id='app-container'>
+			<nav id='nav-panel'>
+				<header id='nav-header'>Social Network</header>
+				<ol>
+					<li><Link to={'/'}>Home</Link></li>
+					{isAuthorized && <li>Profile</li>}
+					{isAuthorized && <li>Collections</li>}
+					<li><Link to={'/search'}>Search</Link></li>
+					{isAuthorized && <li>Notifications</li>}
+					{isAuthorized && <li>Messages</li>}
+					<li><Link to={'/settings'}>Settings</Link></li>
+				</ol>
+			</nav>
+			<div id='content-panel'>
+				<Outlet />
 			</div>
-		</>
+		</div>
 	);
 }

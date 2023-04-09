@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Editor from './Editor.js';
+import ContentHeader from './ContentHeader.js';
 import PostsList from './PostsList.js';
 
 export default function Home() {
@@ -32,6 +33,7 @@ export default function Home() {
 	return (
 		<>
 			{/* <Editor getPosts={getPosts} /> */}
+			<ContentHeader contentHeader={'home'} />
 			<PostsList posts={posts} />
 		</>
 	);

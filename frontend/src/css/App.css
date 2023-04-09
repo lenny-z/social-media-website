@@ -31,6 +31,12 @@
 	width: var(--nav-panel-width);
 }
 
+#nav-header,
+#content-header {
+	padding: var(--padding);
+	font-size: var(--large-font-size);
+}
+
 #nav-panel>ol>li>a {
 	display: block;
 	padding: var(--padding);
@@ -90,7 +96,7 @@ input[value='Post'] {
 
 /* Search.js */
 
-#search-form{
+#search-form {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
