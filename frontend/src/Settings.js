@@ -5,9 +5,9 @@ import './css/Settings.css';
 export default function Settings() {
 	const navigate = useNavigate();
 	
-	async function handleSubmit(event) {
-		event.preventDefault();
-		console.log('Settings.handleSubmit:');
+	async function handleLogout(event) {
+		// event.preventDefault();
+		console.log('Settings.handleLogout:');
 
 		try {
 			const res = await axios.post(process.env.REACT_APP_LOGOUT);
@@ -16,16 +16,17 @@ export default function Settings() {
 				navigate('/');
 			}
 		} catch (err) {
-			console.log('Implement Settings.handleSubmit error handling');
+			console.log('Implement Settings.handleLogout error handling');
 		}
 	}
 
 	return (
-		<form id='logout-form' onSubmit={handleSubmit}>
+		// <form id='logout-form' onSubmit={handleSubmit}>
 			<input
-				type='submit'
+				type='button'
 				value='Log Out'
+				onClick={handleLogout}
 			/>
-		</form>
+		// </form>
 	)
 }

@@ -3,6 +3,8 @@ import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import PostsList from './PostsList.js';
 
+const util = require('@lenny_zhou/util');
+
 export async function loader({ params }) {
 	console.log('Profile.loader:');
 	const data = {};
@@ -26,11 +28,22 @@ export async function loader({ params }) {
 
 export default function Profile() {
 	const data = useLoaderData();
+	util.log('test');
+
+	async function handleFollow(event){
+		console.log()
+	}
 
 	return (
 		<>
-			<ContentHeader contentHeader={data.contentHeader} />
-
+			<div id='profile-header'>
+				<ContentHeader contentHeader={data.contentHeader} />
+				<input
+					type='button'
+					value='Follow'
+					onClick={handleFollow}
+				/>
+			</div>
 			<PostsList posts={data.posts} />
 		</>
 	);

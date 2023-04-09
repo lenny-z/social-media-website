@@ -29,7 +29,8 @@ const sessionOptions = {
 		httpOnly: true,
 		maxAge: 60 * 24 * 60 * 60 * 1000,
 		path: '/',
-		secure: process.env.NODE_ENV === process.env.NODE_PROD_ENV
+		// secure: process.env.NODE_ENV === process.env.NODE_PROD_ENV
+		secure: process.env.NODE_ENV === 'production'
 	}
 };
 
