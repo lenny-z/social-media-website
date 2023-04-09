@@ -6,7 +6,8 @@ import PostsList from './PostsList.js';
 const util = require('@lenny_zhou/util');
 
 export async function loader({ params }) {
-	console.log('Profile.loader:');
+	// console.log('Profile.loader:');
+	util.log('Profile.loader:');
 	const data = {};
 	data.contentHeader = params.username;
 
@@ -28,7 +29,7 @@ export async function loader({ params }) {
 
 export default function Profile() {
 	const data = useLoaderData();
-	util.log('test');
+	// util.log('test');
 
 	async function handleFollow(event){
 		console.log()

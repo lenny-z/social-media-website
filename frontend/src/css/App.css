@@ -37,6 +37,22 @@
 	font-size: var(--large-font-size);
 }
 
+#profile-header{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+}
+
+#profile-header>#content-header{
+	flex-grow: 1
+}
+
+#profile-header>input[value='Follow']{
+	flex-grow: 0;
+	padding: var(--padding);
+}
+
 #nav-panel>ol>li>a {
 	display: block;
 	padding: var(--padding);
