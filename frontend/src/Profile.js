@@ -2,6 +2,7 @@ import { useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import PostsList from './PostsList.js';
+import './css/Profile.css';
 
 const util = require('@lenny_zhou/util');
 
