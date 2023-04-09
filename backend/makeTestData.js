@@ -27,30 +27,19 @@ const emailProviders = [
 	'gmail.com', 'yahoo.com', 'hotmail.com', 'verizon.com'
 ];
 
-const passwords = [];
-
-for (let i = 0; i < 20; i++) {
-	passwords.push(crypto.randomBytes(16).toString('hex'));
-}
-
 function getRandomElement(array) {
 	return array[Math.floor(Math.random() * array.length)];
 }
+
+const usernames = [];
 
 async function makeUsers() {
 	let numUsers = 0;
 	const query = 'INSERT INTO users(email, username) VALUES ($1, $2);';
 
 	while (numUsers < NUM_USERS) {
-		// const firstName = firstNames[Math.floor(Math.random()
-		// * firstNames.length)];
 		const firstName = getRandomElement(firstNames);
-
-		// const lastName = lastNames[Math.floor(Math.random()
-		// * lastNames.length)];
-
 		const lastName = getRandomElement(lastNames);
-
 		const username = `${firstName.toLowerCase()}${lastName.toLowerCase()}`;
 		const emailProvider = getRandomElement(emailProviders);
 		const email = `${username}@${emailProvider}`;
@@ -58,14 +47,27 @@ async function makeUsers() {
 
 		try {
 			await pool.query(query, params);
+			usernames.push(username);
 			numUsers++;
 		} catch (err) { }
+	}
+}
+
+async function makePasswords(){
+	const query = `INSERT INTO salted_password_hashes(user_id,
+		salted_password_hash) VALUES((SELECT id FROM users WHERE username
+		= $1), $2);`;
+
+	for(const username of usernames){
+		const params = [username, crypto.randomBytes(16).toString('hex')];
+		pool.query(query, params);
 	}
 }
 
 async function makeTestData() {
 	await clear();
 	await makeUsers();
+	await makePasswords();
 }
 
 makeTestData();
