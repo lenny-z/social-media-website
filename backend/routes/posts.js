@@ -27,14 +27,11 @@ router.post('/', authorize, async (req, res) => {
 	}
 });
 
-// router.get('/profile', authorize, async (req, res) => {
 router.get('/profile/:username', async (req, res) => {
 	util.log('GET to /posts/profile:');
 	util.log(`req.params: ${util.prettyJSON(req.params)}`, 8);
-	// util.log(`\treq.session.userID: ${req.session.userID}`);
 
 	try {
-		// const dbRes = await queries.getProfilePosts(req.session.userID);
 		const dbRes = await queries.getProfilePosts(req.params.username);
 		res.status(200).send(dbRes.rows); // 200 OK
 	} catch (err) {
