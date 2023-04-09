@@ -185,3 +185,7 @@ exports.getIdentifiers = async () => {
 		throw err;
 	}
 }
+
+exports.follow = async (followerID, followedUsername) => {
+	// const query = 
+}

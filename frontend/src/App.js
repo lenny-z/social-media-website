@@ -3,6 +3,8 @@ import { Outlet, Link, useNavigate, useRouteLoaderData } from 'react-router-dom'
 import axios from 'axios';
 import './css/App.css';
 
+const util = require('@lenny_zhou/util');
+
 export default function App() {
 	// const data = useRouteLoaderData('root');
 	// console.log('App.data: ' + data);
@@ -11,7 +13,7 @@ export default function App() {
 	const navigate = useNavigate();
 
 	async function getAuthorized() {
-		console.log('isAuthorized:');
+		util.log('App.isAuthorized:');
 
 		try {
 			const res = await axios.get(
