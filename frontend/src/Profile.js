@@ -31,6 +31,9 @@ export default function Profile() {
 	const data = useLoaderData();
 
 	async function handleFollow(event){
+		const res = await axios.post(
+			`${process.env.REACT_APP_FOLLOWS}`
+		)
 	}
 
 	return (

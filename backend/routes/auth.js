@@ -2,6 +2,23 @@ const router = require('express').Router();
 const util = require('../lib/util.js');
 const queries = require('../lib/queries.js');
 
+async function authorize(req, res, next) {
+	util.log('authorize(req, res, next):');
+	util.log(`\treq.session.userID: ${req.session.userID}`);
+
+	if (req.session.userID) {
+		next();
+	} else {
+		res.sendStatus(401); // 401 Unauthorized
+	}
+}
+
+exports.authorize = authorize;
+
+router.get('/authorize', authorize, async (req, res) => {
+	// res
+});
+
 router.get('/', async (req, res) => {
 	util.log('GET to /:');
 	util.log(`\treq.session.userID: ${req.session.userID}`);
@@ -20,4 +37,5 @@ router.get('/', async (req, res) => {
 	}
 });
 
-module.exports = router;
+// module.exports = router;
+exports.router = router;
