@@ -1,12 +1,12 @@
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ContentHeader from './ContentHeader.js';
 import './css/Settings.css';
 
 export default function Settings() {
 	const navigate = useNavigate();
-	
+
 	async function handleLogout(event) {
-		// event.preventDefault();
 		console.log('Settings.handleLogout:');
 
 		try {
@@ -21,12 +21,13 @@ export default function Settings() {
 	}
 
 	return (
-		// <form id='logout-form' onSubmit={handleSubmit}>
+		<>
+			<ContentHeader contentHeader='Settings' />
 			<input
 				type='button'
 				value='Log Out'
 				onClick={handleLogout}
 			/>
-		// </form>
+		</>
 	)
 }

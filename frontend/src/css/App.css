@@ -33,13 +33,15 @@
 
 #nav-header,
 #content-header {
-	padding: var(--padding);
+	padding-top: var(--padding);
+	padding-bottom: var(--padding);
 	font-size: var(--large-font-size);
 }
 
 #nav-panel>ol>li>a {
 	display: block;
-	padding: var(--padding);
+	padding-top: var(--padding);
+	padding-bottom: var(--padding);
 	font-size: var(--medium-font-size);
 }
 
