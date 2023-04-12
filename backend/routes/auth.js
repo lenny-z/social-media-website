@@ -4,7 +4,7 @@ const queries = require('../lib/queries.js');
 
 async function authorize(req, res, next) {
 	util.log('authorize(req, res, next):');
-	util.log(`\treq.session.userID: ${req.session.userID}`);
+	util.log(`req.session.userID: ${req.session.userID}`, 4);
 
 	if (req.session.userID) {
 		next();

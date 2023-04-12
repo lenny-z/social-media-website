@@ -1,15 +1,18 @@
 const USERS_TABLE = process.env.USERS_TABLE;
 const SALTED_PASSWORD_HASHES_TABLE = process.env.SALTED_PASSWORD_HASHES_TABLE;
 const POSTS_TABLE = process.env.POSTS_TABLE;
+const FOLLOWS_TABLE = process.env.FOLLOWS_TABLE;
 
-const ID_COL = process.env.ID_COLUMN;
-const USER_ID_COL = process.env.USER_ID_COLUMN;
+const ID_COL = process.env.ID_COL;
+const USER_ID_COL = process.env.USER_ID_COL;
 
 const EMAIL_COL = process.env.EMAIL_COL;
 const USERNAME_COL = process.env.USERNAME_COL;
-const SALTED_PASSWORD_HASH_COL = process.env.SALTED_PASSWORD_HASH_COLUMN;
+const SALTED_PASSWORD_HASH_COL = process.env.SALTED_PASSWORD_HASH_COL;
 const POST_COL = process.env.POST_COL;
-const TIME_POSTED_COL = process.env.TIME_POSTED_COLUMN;
+const TIME_POSTED_COL = process.env.TIME_POSTED_COL;
+const FOLLOWER_COL = process.env.FOLLOWER_COL;
+const FOLLOWED_COL = process.env.FOLLOWED_COL;
 
 const pool = require('./pool.js');
 const util = require('./util.js');
@@ -184,8 +187,20 @@ exports.getIdentifiers = async () => {
 		console.error(err);
 		throw err;
 	}
-}
+};
 
 exports.follow = async (followerID, followedUsername) => {
-	// const query = 
+	const query = `INSERT INTO ${FOLLOWS_TABLE}(${FOLLOWER_COL}, ${FOLLOWED_COL})
+		VALUES($1, (SELECT ${ID_COL} FROM ${USERS_TABLE} WHERE ${USERNAME_COL}
+		= $2));`;
+
+	const params = [followerID, followedUsername];
+
+	try {
+		const res = await pool.query(query, params);
+		return res.rows;
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
 }

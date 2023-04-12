@@ -45,3 +45,4 @@ GRANT USAGE, SELECT ON SEQUENCE salted_password_hashes_id_seq TO
 	social_network_backend;
 
 GRANT USAGE, SELECT ON SEQUENCE posts_id_seq TO social_network_backend;
+GRANT USAGE, SELECT ON SEQUENCE follows_id_seq TO social_network_backend;
