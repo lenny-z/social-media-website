@@ -26,7 +26,8 @@ CREATE TABLE posts (
 CREATE TABLE follows (
 	id			SERIAL PRIMARY KEY,
 	follower_id	INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-	followed_id	INT NOT NULL REFERENCES users (id) ON DELETE CASCADE
+	followed_id	INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+	UNIQUE (follower_id, followed_id)
 );
 
 REASSIGN OWNED BY social_network_backend TO postgres;

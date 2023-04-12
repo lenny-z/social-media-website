@@ -1,15 +1,16 @@
-#profile-header{
+#profile-header {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
 	align-items: center;
 }
 
-#profile-header>#content-header{
+#profile-header>#content-header {
 	flex-grow: 1
 }
 
-#profile-header>input[value='Follow']{
+/* #profile-header>input[value='Follow']{ */
+#follow-button {
 	flex-grow: 0;
 	padding: var(--padding);
 }

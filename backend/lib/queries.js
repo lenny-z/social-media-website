@@ -214,7 +214,7 @@ exports.follow = async (followerID, followedUsername) => {
 	}
 }
 
-exports.isFollowing = async (followerID, followedUsername) => {
+exports.getFollow = async (followerID, followedUsername) => {
 	const query = `SELECT EXISTS(SELECT 1 FROM ${FOLLOWS_TABLE}
 		WHERE ${FOLLOWER_ID_COL} = $1 AND ${FOLLOWED_ID_COL}
 		= (SELECT ${ID_COL} FROM ${USERS_TABLE} WHERE ${USERNAME_COL} = $2));`;

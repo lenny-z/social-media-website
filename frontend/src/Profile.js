@@ -2,6 +2,7 @@ import { useLoaderData, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import PostsList from './PostsList.js';
+import FollowButton from './FollowButton.js';
 import './css/Profile.css';
 
 const util = require('@lenny_zhou/util');
@@ -11,10 +12,8 @@ const USERNAME_COL = process.env.REACT_APP_USERNAME_COL;
 export async function loader({ params }) {
 	util.log('Profile.loader:');
 	const data = {};
-	// data.contentHeader = params.username;
 
 	try {
-		// const res = await axios.get(
 		var res = await axios.get(
 			`${process.env.REACT_APP_PROFILE_POSTS}/${params[USERNAME_COL]}`
 		);
@@ -27,14 +26,15 @@ export async function loader({ params }) {
 			`${process.env.REACT_APP_FOLLOWS}/${params[USERNAME_COL]}`,
 			{withCredentials: true}
 		);
-		util.log(util.prettyJSON(res.data));
 
-		// if(res.)
+		if(res.status === 200){
+			data.isFollowing = res.data.isFollowing;
+		}
 	} catch (err) {
 		console.log(err);
-		data.posts = null;
 	}
 
+	// util.log(util.prettyJSON(data), 4);
 	return data;
 }
 
@@ -42,10 +42,10 @@ export default function Profile() {
 	const params = useParams();
 	const data = useLoaderData();
 
-	async function handleFollow(event) {
+	async function handleFollow() {
 		const req = {};
 		req[USERNAME_COL] = params[USERNAME_COL];
-		util.log(`Profile.req: ${util.prettyJSON(req)}`, 4);
+		// util.log(`Profile.req: ${util.prettyJSON(req)}`, 4);
 
 		const res = await axios.post(
 			`${process.env.REACT_APP_FOLLOWS}`,
@@ -58,11 +58,13 @@ export default function Profile() {
 		<>
 			<div id='profile-header'>
 				<ContentHeader contentHeader={params[USERNAME_COL]} />
-				<input
+				{/* <input
 					type='button'
-					value='Follow'
+					id='follow-button'
+					value={data.isFollowing ? 'Following' : 'Follow'}
 					onClick={handleFollow}
-				/>
+				/> */}
+				<FollowButton onClick={handleFollow} />
 			</div>
 			<PostsList posts={data.posts} />
 		</>
