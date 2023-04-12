@@ -5,14 +5,14 @@ const FOLLOWS_TABLE = process.env.FOLLOWS_TABLE;
 
 const ID_COL = process.env.ID_COL;
 const USER_ID_COL = process.env.USER_ID_COL;
+const FOLLOWER_ID_COL = process.env.FOLLOWER_ID_COL;
+const FOLLOWED_ID_COL = process.env.FOLLOWED_ID_COL;
 
 const EMAIL_COL = process.env.EMAIL_COL;
 const USERNAME_COL = process.env.USERNAME_COL;
 const SALTED_PASSWORD_HASH_COL = process.env.SALTED_PASSWORD_HASH_COL;
 const POST_COL = process.env.POST_COL;
 const TIME_POSTED_COL = process.env.TIME_POSTED_COL;
-const FOLLOWER_COL = process.env.FOLLOWER_COL;
-const FOLLOWED_COL = process.env.FOLLOWED_COL;
 
 const pool = require('./pool.js');
 const util = require('./util.js');
@@ -84,6 +84,14 @@ exports.getUsername = async (id) => {
 	}
 };
 
+// function returnIfExists(res, col){
+// 	if(res.rowCount === 1){
+// 		return res.rows[0][col];
+// 	}else{
+// 		return null;
+// 	}
+// }
+
 // Don't log passwords
 
 exports.getSaltedPasswordHash = async (userID) => {
@@ -94,6 +102,7 @@ exports.getSaltedPasswordHash = async (userID) => {
 
 	try {
 		const res = await pool.query(query, params);
+		// return returnIfExists(res, SALTED_PASSWORD_HASH_COL);
 
 		if (res.rowCount === 1) {
 			return res.rows[0][SALTED_PASSWORD_HASH_COL];
@@ -190,7 +199,7 @@ exports.getIdentifiers = async () => {
 };
 
 exports.follow = async (followerID, followedUsername) => {
-	const query = `INSERT INTO ${FOLLOWS_TABLE}(${FOLLOWER_COL}, ${FOLLOWED_COL})
+	const query = `INSERT INTO ${FOLLOWS_TABLE}(${FOLLOWER_ID_COL}, ${FOLLOWED_ID_COL})
 		VALUES($1, (SELECT ${ID_COL} FROM ${USERS_TABLE} WHERE ${USERNAME_COL}
 		= $2));`;
 
@@ -204,3 +213,22 @@ exports.follow = async (followerID, followedUsername) => {
 		throw err;
 	}
 }
+
+exports.isFollowing = async (followerID, followedUsername) => {
+	const query = `SELECT EXISTS(SELECT 1 FROM ${FOLLOWS_TABLE}
+		WHERE ${FOLLOWER_ID_COL} = $1 AND ${FOLLOWED_ID_COL}
+		= (SELECT ${ID_COL} FROM ${USERS_TABLE} WHERE ${USERNAME_COL} = $2));`;
+
+	const params = [followerID, followedUsername];
+
+	try{
+		const res = await pool.query(query, params);
+		// util.log(res);
+		// return returnIfExists(res, ID_COL);
+		// return res.rows[0].exists === true;
+		return res.rows[0].exists;
+	}catch(err){
+		console.error(err);
+		throw err;
+	}
+};

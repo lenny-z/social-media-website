@@ -11,16 +11,25 @@ const USERNAME_COL = process.env.REACT_APP_USERNAME_COL;
 export async function loader({ params }) {
 	util.log('Profile.loader:');
 	const data = {};
-	data.contentHeader = params.username;
+	// data.contentHeader = params.username;
 
 	try {
-		const res = await axios.get(
-			`${process.env.REACT_APP_PROFILE_POSTS}/${params.username}`
+		// const res = await axios.get(
+		var res = await axios.get(
+			`${process.env.REACT_APP_PROFILE_POSTS}/${params[USERNAME_COL]}`
 		);
 
 		if (res.status === 200) {
 			data.posts = res.data;
 		}
+
+		res = await axios.get(
+			`${process.env.REACT_APP_FOLLOWS}/${params[USERNAME_COL]}`,
+			{withCredentials: true}
+		);
+		util.log(util.prettyJSON(res.data));
+
+		// if(res.)
 	} catch (err) {
 		console.log(err);
 		data.posts = null;
@@ -48,7 +57,6 @@ export default function Profile() {
 	return (
 		<>
 			<div id='profile-header'>
-				{/* <ContentHeader contentHeader={data.contentHeader} /> */}
 				<ContentHeader contentHeader={params[USERNAME_COL]} />
 				<input
 					type='button'
