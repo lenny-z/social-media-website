@@ -34,7 +34,6 @@ export async function loader({ params }) {
 		console.log(err);
 	}
 
-	// util.log(util.prettyJSON(data), 4);
 	return data;
 }
 
@@ -45,7 +44,6 @@ export default function Profile() {
 	async function handleFollow() {
 		const req = {};
 		req[USERNAME_COL] = params[USERNAME_COL];
-		// util.log(`Profile.req: ${util.prettyJSON(req)}`, 4);
 
 		const res = await axios.post(
 			`${process.env.REACT_APP_FOLLOWS}`,
@@ -58,12 +56,6 @@ export default function Profile() {
 		<>
 			<div id='profile-header'>
 				<ContentHeader contentHeader={params[USERNAME_COL]} />
-				{/* <input
-					type='button'
-					id='follow-button'
-					value={data.isFollowing ? 'Following' : 'Follow'}
-					onClick={handleFollow}
-				/> */}
 				<FollowButton onClick={handleFollow} />
 			</div>
 			<PostsList posts={data.posts} />
