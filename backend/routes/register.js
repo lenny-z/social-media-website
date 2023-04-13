@@ -4,8 +4,8 @@ const queries = require('../lib/queries.js');
 const util = require('../lib/util.js');
 const session = require('../lib/session.js');
 
-const USERNAME_COL = process.env.USERNAME_COL;
-const EMAIL_COL = process.env.EMAIL_COL;
+// const USERNAME_COL = process.env.USERNAME_COL;
+// const EMAIL_COL = process.env.EMAIL_COL;
 
 router.post('/', async (req, res) => {
 	console.log('POST to /register:');

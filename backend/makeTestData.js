@@ -1,5 +1,5 @@
 const NUM_USERS = 20;
-const NUM_POSTS = 40;
+const NUM_POSTS = 100;
 
 const pool = require('./lib/pool.js');
 const crypto = require('crypto');

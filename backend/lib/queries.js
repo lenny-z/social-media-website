@@ -1,18 +1,18 @@
-const USERS_TABLE = process.env.USERS_TABLE;
-const SALTED_PASSWORD_HASHES_TABLE = process.env.SALTED_PASSWORD_HASHES_TABLE;
-const POSTS_TABLE = process.env.POSTS_TABLE;
-const FOLLOWS_TABLE = process.env.FOLLOWS_TABLE;
+// const USERS_TABLE = process.env.USERS_TABLE;
+// const SALTED_PASSWORD_HASHES_TABLE = process.env.SALTED_PASSWORD_HASHES_TABLE;
+// const POSTS_TABLE = process.env.POSTS_TABLE;
+// const FOLLOWS_TABLE = process.env.FOLLOWS_TABLE;
 
-const ID_COL = process.env.ID_COL;
-const USER_ID_COL = process.env.USER_ID_COL;
-const FOLLOWER_ID_COL = process.env.FOLLOWER_ID_COL;
-const FOLLOWED_ID_COL = process.env.FOLLOWED_ID_COL;
+// const ID_COL = process.env.ID_COL;
+// const USER_ID_COL = process.env.USER_ID_COL;
+// const FOLLOWER_ID_COL = process.env.FOLLOWER_ID_COL;
+// const FOLLOWED_ID_COL = process.env.FOLLOWED_ID_COL;
 
-const EMAIL_COL = process.env.EMAIL_COL;
-const USERNAME_COL = process.env.USERNAME_COL;
-const SALTED_PASSWORD_HASH_COL = process.env.SALTED_PASSWORD_HASH_COL;
-const POST_COL = process.env.POST_COL;
-const TIME_POSTED_COL = process.env.TIME_POSTED_COL;
+// const EMAIL_COL = process.env.EMAIL_COL;
+// const USERNAME_COL = process.env.USERNAME_COL;
+// const SALTED_PASSWORD_HASH_COL = process.env.SALTED_PASSWORD_HASH_COL;
+// const POST_COL = process.env.POST_COL;
+// const TIME_POSTED_COL = process.env.TIME_POSTED_COL;
 
 const pool = require('./pool.js');
 const util = require('./util.js');
@@ -38,14 +38,12 @@ exports.getUserID = async (identifier) => {
 	var identifierCol = '';
 
 	if (emailRegex.test(identifier)) {
-		identifierCol = EMAIL_COL;
+		identifierCol = 'email';
 	} else {
-		identifierCol = USERNAME_COL;
+		identifierCol = 'username';
 	}
 
-	const query = `SELECT ${ID_COL} FROM ${USERS_TABLE} WHERE
-		${identifierCol} = $1;`;
-
+	const query = `SELECT id FROM users WHERE ${identifierCol} = $1;`;
 	const params = [identifier];
 
 	try {
@@ -54,7 +52,7 @@ exports.getUserID = async (identifier) => {
 		if (res.rowCount === 0) {
 			return null;
 		} else {
-			return res.rows[0][ID_COL];
+			return res.rows[0].id;
 		}
 	} catch (err) {
 		console.error(err.stack);
@@ -65,18 +63,16 @@ exports.getUserID = async (identifier) => {
 exports.getUsername = async (id) => {
 	util.log('getUsername:');
 
-	const query = `SELECT ${USERNAME_COL} FROM ${USERS_TABLE} WHERE
-		${ID_COL} = $1;`;
-
+	const query = `SELECT username FROM users WHERE id = $1;`;
 	const params = [id];
 
 	try {
 		const res = await pool.query(query, params);
 
-		if (res.rowCount === 0) {
-			return null;
+		if (res.rowCount === 1) {
+			return res.rows[0].username;
 		} else {
-			return res.rows[0][USERNAME_COL];
+			return null;
 		}
 	} catch (err) {
 		console.error(err.stack);
@@ -84,25 +80,14 @@ exports.getUsername = async (id) => {
 	}
 };
 
-// function returnIfExists(res, col){
-// 	if(res.rowCount === 1){
-// 		return res.rows[0][col];
-// 	}else{
-// 		return null;
-// 	}
-// }
-
-// Don't log passwords
-
 exports.getSaltedPasswordHash = async (userID) => {
-	const query = `SELECT ${SALTED_PASSWORD_HASH_COL} FROM
-		${SALTED_PASSWORD_HASHES_TABLE} WHERE ${USER_ID_COL} = $1;`;
+	const query = `SELECT salted_password_hash FROM salted_password_hashes
+		WHERE user_id = $1;`;
 
 	const params = [userID];
 
 	try {
 		const res = await pool.query(query, params);
-		// return returnIfExists(res, SALTED_PASSWORD_HASH_COL);
 
 		if (res.rowCount === 1) {
 			return res.rows[0][SALTED_PASSWORD_HASH_COL];
@@ -128,15 +113,13 @@ exports.registerUser = async (email, username, saltedPasswordHash) => {
 	try {
 		await client.query('BEGIN;');
 
-		var query = `INSERT INTO ${USERS_TABLE}(${EMAIL_COL}, ${USERNAME_COL})
-			VALUES ($1, $2);`;
-
+		var query = `INSERT INTO users(email, username) VALUES ($1, $2);`;
 		var params = [email, username];
 		await client.query(query, params);
 
-		query = `INSERT INTO ${SALTED_PASSWORD_HASHES_TABLE}(${USER_ID_COL},
-			${SALTED_PASSWORD_HASH_COL}) VALUES((SELECT ${ID_COL} FROM ${USERS_TABLE}
-			WHERE ${EMAIL_COL} = $1), $2);`;
+		query = `INSERT INTO salted_password_hashes(user_id,
+			salted_password_hash) VALUES((SELECT id FROM users
+			WHERE email = $1), $2);`;
 
 		params = [email, saltedPasswordHash];
 		await client.query(query, params);
@@ -151,8 +134,8 @@ exports.registerUser = async (email, username, saltedPasswordHash) => {
 };
 
 exports.post = async (userID, post, timePosted) => {
-	const query = `INSERT INTO ${POSTS_TABLE}(${USER_ID_COL}, ${POST_COL},
-		${TIME_POSTED_COL}) VALUES($1, $2, to_timestamp($3 / 1000.0));`;
+	const query = `INSERT INTO posts(user_id, post, time_posted)
+		VALUES($1, $2, to_timestamp($3 / 1000.0));`;
 
 	const params = [userID, post, timePosted];
 
@@ -164,10 +147,8 @@ exports.post = async (userID, post, timePosted) => {
 };
 
 exports.getProfilePosts = async (username) => {
-	const query = `SELECT ${ID_COL}, ${POST_COL}, ${TIME_POSTED_COL} FROM
-		${POSTS_TABLE} WHERE ${USER_ID_COL}
-		= (SELECT ${ID_COL} FROM ${USERS_TABLE} WHERE
-		${USERNAME_COL} = $1);`;
+	const query = `SELECT id, post, time_posted FROM posts WHERE user_id
+		= (SELECT id FROM users WHERE username = $1);`;
 
 	const params = [username];
 
@@ -187,7 +168,7 @@ exports.getIdentifiers = async () => {
 
 	// Protect email search; for now just return usernames
 
-	const query = `SELECT ${ID_COL}, ${USERNAME_COL} FROM ${USERS_TABLE};`;
+	const query = `SELECT id, username FROM users;`;
 
 	try {
 		const res = await pool.query(query);
@@ -199,9 +180,8 @@ exports.getIdentifiers = async () => {
 };
 
 exports.follow = async (followerID, followedUsername) => {
-	const query = `INSERT INTO ${FOLLOWS_TABLE}(${FOLLOWER_ID_COL}, ${FOLLOWED_ID_COL})
-		VALUES($1, (SELECT ${ID_COL} FROM ${USERS_TABLE} WHERE ${USERNAME_COL}
-		= $2));`;
+	const query = `INSERT INTO follows(follower_id, followed_id)
+		VALUES($1, (SELECT id FROM users WHERE username = $2));`;
 
 	const params = [followerID, followedUsername];
 
@@ -215,16 +195,15 @@ exports.follow = async (followerID, followedUsername) => {
 }
 
 exports.isFollowing = async (followerID, followedUsername) => {
-	const query = `SELECT EXISTS(SELECT 1 FROM ${FOLLOWS_TABLE}
-		WHERE ${FOLLOWER_ID_COL} = $1 AND ${FOLLOWED_ID_COL}
-		= (SELECT ${ID_COL} FROM ${USERS_TABLE} WHERE ${USERNAME_COL} = $2));`;
+	const query = `SELECT EXISTS(SELECT 1 FROM follows WHERE follower_id = $1
+		AND followed_id = (SELECT id FROM users WHERE username = $2));`;
 
 	const params = [followerID, followedUsername];
 
-	try{
+	try {
 		const res = await pool.query(query, params);
 		return res.rows[0].exists;
-	}catch(err){
+	} catch (err) {
 		console.error(err);
 		throw err;
 	}

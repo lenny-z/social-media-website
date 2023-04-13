@@ -3,8 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './css/Register.css';
 
-// const EMAIL_COL = process.env.REACT_APP_EMAIL_COL;
-// const USERNAME_COL = process.env.REACT_APP_USERNAME_COL;
 const EMAIL_REGEX = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/);
 
 export default function Register() {
@@ -21,12 +19,10 @@ export default function Register() {
 			username: username,
 			password: password
 		};
-		// user[EMAIL_COL] = email;
-		// user[USERNAME_COL] = username;
-		// user['password'] = password;
 
 		try {
-			const res = await axios.post(process.env.REACT_APP_REGISTER, user, { withCredentials: true });
+			const res = await axios.post(process.env.REACT_APP_REGISTER, user,
+				{ withCredentials: true });
 
 			if (res.status === 201) {
 				navigate('/home');
