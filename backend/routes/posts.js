@@ -2,8 +2,6 @@ const router = require('express').Router();
 const queries = require('../lib/queries.js');
 const util = require('../lib/util.js');
 
-// const POST_COL = process.env.POST_COL;
-
 async function authorize(req, res, next) {
 	util.log('authorize(req, res, next):');
 	util.log(`req.session.userID: ${req.session.userID}`, 4);

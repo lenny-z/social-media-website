@@ -1,9 +1,7 @@
 const router = require('express').Router();
 const queries = require('../lib/queries.js');
 const util = require('@lenny_zhou/util');
-
 const authorize = require('./auth.js').authorize;
-// const USERNAME_COL = process.env.USERNAME_COL;
 
 router.get(`/:username`, authorize, async (req, res) => {
 	util.log(`GET to /follows/${req.params.username}:`);

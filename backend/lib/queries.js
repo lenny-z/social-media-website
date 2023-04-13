@@ -1,19 +1,3 @@
-// const USERS_TABLE = process.env.USERS_TABLE;
-// const SALTED_PASSWORD_HASHES_TABLE = process.env.SALTED_PASSWORD_HASHES_TABLE;
-// const POSTS_TABLE = process.env.POSTS_TABLE;
-// const FOLLOWS_TABLE = process.env.FOLLOWS_TABLE;
-
-// const ID_COL = process.env.ID_COL;
-// const USER_ID_COL = process.env.USER_ID_COL;
-// const FOLLOWER_ID_COL = process.env.FOLLOWER_ID_COL;
-// const FOLLOWED_ID_COL = process.env.FOLLOWED_ID_COL;
-
-// const EMAIL_COL = process.env.EMAIL_COL;
-// const USERNAME_COL = process.env.USERNAME_COL;
-// const SALTED_PASSWORD_HASH_COL = process.env.SALTED_PASSWORD_HASH_COL;
-// const POST_COL = process.env.POST_COL;
-// const TIME_POSTED_COL = process.env.TIME_POSTED_COL;
-
 const pool = require('./pool.js');
 const util = require('./util.js');
 
@@ -90,7 +74,7 @@ exports.getSaltedPasswordHash = async (userID) => {
 		const res = await pool.query(query, params);
 
 		if (res.rowCount === 1) {
-			return res.rows[0][SALTED_PASSWORD_HASH_COL];
+			return res.rows[0].salted_password_hash;
 		} else {
 			return null;
 		}

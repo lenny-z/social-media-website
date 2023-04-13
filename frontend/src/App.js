@@ -16,10 +16,8 @@ export default function App() {
 		util.log('App.isAuthorized:');
 
 		try {
-			const res = await axios.get(
-				process.env.REACT_APP_ROOT,
-				{ withCredentials: true }
-			);
+			const res = await axios.get(process.env.REACT_APP_AUTHORIZE,
+				{ withCredentials: true });
 
 			if (res.status === 200) {
 				setAuthorized(true);
