@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
 		const userID = await queries.getUserID(req.body[EMAIL_COL])
 			|| await queries.getUserID(req.body[USERNAME_COL]);
 
-		util.log(`\tuserID: ${userID}`);
+		util.log(`userID: ${userID}`, 4);
 
 		if (userID === null) {
 			const saltedPasswordHash = await argon2.hash(req.body.password);

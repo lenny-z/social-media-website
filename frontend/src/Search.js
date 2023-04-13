@@ -3,16 +3,16 @@ import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import SearchResult from './SearchResult.js';
 
-const ID_COL = process.env.REACT_APP_ID_COL;
-const USERNAME_COL = process.env.REACT_APP_USERNAME_COL;
+// const ID_COL = process.env.REACT_APP_ID_COL;
+// const USERNAME_COL = process.env.REACT_APP_USERNAME_COL;
 
 export default function Search() {
 	const [terms, setTerms] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 
 	const renderResults = searchResults.map(searchResult =>
-		<li key={searchResult[ID_COL]}>
-			<SearchResult username={searchResult[USERNAME_COL]} />
+		<li key={searchResult.id}>
+			<SearchResult username={searchResult.username} />
 		</li>
 	);
 

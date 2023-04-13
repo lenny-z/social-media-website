@@ -29,7 +29,6 @@ const sessionOptions = {
 		httpOnly: true,
 		maxAge: 60 * 24 * 60 * 60 * 1000,
 		path: '/',
-		// secure: process.env.NODE_ENV === process.env.NODE_PROD_ENV
 		secure: process.env.NODE_ENV === 'production'
 	}
 };
@@ -37,7 +36,7 @@ const sessionOptions = {
 exports.manager = session(sessionOptions);
 
 exports.set = (req, userID) => {
-	util.log(`setSession:`);
+	util.log(`session.set:`);
 
 	return new Promise((resolve, reject) => {
 		req.session.regenerate((err) => {
@@ -46,7 +45,7 @@ exports.set = (req, userID) => {
 				reject(false);
 			} else {
 				req.session.userID = userID;
-				util.log(`\treq.session.userID: ${req.session.userID}`);
+				util.log(`req.session.userID: ${req.session.userID}`, 4);
 
 				req.session.save((err) => {
 					if (err) {

@@ -15,7 +15,7 @@ export async function loader({ params }) {
 
 	try {
 		var res = await axios.get(
-			`${process.env.REACT_APP_PROFILE_POSTS}/${params[USERNAME_COL]}`
+			`${process.env.REACT_APP_PROFILE_POSTS}/${params.username}`
 		);
 
 		if (res.status === 200) {
@@ -23,11 +23,11 @@ export async function loader({ params }) {
 		}
 
 		res = await axios.get(
-			`${process.env.REACT_APP_FOLLOWS}/${params[USERNAME_COL]}`,
-			{withCredentials: true}
+			`${process.env.REACT_APP_FOLLOWS}/${params.username}`,
+			{ withCredentials: true }
 		);
 
-		if(res.status === 200){
+		if (res.status === 200) {
 			data.isFollowing = res.data.isFollowing;
 		}
 	} catch (err) {
@@ -42,20 +42,20 @@ export default function Profile() {
 	const data = useLoaderData();
 
 	async function handleFollow() {
-		const req = {};
-		req[USERNAME_COL] = params[USERNAME_COL];
+		const req = {
+			username: params.username
+		};
+		// req[USERNAME_COL] = params.username;
 
 		const res = await axios.post(
-			`${process.env.REACT_APP_FOLLOWS}`,
-			req,
-			{ withCredentials: true }
-		);
+			`${process.env.REACT_APP_FOLLOWS}`, req,
+			{ withCredentials: true });
 	}
 
 	return (
 		<>
 			<div id='profile-header'>
-				<ContentHeader contentHeader={params[USERNAME_COL]} />
+				<ContentHeader contentHeader={params.username} />
 				<FollowButton onClick={handleFollow} />
 			</div>
 			<PostsList posts={data.posts} />

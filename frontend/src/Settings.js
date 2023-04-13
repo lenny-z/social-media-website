@@ -6,7 +6,7 @@ import './css/Settings.css';
 export default function Settings() {
 	const navigate = useNavigate();
 
-	async function handleLogout(event) {
+	async function handleLogout() {
 		console.log('Settings.handleLogout:');
 
 		try {
