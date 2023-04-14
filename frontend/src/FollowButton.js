@@ -1,15 +1,33 @@
 import {useState} from 'react';
-import {useLoaderData} from 'react-router-dom';
+import {useLoaderData, useParams} from 'react-router-dom';
 import axios from 'axios';
+import util from '@lenny_zhou/util';
 
-// export default function FollowButton({onClick}){
+export async function getFollow(username){
+	// const params = useParams();
+	try{
+		const res = await axios.get(
+			`${process.env.REACT_APP_FOLLOWS}/${username}`,
+			{withCredentials: true}
+		);
+
+		if(res.status === 200){
+			return res.data.isFollowing;
+		}
+	}catch(err){
+		console.log(err);
+	}
+}
+
 export default function FollowButton({username}){
-	// const [username, setUsername] = useState
-	const [isHovered, setHovered] = useState(false);
 	const data = useLoaderData();
+	const params = useParams();
+	const [isFollowing, setFollowing] = useState(data.isFollowing);
+	const [isHovered, setHovered] = useState(false);
 	let buttonValue = '';
 
-	if(data.isFollowing){
+	// if(data.isFollowing){
+	if(isFollowing){
 		if(isHovered){
 			buttonValue = 'Unfollow';
 		}else{
@@ -19,17 +37,49 @@ export default function FollowButton({username}){
 		buttonValue = 'Follow';
 	}
 
-	async function setFollow(follow){
+	async function makeFollow(){
 		const req = {
 			username: username,
-			follow: follow
+			// follow: follow
 		};
 
-		const res = await axios.post(
-			`${process.env.REACT_APP_FOLLOWS}`, req,
-			{ withCredentials: true }
-		);
+		try{
+			const res = await axios.post(
+				`${process.env.REACT_APP_FOLLOWS}`,
+				req,
+				{ withCredentials: true }
+			);
+
+			if(res.status === 201){ // 201 Created
+				setFollowing(await getFollow(username));
+			}
+		}catch(err){
+			util.log(err);
+		}
 	}
+
+	async function deleteFollow(){
+		// try{
+			// const res = await axios.delete(
+
+			// )
+		// }
+	}
+
+	// async function getFollow(){
+	// 	try{
+	// 		const res = await axios.get(
+	// 			`${process.env.REACT_APP_FOLLOWS}/${params.username}`,
+	// 			{withCredentials: true}
+	// 		);
+
+	// 		if(res.status === 200){
+	// 			return res.data.isFollowing;
+	// 		}
+	// 	}catch(err){
+	// 		console.log(err);
+	// 	}
+	// }
 
 	function onMouseEnter(){
 		setHovered(true);
@@ -46,7 +96,7 @@ export default function FollowButton({username}){
 			value={buttonValue}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			onClick={setFollow}
+			onClick={makeFollow}
 		/>
 	);
 }

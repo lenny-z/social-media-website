@@ -163,7 +163,7 @@ exports.getIdentifiers = async () => {
 	}
 };
 
-exports.follow = async (followerID, followedUsername) => {
+exports.makeFollow = async (followerID, followedUsername) => {
 	const query = `INSERT INTO follows(follower_id, followed_id)
 		VALUES($1, (SELECT id FROM users WHERE username = $2));`;
 
@@ -178,7 +178,7 @@ exports.follow = async (followerID, followedUsername) => {
 	}
 }
 
-exports.isFollowing = async (followerID, followedUsername) => {
+exports.getFollow = async (followerID, followedUsername) => {
 	const query = `SELECT EXISTS(SELECT 1 FROM follows WHERE follower_id = $1
 		AND followed_id = (SELECT id FROM users WHERE username = $2));`;
 
@@ -188,6 +188,21 @@ exports.isFollowing = async (followerID, followedUsername) => {
 		const res = await pool.query(query, params);
 		return res.rows[0].exists;
 	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+};
+
+exports.deleteFollow = async(followerID, followedUsername) => {
+	const query = `DELETE FROM follows WHERE follower_id = $1 AND followed_id
+		= (SELECT id FROM users WHERE username = $2);`;
+
+	const params = [followerID, followedUsername];
+
+	try{
+		const res = await pool.query(query, params);
+		return res.rows[0].exists;
+	}catch(err){
 		console.error(err);
 		throw err;
 	}

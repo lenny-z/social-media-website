@@ -7,7 +7,7 @@ router.get(`/:username`, authorize, async (req, res) => {
 	util.log(`GET to /follows/${req.params.username}:`);
 
 	try {
-		const dbRes = await queries.isFollowing(req.session.userID, req.params.username);
+		const dbRes = await queries.getFollow(req.session.userID, req.params.username);
 		res.status(200).send({ isFollowing: dbRes });
 	} catch (err) {
 		console.error(err);
@@ -21,12 +21,12 @@ router.post('/', authorize, async (req, res) => {
 	const followedUsername = req.body.username;
 
 	try {
-		if (await queries.isFollowing(followerID, followedUsername)) {
-			res.sendStatus(409); // 409 Conflict
-		} else {
-			await queries.follow(followerID, followedUsername);
-			res.sendStatus(201); // 201 Created
-		}
+		// if (await queries.getFollow(followerID, followedUsername)) {
+		// 	res.sendStatus(409); // 409 Conflict
+		// } else {
+		await queries.makeFollow(followerID, followedUsername);
+		res.sendStatus(201); // 201 Created
+		// }
 	} catch (err) {
 		console.error(err);
 		res.sendStatus(500);

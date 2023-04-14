@@ -2,7 +2,7 @@ import { useLoaderData, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import PostsList from './PostsList.js';
-import FollowButton from './FollowButton.js';
+import FollowButton, {getFollow} from './FollowButton.js';
 import './css/Profile.css';
 
 const util = require('@lenny_zhou/util');
@@ -20,14 +20,18 @@ export async function loader({ params }) {
 			data.posts = res.data;
 		}
 
-		res = await axios.get(
-			`${process.env.REACT_APP_FOLLOWS}/${params.username}`,
-			{ withCredentials: true }
-		);
+		data.isFollowing = getFollow(params.username);
 
-		if (res.status === 200) {
-			data.isFollowing = res.data.isFollowing;
-		}
+		// data.isFollowing = FollowButton.getFollow();
+
+		// res = await axios.get(
+		// 	`${process.env.REACT_APP_FOLLOWS}/${params.username}`,
+		// 	{ withCredentials: true }
+		// );
+
+		// if (res.status === 200) {
+		// 	data.isFollowing = res.data.isFollowing;
+		// }
 	} catch (err) {
 		console.log(err);
 	}
@@ -38,17 +42,6 @@ export async function loader({ params }) {
 export default function Profile() {
 	const params = useParams();
 	const data = useLoaderData();
-
-	// async function handleFollow() {
-	// 	const req = {
-	// 		username: params.username
-	// 	};
-
-	// 	const res = await axios.post(
-	// 		`${process.env.REACT_APP_FOLLOWS}`, req,
-	// 		{ withCredentials: true }
-	// 	);
-	// }
 
 	return (
 		<>
