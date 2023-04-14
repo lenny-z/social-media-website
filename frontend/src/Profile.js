@@ -7,8 +7,6 @@ import './css/Profile.css';
 
 const util = require('@lenny_zhou/util');
 
-const USERNAME_COL = process.env.REACT_APP_USERNAME_COL;
-
 export async function loader({ params }) {
 	util.log('Profile.loader:');
 	const data = {};
@@ -41,22 +39,22 @@ export default function Profile() {
 	const params = useParams();
 	const data = useLoaderData();
 
-	async function handleFollow() {
-		const req = {
-			username: params.username
-		};
-		// req[USERNAME_COL] = params.username;
+	// async function handleFollow() {
+	// 	const req = {
+	// 		username: params.username
+	// 	};
 
-		const res = await axios.post(
-			`${process.env.REACT_APP_FOLLOWS}`, req,
-			{ withCredentials: true });
-	}
+	// 	const res = await axios.post(
+	// 		`${process.env.REACT_APP_FOLLOWS}`, req,
+	// 		{ withCredentials: true }
+	// 	);
+	// }
 
 	return (
 		<>
 			<div id='profile-header'>
 				<ContentHeader contentHeader={params.username} />
-				<FollowButton onClick={handleFollow} />
+				<FollowButton username={params.username} />
 			</div>
 			<PostsList posts={data.posts} />
 		</>
