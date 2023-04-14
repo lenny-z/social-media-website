@@ -21,7 +21,7 @@ export async function getFollow(username){
 
 export default function FollowButton({username}){
 	const data = useLoaderData();
-	const params = useParams();
+	// const params = useParams();
 	const [isFollowing, setFollowing] = useState(data.isFollowing);
 	const [isHovered, setHovered] = useState(false);
 	let buttonValue = '';
@@ -59,11 +59,18 @@ export default function FollowButton({username}){
 	}
 
 	async function deleteFollow(){
-		// try{
-			// const res = await axios.delete(
+		try{
+			const res = await axios.delete(
+				`${process.env.REACT_APP_FOLLOWS}/${username}`,
+				{withCredentials: true}
+			);
 
-			// )
-		// }
+			if(res.status === 200){
+				setFollowing(await getFollow(username));
+			}
+		}catch(err){
+			console.log(err);
+		}
 	}
 
 	// async function getFollow(){
@@ -96,7 +103,7 @@ export default function FollowButton({username}){
 			value={buttonValue}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			onClick={makeFollow}
+			onClick={isFollowing ? deleteFollow : makeFollow}
 		/>
 	);
 }

@@ -170,8 +170,8 @@ exports.makeFollow = async (followerID, followedUsername) => {
 	const params = [followerID, followedUsername];
 
 	try {
-		const res = await pool.query(query, params);
-		return res.rows;
+		await pool.query(query, params);
+		// return res.rows;
 	} catch (err) {
 		console.error(err);
 		throw err;
@@ -200,8 +200,8 @@ exports.deleteFollow = async(followerID, followedUsername) => {
 	const params = [followerID, followedUsername];
 
 	try{
-		const res = await pool.query(query, params);
-		return res.rows[0].exists;
+		await pool.query(query, params);
+		// return res.rows[0].exists;
 	}catch(err){
 		console.error(err);
 		throw err;
