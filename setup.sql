@@ -17,7 +17,7 @@ CREATE TABLE salted_password_hashes (
 
 CREATE TABLE posts (
     id      	SERIAL PRIMARY KEY,
-    user_id 	INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    poster_id 	INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
 	parent		INT REFERENCES posts (id) ON DELETE CASCADE,
     post    	VARCHAR(40000) NOT NULL,
 	time_posted	TIMESTAMPTZ NOT NULL
