@@ -35,24 +35,6 @@ router.get('/authorize', authorize, async (req, res) => {
 	}
 });
 
-// router.get('/', async (req, res) => {
-// 	util.log('GET to /:');
-// 	util.log(`req.session.userID: ${req.session.userID}`, 4);
-
-// 	if (req.session.userID) {
-// 		try {
-// 			const username = await queries.getUsername(req.session.userID);
-// 			util.log(`username: ${username}`, 4);
-// 			res.status(200).send({ username: username });
-// 		} catch (err) {
-// 			console.error(err);
-// 			res.sendStatus(500);
-// 		}
-// 	} else {
-// 		res.sendStatus(401);
-// 	}
-// });
-
 router.post('/login', async (req, res) => {
 	console.log('POST to /login:');
 

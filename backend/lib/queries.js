@@ -185,21 +185,36 @@ exports.getFollow = async (followerID, followedUsername) => {
 
 	try {
 		const res = await pool.query(query, params);
-		return res.rows[0].exists;
+		return res.rows[0].exists === true;
 	} catch (err) {
 		console.error(err);
 		throw err;
 	}
 };
 
-exports.deleteFollow = async(followerID, followedUsername) => {
+exports.deleteFollow = async (followerID, followedUsername) => {
 	const query = `DELETE FROM follows WHERE follower_id = $1 AND followed_id
 		= (SELECT id FROM users WHERE username = $2);`;
 
 	const params = [followerID, followedUsername];
 
-	try{
+	try {
 		await pool.query(query, params);
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+};
+
+exports.getFeed = async (userID) => {
+	const query = `SELECT id, post, time_posted FROM posts WHERE user_id
+		IN (SELECT followed_id FROM follows WHERE follower_id = $1);`;
+
+	const params = [userID];
+
+	try{
+		const res = await pool.query(query, params);
+		return res.rows;
 	}catch(err){
 		console.error(err);
 		throw err;

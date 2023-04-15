@@ -1,17 +1,17 @@
 const router = require('express').Router();
 const queries = require('../lib/queries.js');
 const util = require('../lib/util.js');
+const authorize = require('./auth.js').authorize;
+// async function authorize(req, res, next) {
+// 	util.log('authorize(req, res, next):');
+// 	util.log(`req.session.userID: ${req.session.userID}`, 4);
 
-async function authorize(req, res, next) {
-	util.log('authorize(req, res, next):');
-	util.log(`req.session.userID: ${req.session.userID}`, 4);
-
-	if (req.session.userID) {
-		next();
-	} else {
-		res.sendStatus(401); // 401 Unauthorized
-	}
-}
+// 	if (req.session.userID) {
+// 		next();
+// 	} else {
+// 		res.sendStatus(401); // 401 Unauthorized
+// 	}
+// }
 
 router.post('/', authorize, async (req, res) => {
 	console.log('POST to /posts:');
@@ -27,12 +27,25 @@ router.post('/', authorize, async (req, res) => {
 
 router.get('/profile/:username', async (req, res) => {
 	util.log('GET to /posts/profile:');
-	util.log(`req.params: ${util.prettyJSON(req.params)}`, 8);
+	// util.log(`req.params: ${util.prettyJSON(req.params)}`, 8);
 
 	try {
 		const dbRes = await queries.getProfilePosts(req.params.username);
 		res.status(200).send(dbRes.rows); // 200 OK
 	} catch (err) {
+		console.error(err);
+		res.sendStatus(500);
+	}
+});
+
+router.get('/feed', authorize, async (req, res) => {
+	util.log('GET to /posts/feed:');
+
+	try{
+		const dbRes = await queries.getFeed(req.session.userID);
+		// util.log(util.prettyJSON(dbRes));
+		res.status(200).send(dbRes);
+	}catch(err){
 		console.error(err);
 		res.sendStatus(500);
 	}

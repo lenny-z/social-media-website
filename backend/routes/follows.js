@@ -28,7 +28,7 @@ router.get(`/:username`, authorize, async (req, res) => {
 			req.params.username
 		);
 
-		res.status(200).send({ isFollowing: dbRes });
+		res.status(200).send({ isFollowing: dbRes === true});
 	} catch (err) {
 		console.error(err);
 		res.sendStatus(500);

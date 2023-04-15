@@ -8,7 +8,6 @@ import './css/Profile.css';
 const util = require('@lenny_zhou/util');
 
 export async function loader({ params }) {
-	util.log('Profile.loader:');
 	const data = {};
 
 	try {
@@ -22,7 +21,7 @@ export async function loader({ params }) {
 
 		data.isFollowing = getFollow(params.username);
 	} catch (err) {
-		console.log(err);
+		util.log(err);
 	}
 
 	return data;
