@@ -19,7 +19,7 @@ export async function loader({ params }) {
 			data.posts = res.data;
 		}
 
-		data.isFollowing = getFollow(params.username);
+		data.isFollowing = await getFollow(params.username);
 	} catch (err) {
 		util.log(err);
 	}
