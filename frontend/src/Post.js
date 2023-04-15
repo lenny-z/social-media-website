@@ -1,7 +1,7 @@
-export default function Post({ post, timePosted }) {
+export default function Post({ poster, post, timePosted }) {
 	return (
 		<div className='post'>
-			{timePosted}
+			{poster} {timePosted}
 			<br />
 			{post}
 		</div>

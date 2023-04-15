@@ -1,23 +1,13 @@
 const router = require('express').Router();
-const queries = require('../lib/queries.js');
+const queries = require('../lib/queries/posts.js');
 const util = require('../lib/util.js');
 const authorize = require('./auth.js').authorize;
-// async function authorize(req, res, next) {
-// 	util.log('authorize(req, res, next):');
-// 	util.log(`req.session.userID: ${req.session.userID}`, 4);
-
-// 	if (req.session.userID) {
-// 		next();
-// 	} else {
-// 		res.sendStatus(401); // 401 Unauthorized
-// 	}
-// }
 
 router.post('/', authorize, async (req, res) => {
 	console.log('POST to /posts:');
 
 	try {
-		await queries.post(req.session.userID, req.body.post, Date.now());
+		await queries.makePost(req.session.userID, req.body.post, Date.now());
 		res.sendStatus(201); // 201 Created
 	} catch (err) {
 		console.error(err);
@@ -27,7 +17,6 @@ router.post('/', authorize, async (req, res) => {
 
 router.get('/profile/:username', async (req, res) => {
 	util.log('GET to /posts/profile:');
-	// util.log(`req.params: ${util.prettyJSON(req.params)}`, 8);
 
 	try {
 		const dbRes = await queries.getProfilePosts(req.params.username);
@@ -42,8 +31,7 @@ router.get('/feed', authorize, async (req, res) => {
 	util.log('GET to /posts/feed:');
 
 	try{
-		const dbRes = await queries.getFeed(req.session.userID);
-		// util.log(util.prettyJSON(dbRes));
+		const dbRes = await queries.getFeedPosts(req.session.userID);
 		res.status(200).send(dbRes);
 	}catch(err){
 		console.error(err);

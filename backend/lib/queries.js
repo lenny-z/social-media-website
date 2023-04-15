@@ -117,7 +117,7 @@ exports.registerUser = async (email, username, saltedPasswordHash) => {
 	}
 };
 
-exports.post = async (userID, post, timePosted) => {
+exports.makePost = async (userID, post, timePosted) => {
 	const query = `INSERT INTO posts(user_id, post, time_posted)
 		VALUES($1, $2, to_timestamp($3 / 1000.0));`;
 
