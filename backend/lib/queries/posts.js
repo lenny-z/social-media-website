@@ -15,15 +15,17 @@ exports.makePost = async (userID, post, timePosted) => {
 };
 
 exports.getFeedPosts = async (userID) => {
-	const query = `SELECT id, post, time_posted FROM posts WHERE user_id
+	const query = `SELECT posts.id, username, time_posted, post
+		FROM users INNER JOIN posts ON users.id = poster_id
+		WHERE poster_id
 		IN (SELECT followed_id FROM follows WHERE follower_id = $1);`;
 
 	const params = [userID];
 
-	try{
+	try {
 		const res = await pool.query(query, params);
 		return res.rows;
-	}catch(err){
+	} catch (err) {
 		console.error(err);
 		throw err;
 	}
