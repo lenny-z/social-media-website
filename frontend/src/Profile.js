@@ -21,17 +21,6 @@ export async function loader({ params }) {
 		}
 
 		data.isFollowing = getFollow(params.username);
-
-		// data.isFollowing = FollowButton.getFollow();
-
-		// res = await axios.get(
-		// 	`${process.env.REACT_APP_FOLLOWS}/${params.username}`,
-		// 	{ withCredentials: true }
-		// );
-
-		// if (res.status === 200) {
-		// 	data.isFollowing = res.data.isFollowing;
-		// }
 	} catch (err) {
 		console.log(err);
 	}

@@ -171,7 +171,6 @@ exports.makeFollow = async (followerID, followedUsername) => {
 
 	try {
 		await pool.query(query, params);
-		// return res.rows;
 	} catch (err) {
 		console.error(err);
 		throw err;
@@ -201,7 +200,6 @@ exports.deleteFollow = async(followerID, followedUsername) => {
 
 	try{
 		await pool.query(query, params);
-		// return res.rows[0].exists;
 	}catch(err){
 		console.error(err);
 		throw err;

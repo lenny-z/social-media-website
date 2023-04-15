@@ -4,7 +4,6 @@ import axios from 'axios';
 import util from '@lenny_zhou/util';
 
 export async function getFollow(username){
-	// const params = useParams();
 	try{
 		const res = await axios.get(
 			`${process.env.REACT_APP_FOLLOWS}/${username}`,
@@ -21,12 +20,10 @@ export async function getFollow(username){
 
 export default function FollowButton({username}){
 	const data = useLoaderData();
-	// const params = useParams();
 	const [isFollowing, setFollowing] = useState(data.isFollowing);
 	const [isHovered, setHovered] = useState(false);
 	let buttonValue = '';
 
-	// if(data.isFollowing){
 	if(isFollowing){
 		if(isHovered){
 			buttonValue = 'Unfollow';
@@ -37,10 +34,9 @@ export default function FollowButton({username}){
 		buttonValue = 'Follow';
 	}
 
-	async function makeFollow(){
+	async function follow(){
 		const req = {
 			username: username,
-			// follow: follow
 		};
 
 		try{
@@ -58,7 +54,7 @@ export default function FollowButton({username}){
 		}
 	}
 
-	async function deleteFollow(){
+	async function unfollow(){
 		try{
 			const res = await axios.delete(
 				`${process.env.REACT_APP_FOLLOWS}/${username}`,
@@ -72,21 +68,6 @@ export default function FollowButton({username}){
 			console.log(err);
 		}
 	}
-
-	// async function getFollow(){
-	// 	try{
-	// 		const res = await axios.get(
-	// 			`${process.env.REACT_APP_FOLLOWS}/${params.username}`,
-	// 			{withCredentials: true}
-	// 		);
-
-	// 		if(res.status === 200){
-	// 			return res.data.isFollowing;
-	// 		}
-	// 	}catch(err){
-	// 		console.log(err);
-	// 	}
-	// }
 
 	function onMouseEnter(){
 		setHovered(true);
@@ -103,7 +84,7 @@ export default function FollowButton({username}){
 			value={buttonValue}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			onClick={isFollowing ? deleteFollow : makeFollow}
+			onClick={isFollowing ? unfollow : follow}
 		/>
 	);
 }

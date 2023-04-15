@@ -5,13 +5,9 @@ const authorize = require('./auth.js').authorize;
 
 router.post('/', authorize, async (req, res) => {
 	util.log('POST to /follows:');
-	// const followerID = req.session.userID;
-	// const followedUsername = req.body.username;
 
 	try {
 		await queries.makeFollow(
-			// followerID,
-			// followedUsername
 			req.session.userID,
 			req.body.username
 		);
@@ -42,8 +38,6 @@ router.get(`/:username`, authorize, async (req, res) => {
 
 router.delete('/:username', authorize, async (req, res) => {
 	util.log('DELETE to /follows:');
-	// const followerID = req.session.userID;
-	// const followedUsername = req.body.username;
 
 	try{
 		await queries.deleteFollow(
