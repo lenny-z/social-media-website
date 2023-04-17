@@ -76,21 +76,6 @@ input[value='Post'] {
 	padding: var(--padding);
 }
 
-/* Post.js */
-
-/* .post-li {
-	padding-top: var(--padding);
-	padding-bottom: var(--padding);
-} */
-
-/* .post {
-	margin: auto;
-	box-sizing: border-box;
-	padding: var(--padding);
-	width: var(--content-panel-width);
-	border: 1px solid;
-} */
-
 .error-message {
 	padding: var(--padding);
 	text-align: center;

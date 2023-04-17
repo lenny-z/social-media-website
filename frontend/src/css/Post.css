@@ -8,7 +8,6 @@
 
 .username-link{
 	display: inline-block;
-	/* padding: var(--padding); */
 	padding-bottom: var(--padding);
 	padding-right: var(--padding);
 	font-weight: bold;
@@ -16,11 +15,6 @@
 
 .time-posted-div{
 	display: inline-block;
-	/* padding: var(--padding); */
 	padding-bottom: var(--padding);
 	font-style: italic;
-}
-
-.post-div{
-	/* padding-bottom: var(--padding); */
 }
