@@ -1,7 +1,12 @@
+import { Link } from 'react-router-dom';
+import './css/Post.css';
+
 export default function Post({ poster, post, timePosted }) {
 	return (
 		<div className='post'>
-			{poster} {timePosted}
+			<Link className='username-link'>{poster}</Link>
+			<br />
+			{timePosted}
 			<br />
 			{post}
 		</div>

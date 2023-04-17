@@ -1,4 +1,5 @@
 import Post from './Post.js';
+import './css/PostsList.css';
 
 export default function PostsList({posts}) {
 	const renderPosts = posts.map(post =>

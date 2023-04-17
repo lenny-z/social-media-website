@@ -1,0 +1,11 @@
+.post {
+	margin: auto;
+	box-sizing: border-box;
+	padding: var(--padding);
+	width: var(--content-panel-width);
+	border: 1px solid;
+}
+
+.username-link{
+	font-weight: bold;
+}
