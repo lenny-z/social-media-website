@@ -24,12 +24,16 @@ export default function Search() {
 
 	async function handleSubmit(event) {
 		event.preventDefault();
-		console.log('Search.handleSubmit:');
+		util.log('Search.handleSubmit:');
+		const serializer = new URLSearchParams();
+		serializer.append('terms', terms);
+		util.log(serializer.toString(), 4);
+		setSearchParams(serializer.toString());
 
 		const req = {
-			params: {
-				terms: terms
-			}
+			// params: {
+			// 	terms: terms
+			// }
 		};
 
 		try {
