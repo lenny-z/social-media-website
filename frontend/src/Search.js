@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import {useSearchParams} from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import SearchResult from './SearchResult.js';
 
-// const ID_COL = process.env.REACT_APP_ID_COL;
-// const USERNAME_COL = process.env.REACT_APP_USERNAME_COL;
+const util = require('@lenny_zhou/util');
 
 export default function Search() {
+	let [searchParams, setSearchParams] = useSearchParams();
+	util.log(searchParams);
+
 	const [terms, setTerms] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 
@@ -21,12 +24,18 @@ export default function Search() {
 		console.log('Search.handleSubmit:');
 
 		const req = {
-			terms: terms
+			params: {
+				terms: terms
+			}
 		};
 
 		try {
-			const res = await axios.post(process.env.REACT_APP_SEARCH, req,
-				{ withCredentials: true });
+			// const res = await axios.post(process.env.REACT_APP_SEARCH, req,
+			// { withCredentials: true });
+			const res = await axios.get(
+				process.env.REACT_APP_SEARCH,
+				req
+			);
 
 			if (res.status === 200) {
 				setSearchResults(res.data);

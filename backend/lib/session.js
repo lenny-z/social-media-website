@@ -1,7 +1,8 @@
 const redis = require('redis');
 const RedisStore = require('connect-redis').default;
 const session = require('express-session');
-const util = require('./util.js');
+// const util = require('./util.js');
+const util = require('@lenny_zhou/util');
 
 const redisClient = redis.createClient({
 	socket: {

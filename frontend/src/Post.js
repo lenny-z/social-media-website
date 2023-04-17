@@ -4,7 +4,7 @@ import './css/Post.css';
 export default function Post({ poster, body, timePosted }) {
 	return (
 		<div className='post-div'>
-			<Link className='username-link'>{poster}</Link>
+			<Link className='username-link' to={poster}>{poster}</Link>
 			<div className='time-posted-div'>
 				{timePosted}
 			</div>

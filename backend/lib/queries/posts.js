@@ -1,5 +1,4 @@
 const pool = require('../pool.js');
-const util = require('../util.js');
 
 exports.makePost = async (userID, post, timePosted) => {
 	const query = `INSERT INTO posts(poster_id, body, time_posted)
@@ -40,7 +39,6 @@ exports.getProfilePosts = async (username) => {
 
 	try {
 		const res = await pool.query(query, params);
-		util.log(util.prettyJSON(res));
 		return res;
 	} catch (err) {
 		console.error(err);
