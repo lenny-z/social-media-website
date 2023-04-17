@@ -6,7 +6,7 @@ const testBool = false;
 const testNum = 0;
 const testStr = 'str';
 
-const testFunction = () => {
+function testFunction() {
 	console.log('Hello, world!');
 }
 
@@ -20,7 +20,7 @@ function testThing(thing){
 	const thingType = typeof thing;
 	console.log(`\tthingType: ${thingType}`);
 
-	if(thingType !== 'function' && thingType !== 'undefined'){
+	if(thingType !== 'undefined'){
 		if(thing){
 			console.log(`\ttoString: ${thing.toString()}`);
 		}
@@ -30,15 +30,22 @@ function testThing(thing){
 	console.log();
 }
 
-// console.log(testObject.toString());
-// console.log(JSON.stringify(testObject));
+// testThing(testUndefined);
+// testThing(testNull);
+// testThing(testBool);
+// testThing(testNum);
+// testThing(testStr);
+// testThing(testFunction);
+// testThing(testObject);
 
-testThing(testUndefined);
-testThing(testNull);
-testThing(testNum);
-testThing(testFunction);
-testThing(testObject);
+// util.log({
+// 	testKey: 'testValue'
+// });
 
-util.log({
-	testKey: 'testValue'
-});
+util.log(testUndefined);
+util.log(testNull);
+util.log(testBool);
+util.log(testNum);
+util.log(testStr);
+util.log(testFunction, 0);
+util.log(testObject, 2);
