@@ -29,8 +29,13 @@ const emailProviders = [
 	'gmail.com', 'yahoo.com', 'hotmail.com', 'verizon.com'
 ];
 
+function myRandom(min, max) {
+	return min + Math.floor(Math.random() * (max - min))
+}
+
 function getRandomElement(array) {
-	return array[Math.floor(Math.random() * array.length)];
+	// return array[Math.floor(Math.random() * array.length)];
+	return array[myRandom(0, array.length)];
 }
 
 const usernames = [];
@@ -86,9 +91,6 @@ const posts = [
 const minDate = new Date(1970, 0, 1);
 const maxDate = new Date(Date.now());
 
-function myRandom(min, max) {
-	return min + Math.floor(Math.random() * (max - min))
-}
 
 async function makePosts() {
 	console.log('makePosts:');
@@ -98,7 +100,7 @@ async function makePosts() {
 		const date = myRandom(minDate.getTime(), maxDate.getTime());
 		const post = getRandomElement(posts);
 
-		const query = `INSERT INTO posts(user_id, post, time_posted)
+		const query = `INSERT INTO posts(poster_id, body, time_posted)
 			VALUES((SELECT id FROM users WHERE username = $1),
 			$2, to_timestamp($3 / 1000.0));`;
 

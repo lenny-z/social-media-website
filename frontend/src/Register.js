@@ -25,7 +25,7 @@ export default function Register() {
 				{ withCredentials: true });
 
 			if (res.status === 201) {
-				navigate('/home');
+				navigate('/');
 			}
 		} catch (err) {
 			if (err.response && err.response.status === 500) {

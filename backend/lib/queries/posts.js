@@ -2,7 +2,7 @@ const pool = require('../pool.js');
 const util = require('../util.js');
 
 exports.makePost = async (userID, post, timePosted) => {
-	const query = `INSERT INTO posts(poster_id, post, time_posted)
+	const query = `INSERT INTO posts(poster_id, body, time_posted)
 		VALUES($1, $2, to_timestamp($3 / 1000.0));`;
 
 	const params = [userID, post, timePosted];
@@ -15,7 +15,7 @@ exports.makePost = async (userID, post, timePosted) => {
 };
 
 exports.getFeedPosts = async (userID) => {
-	const query = `SELECT posts.id, username, time_posted, post
+	const query = `SELECT posts.id, username, time_posted, body
 		FROM users INNER JOIN posts ON users.id = poster_id
 		WHERE poster_id
 		IN (SELECT followed_id FROM follows WHERE follower_id = $1);`;
@@ -32,7 +32,7 @@ exports.getFeedPosts = async (userID) => {
 };
 
 exports.getProfilePosts = async (username) => {
-	const query = `SELECT posts.id, username, time_posted, post
+	const query = `SELECT posts.id, username, time_posted, body
 		FROM users INNER JOIN posts ON users.id = poster_id
 		WHERE poster_id = (SELECT id FROM users WHERE username = $1);`;
 
