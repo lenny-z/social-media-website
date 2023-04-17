@@ -7,10 +7,13 @@ import SearchResult from './SearchResult.js';
 const util = require('@lenny_zhou/util');
 
 export default function Search() {
-	let [searchParams, setSearchParams] = useSearchParams();
-	util.log(searchParams);
+	// let [searchParams, setSearchParams] = useSearchParams();
+	// util.log('Search:');
+	// util.log(searchParams, 4);
 
 	const [terms, setTerms] = useState('');
+	// const [terms, setTerms] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [searchResults, setSearchResults] = useState([]);
 
 	const renderResults = searchResults.map(searchResult =>
