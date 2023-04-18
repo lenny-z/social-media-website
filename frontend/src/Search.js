@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useSearchParams, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import SearchResult from './SearchResult.js';
@@ -7,69 +7,42 @@ import SearchResult from './SearchResult.js';
 const util = require('@lenny_zhou/util');
 
 async function getSearchResults(serializedParams) {
-	// const serializedParams = new URLSearchParams([['terms', terms]])
-		// .toString();
-
-	// setSearchParams(serializedParams);
-
 	try {
 		const res = await axios.get(
 			`${process.env.REACT_APP_SEARCH}?${serializedParams}`
 		);
 
 		if (res.status === 200) {
-			// setSearchResults(res.data);
 			return res.data;
 		}
 	} catch (err) {
-		// if (err.response) {
-			// console.log('Search.js: implement error handling');
-		// }
 		throw err;
 	}
 }
 
 export async function loader() {
+	util.log('Search.loader:');
 	const data = {};
+	const params = new URL(document.location).searchParams;
+	// util.log(params.toString(), 1);
 
 	try {
-		// const serializedParams = new URLSearchParams([['terms', terms]])
-		// 	.toString();
-
-		// // setSearchParams(serializedParams);
-
-		// try {
-		// 	const res = await axios.get(
-		// 		`${process.env.REACT_APP_SEARCH}?${serializedParams}`
-		// 	);
-
-		// 	if (res.status === 200) {
-		// 		setSearchResults(res.data);
-		// 	}
-		// } catch (err) {
-		// 	if (err.response) {
-		// 		console.log('Search.js: implement error handling');
-		// 	}
-		// }
-	}catch(err){
+		data.searchResults = await getSearchResults(params.toString());
+	} catch (err) {
 		console.log(err);
 	}
+
+	// util.log(data, 1);
+	// return null;
+	return data;
 }
 
 export default function Search() {
+	const data = useLoaderData();
 	const [terms, setTerms] = useState('');
 	const [searchParams, setSearchParams] = useSearchParams();
-	const [searchResults, setSearchResults] = useState([]);
-
-	// useEffect(() => {
-	// 	const terms = searchParams.get('terms');
-	// 	util.log(terms);
-	// 	if(terms){
-	// 		setTerms(searchParams.get('terms'));
-	// 	}else{
-	// 		setTerms('');
-	// 	}
-	// }, [searchParams])
+	// const [searchResults, setSearchResults] = useState([]);
+	const [searchResults, setSearchResults] = useState(data.searchResults);
 
 	const renderResults = searchResults.map(searchResult =>
 		<li key={searchResult.id}>
@@ -80,24 +53,6 @@ export default function Search() {
 	async function handleSubmit(event) {
 		event.preventDefault();
 		util.log('Search.handleSubmit:');
-		// const serializedParams = new URLSearchParams([['terms', terms]])
-		// 	.toString();
-
-		// setSearchParams(serializedParams);
-
-		// try {
-		// 	const res = await axios.get(
-		// 		`${process.env.REACT_APP_SEARCH}?${serializedParams}`
-		// 	);
-
-		// 	if (res.status === 200) {
-		// 		setSearchResults(res.data);
-		// 	}
-		// } catch (err) {
-		// 	if (err.response) {
-		// 		console.log('Search.js: implement error handling');
-		// 	}
-		// }
 	}
 
 	function handleTerms(event) {

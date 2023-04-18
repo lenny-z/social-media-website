@@ -20,7 +20,7 @@ exports.authorize = authorize;
 
 router.get('/authorize', authorize, async (req, res) => {
 	util.log('GET to /authorize:');
-	util.log(`req.session.userID: ${req.session.userID}`, 4);
+	util.log(`req.session.userID: ${req.session.userID}`, 1);
 
 	if (req.session.userID) {
 		try {
@@ -41,7 +41,7 @@ router.post('/login', async (req, res) => {
 
 	try {
 		const userID = await queries.getUserID(req.body.identifier);
-		util.log(`userID: ${userID}`, 4);
+		util.log(`userID: ${userID}`, 1);
 
 		if (userID) {
 			const saltedPasswordHash = await queries.getSaltedPasswordHash(userID);
