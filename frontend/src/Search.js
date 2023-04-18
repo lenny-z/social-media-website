@@ -1,20 +1,75 @@
-import { useState } from 'react';
-import {useSearchParams} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import SearchResult from './SearchResult.js';
 
 const util = require('@lenny_zhou/util');
 
-export default function Search() {
-	// let [searchParams, setSearchParams] = useSearchParams();
-	// util.log('Search:');
-	// util.log(searchParams, 4);
+async function getSearchResults(serializedParams) {
+	// const serializedParams = new URLSearchParams([['terms', terms]])
+		// .toString();
 
+	// setSearchParams(serializedParams);
+
+	try {
+		const res = await axios.get(
+			`${process.env.REACT_APP_SEARCH}?${serializedParams}`
+		);
+
+		if (res.status === 200) {
+			// setSearchResults(res.data);
+			return res.data;
+		}
+	} catch (err) {
+		// if (err.response) {
+			// console.log('Search.js: implement error handling');
+		// }
+		throw err;
+	}
+}
+
+export async function loader() {
+	const data = {};
+
+	try {
+		// const serializedParams = new URLSearchParams([['terms', terms]])
+		// 	.toString();
+
+		// // setSearchParams(serializedParams);
+
+		// try {
+		// 	const res = await axios.get(
+		// 		`${process.env.REACT_APP_SEARCH}?${serializedParams}`
+		// 	);
+
+		// 	if (res.status === 200) {
+		// 		setSearchResults(res.data);
+		// 	}
+		// } catch (err) {
+		// 	if (err.response) {
+		// 		console.log('Search.js: implement error handling');
+		// 	}
+		// }
+	}catch(err){
+		console.log(err);
+	}
+}
+
+export default function Search() {
 	const [terms, setTerms] = useState('');
-	// const [terms, setTerms] = useSearchParams();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [searchResults, setSearchResults] = useState([]);
+
+	// useEffect(() => {
+	// 	const terms = searchParams.get('terms');
+	// 	util.log(terms);
+	// 	if(terms){
+	// 		setTerms(searchParams.get('terms'));
+	// 	}else{
+	// 		setTerms('');
+	// 	}
+	// }, [searchParams])
 
 	const renderResults = searchResults.map(searchResult =>
 		<li key={searchResult.id}>
@@ -25,33 +80,24 @@ export default function Search() {
 	async function handleSubmit(event) {
 		event.preventDefault();
 		util.log('Search.handleSubmit:');
-		const serializedParams = new URLSearchParams([['terms', terms]]).toString();
-		// serializedParams.append('terms', terms);
-		setSearchParams(serializedParams);
+		// const serializedParams = new URLSearchParams([['terms', terms]])
+		// 	.toString();
 
-		// const req = {
-			// params: {
-			// 	terms: terms
-			// }
-		// };
+		// setSearchParams(serializedParams);
 
-		try {
-			// const res = await axios.post(process.env.REACT_APP_SEARCH, req,
-			// { withCredentials: true });
-			const res = await axios.get(
-				// process.env.REACT_APP_SEARCH,
-				// serializer.toString()
-				`${process.env.REACT_APP_SEARCH}?${serializedParams}`
-			);
+		// try {
+		// 	const res = await axios.get(
+		// 		`${process.env.REACT_APP_SEARCH}?${serializedParams}`
+		// 	);
 
-			if (res.status === 200) {
-				setSearchResults(res.data);
-			}
-		} catch (err) {
-			if (err.response) {
-				console.log('Search.js: implement error handling');
-			}
-		}
+		// 	if (res.status === 200) {
+		// 		setSearchResults(res.data);
+		// 	}
+		// } catch (err) {
+		// 	if (err.response) {
+		// 		console.log('Search.js: implement error handling');
+		// 	}
+		// }
 	}
 
 	function handleTerms(event) {

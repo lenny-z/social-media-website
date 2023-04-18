@@ -7,7 +7,7 @@ const session = require('../lib/session.js');
 
 async function authorize(req, res, next) {
 	util.log('authorize(req, res, next):');
-	util.log(`req.session.userID: ${req.session.userID}`, 4);
+	util.log(`req.session.userID: ${req.session.userID}`, 1);
 
 	if (req.session.userID) {
 		next();
