@@ -1,5 +1,4 @@
-// import { useState, useEffect } from 'react';
-import {useLoaderData} from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import PostsList from './PostsList.js';
@@ -27,13 +26,13 @@ export async function loader() {
 
 export default function Home() {
 	const data = useLoaderData();
-	// const maxNumPosts = process.env.REACT_APP_INIT_MAX_NUM_POSTS;
-	// const [posts, setPosts] = useState([]);
 
 	return (
 		<>
 			<ContentHeader contentHeader='Home' />
-			<PostsList posts={data.posts} />
+			<div id='content-panel'>
+				<PostsList posts={data.posts} />
+			</div>
 		</>
 	);
 }
