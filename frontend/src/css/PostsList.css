@@ -2,3 +2,13 @@
 	padding-top: var(--padding);
 	padding-bottom: var(--padding);
 }
+
+#posts-list {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: var(--content-panel-width);
+	padding-top: var(--header-height);
+	transform: translate(var(--content-panel-offset), 0);
+	overflow: auto;
+}

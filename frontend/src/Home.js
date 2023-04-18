@@ -31,9 +31,9 @@ export default function Home() {
 	// const [posts, setPosts] = useState([]);
 
 	return (
-		<div id='home-div'>
+		<>
 			<ContentHeader contentHeader='Home' />
 			<PostsList posts={data.posts} />
-		</div>
+		</>
 	);
 }
