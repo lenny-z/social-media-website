@@ -25,23 +25,23 @@ export default function Search() {
 	async function handleSubmit(event) {
 		event.preventDefault();
 		util.log('Search.handleSubmit:');
-		const serializer = new URLSearchParams();
-		serializer.append('terms', terms);
-		util.log(serializer.toString(), 4);
-		setSearchParams(serializer.toString());
+		const serializedParams = new URLSearchParams([['terms', terms]]).toString();
+		// serializedParams.append('terms', terms);
+		setSearchParams(serializedParams);
 
-		const req = {
+		// const req = {
 			// params: {
 			// 	terms: terms
 			// }
-		};
+		// };
 
 		try {
 			// const res = await axios.post(process.env.REACT_APP_SEARCH, req,
 			// { withCredentials: true });
 			const res = await axios.get(
-				process.env.REACT_APP_SEARCH,
-				req
+				// process.env.REACT_APP_SEARCH,
+				// serializer.toString()
+				`${process.env.REACT_APP_SEARCH}?${serializedParams}`
 			);
 
 			if (res.status === 200) {

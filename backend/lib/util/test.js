@@ -30,7 +30,6 @@ function testThing(thing){
 	console.log();
 }
 
-// testThing(testUndefined);
 // testThing(testNull);
 // testThing(testBool);
 // testThing(testNum);
@@ -47,5 +46,5 @@ util.log(testNull);
 util.log(testBool);
 util.log(testNum);
 util.log(testStr);
-util.log(testFunction, 0);
-util.log(testObject, 2);
+util.log(testFunction);
+util.log(testObject);
