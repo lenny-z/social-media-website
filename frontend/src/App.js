@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet, Link, useNavigate, useRouteLoaderData } from 'react-router-dom';
 import axios from 'axios';
+import NavPanel from './NavPanel.js';
 import './css/App.css';
 
 const util = require('@lenny_zhou/util');
@@ -34,20 +35,27 @@ export default function App() {
 		getAuthorized();
 	}, []);
 
+	// return (
+	// 	<>
+	// 		<nav id='nav-panel'>
+	// 			<header id='nav-header'>Social Network</header>
+	// 			<ol>
+	// 				<li><Link to={'/'}>Home</Link></li>
+	// 				{isAuthorized && <li>Profile</li>}
+	// 				{isAuthorized && <li>Collections</li>}
+	// 				<li><Link to={'/search'}>Search</Link></li>
+	// 				{isAuthorized && <li>Notifications</li>}
+	// 				{isAuthorized && <li>Messages</li>}
+	// 				<li><Link to={'/settings'}>Settings</Link></li>
+	// 			</ol>
+	// 		</nav>
+	// 		<Outlet />
+	// 	</>
+	// );
+
 	return (
 		<>
-			<nav id='nav-panel'>
-				<header id='nav-header'>Social Network</header>
-				<ol>
-					<li><Link to={'/'}>Home</Link></li>
-					{isAuthorized && <li>Profile</li>}
-					{isAuthorized && <li>Collections</li>}
-					<li><Link to={'/search'}>Search</Link></li>
-					{isAuthorized && <li>Notifications</li>}
-					{isAuthorized && <li>Messages</li>}
-					<li><Link to={'/settings'}>Settings</Link></li>
-				</ol>
-			</nav>
+			<NavPanel />
 			<Outlet />
 		</>
 	);

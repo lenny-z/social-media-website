@@ -42,14 +42,6 @@
 	width: var(--nav-panel-width);
 }
 
-/* #content-panel{
-	position: fixed;
-	width: var(--content-panel-width);
-	top: 0px;
-	left: 0px;
-	transform: translate(var(--content-panel-offset), 0);
-} */
-
 #nav-header,
 #content-header {
 	padding-top: var(--padding);
