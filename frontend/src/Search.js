@@ -24,7 +24,6 @@ export async function loader() {
 	util.log('Search.loader:');
 	const data = {};
 	const params = new URL(document.location).searchParams;
-	// util.log(params.toString(), 1);
 
 	try {
 		data.searchResults = await getSearchResults(params.toString());
@@ -32,8 +31,6 @@ export async function loader() {
 		console.log(err);
 	}
 
-	// util.log(data, 1);
-	// return null;
 	return data;
 }
 
@@ -41,7 +38,6 @@ export default function Search() {
 	const data = useLoaderData();
 	const [terms, setTerms] = useState('');
 	const [searchParams, setSearchParams] = useSearchParams();
-	// const [searchResults, setSearchResults] = useState([]);
 	const [searchResults, setSearchResults] = useState(data.searchResults);
 
 	const renderResults = searchResults.map(searchResult =>
@@ -53,6 +49,12 @@ export default function Search() {
 	async function handleSubmit(event) {
 		event.preventDefault();
 		util.log('Search.handleSubmit:');
+
+		const serializedParams = new URLSearchParams([['terms', terms]])
+			.toString();
+
+		setSearchParams(serializedParams);
+		setSearchResults(await getSearchResults(serializedParams));
 	}
 
 	function handleTerms(event) {
