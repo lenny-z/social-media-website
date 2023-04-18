@@ -29,10 +29,10 @@ export default function Home() {
 
 	return (
 		<>
-			<ContentHeader contentHeader='Home' />
-			<div id='content-panel'>
-				<PostsList posts={data.posts} />
-			</div>
+			{/* <ContentHeader contentHeader='Home' /> */}
+			{/* <div id='content-panel'> */}
+			<PostsList posts={data.posts} />
+			{/* </div> */}
 		</>
 	);
 }
