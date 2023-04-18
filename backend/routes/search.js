@@ -7,7 +7,6 @@ const MAX_NUM_RESULTS = process.env.USER_SEARCH_MAX_NUM_RESULTS;
 
 router.get('/', async (req, res) => {
 	util.log('GET to /search:');
-	// util.log(`req.query: ${util.prettyJSON(req.query)}`, 1);
 	util.log(`req.query.terms: ${req.query.terms}`, 1);
 	const identifiers = await queries.getIdentifiers();
 	const terms = req.query.terms;

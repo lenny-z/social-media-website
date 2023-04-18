@@ -3,6 +3,7 @@ import {useLoaderData} from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import PostsList from './PostsList.js';
+import './css/Home.css';
 
 const util = require('@lenny_zhou/util');
 
@@ -30,9 +31,9 @@ export default function Home() {
 	// const [posts, setPosts] = useState([]);
 
 	return (
-		<>
+		<div id='home-div'>
 			<ContentHeader contentHeader='Home' />
 			<PostsList posts={data.posts} />
-		</>
+		</div>
 	);
 }

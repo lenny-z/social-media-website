@@ -17,6 +17,7 @@
 	font-size: var(--small-font-size);
 	font-family: Arial;
 	list-style: none;
+	overflow: hidden;
 }
 
 #app-container {
@@ -47,6 +48,7 @@
 
 #content-panel {
 	width: var(--content-panel-width);
+	height: 100vh;
 }
 
 /* Editor.js */
