@@ -5,11 +5,11 @@
 	align-items: center;
 }
 
-#profile-header>#content-header {
-	flex-grow: 1
+#profile-header-username {
+	flex-grow: 1;
+	font-size: var(--large-font-size);
 }
 
-/* #profile-header>input[value='Follow']{ */
 #follow-button {
 	flex-grow: 0;
 	padding: var(--padding);

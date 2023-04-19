@@ -20,29 +20,44 @@ export default function Search() {
 		</li>
 	);
 
-	async function getSearchResults(serializedParams) {
+	// async function getSearchResults(serializedParams) {
+	// 	try {
+	// 		const res = await axios.get(
+	// 			`${process.env.REACT_APP_SEARCH}?${serializedParams}`
+	// 		);
+
+	// 		if (res.status === 200) {
+	// 			return res.data;
+	// 		}
+	// 	} catch (err) {
+	// 		throw err;
+	// 	}
+	// }
+
+	async function getSearchResults() {
 		try {
 			const res = await axios.get(
-				`${process.env.REACT_APP_SEARCH}?${serializedParams}`
+				`${process.env.REACT_APP_SEARCH}?${searchParams.toString()}`
 			);
 
 			if (res.status === 200) {
-				return res.data;
+				setSearchResults(res.data);
 			}
 		} catch (err) {
 			throw err;
 		}
 	}
 
-	async function showSearchResults(serializedParams) {
-		setSearchResults(await getSearchResults(serializedParams));
-	}
+	// async function showSearchResults(serializedParams) {
+	// 	setSearchResults(await getSearchResults(serializedParams));
+	// }
 
 	useEffect(() => {
 		const newTerms = searchParams.get('terms');
 
 		setTerms(newTerms ? newTerms : '');
-		showSearchResults(searchParams.toString());
+		// showSearchResults(searchParams.toString());
+		getSearchResults();
 	}, [location]);
 
 	async function handleSubmit(event) {
@@ -53,7 +68,8 @@ export default function Search() {
 			.toString();
 
 		setSearchParams(serializedParams);
-		setSearchResults(await getSearchResults(serializedParams));
+		// setSearchResults(await getSearchResults(serializedParams));
+		getSearchResults();
 	}
 
 	function handleTerms(event) {
