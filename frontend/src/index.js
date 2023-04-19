@@ -7,7 +7,8 @@ import Error from './Error.js';
 import Login from './Login.js';
 import Register from './Register.js';
 import Home, { loader as homeLoader } from './Home.js';
-import Search, { loader as searchLoader } from './Search.js';
+// import Search, { loader as searchLoader } from './Search.js';
+import Search from './Search.js';
 import Profile, { loader as profileLoader } from './Profile.js';
 import Settings from './Settings.js';
 
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
 			{
 				path: '/search',
 				element: <Search />,
-				loader: searchLoader
+				// loader: searchLoader
 			},
 			{
 				path: '/:username',

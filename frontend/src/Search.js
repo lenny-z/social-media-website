@@ -6,40 +6,40 @@ import SearchResult from './SearchResult.js';
 
 const util = require('@lenny_zhou/util');
 
-async function getSearchResults(serializedParams) {
-	try {
-		const res = await axios.get(
-			`${process.env.REACT_APP_SEARCH}?${serializedParams}`
-		);
+// async function getSearchResults(serializedParams) {
+// 	try {
+// 		const res = await axios.get(
+// 			`${process.env.REACT_APP_SEARCH}?${serializedParams}`
+// 		);
 
-		if (res.status === 200) {
-			return res.data;
-		}
-	} catch (err) {
-		throw err;
-	}
-}
+// 		if (res.status === 200) {
+// 			return res.data;
+// 		}
+// 	} catch (err) {
+// 		throw err;
+// 	}
+// }
 
-function getSearchParams(){
-	return new URL(document.location).searchParams;
-}
+// function getSearchParams(){
+// 	return new URL(document.location).searchParams;
+// }
 
-export async function loader() {
-	util.log('Search.loader:');
-	const data = {};
-	const params = getSearchParams();
+// export async function loader() {
+// 	util.log('Search.loader:');
+// 	const data = {};
+// 	const params = getSearchParams();
 
-	try {
-		data.searchResults = await getSearchResults(params.toString());
-	} catch (err) {
-		console.log(err);
-	}
+// 	try {
+// 		data.searchResults = await getSearchResults(params.toString());
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
 
-	return data;
-}
+// 	return data;
+// }
 
 export default function Search() {
-	const data = useLoaderData();
+	// const data = useLoaderData();
 	const location = useLocation();
 	const [terms, setTerms] = useState('');
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -52,14 +52,32 @@ export default function Search() {
 		</li>
 	);
 
+	async function getSearchResults(serializedParams) {
+		try {
+			const res = await axios.get(
+				`${process.env.REACT_APP_SEARCH}?${serializedParams}`
+			);
+	
+			if (res.status === 200) {
+				return res.data;
+			}
+		} catch (err) {
+			throw err;
+		}
+	}
+
 	async function showSearchResults(serializedParams){
 		setSearchResults(await getSearchResults(serializedParams));
 	}
 
+	// function getSearchParams(){
+	// 	return new URL(document.location).searchParams;
+	// }	
+
 	useEffect(() => {
 		util.log('Search.useEffect:');
-		// util.log(`document.location: ${document.location}`)
-		showSearchResults(getSearchParams().toString());
+		setTerms(searchParams.get('terms'));
+		showSearchResults(searchParams.toString());
 	}, [location]);
 
 	async function handleSubmit(event) {
