@@ -34,27 +34,27 @@
 	background: white;
 }
 
-#nav-panel {
+/* #nav-panel {
 	position: fixed;
 	top: 0px;
 	left: 0px;
 	transform: translate(var(--nav-panel-offset), 0);
 	width: var(--nav-panel-width);
-}
+} */
 
-#nav-header,
+/* #nav-header,
 #content-header {
 	padding-top: var(--padding);
 	padding-bottom: var(--padding);
 	font-size: var(--large-font-size);
-}
+} */
 
-#nav-panel>ol>li>a {
+/* #nav-panel>ol>li>a {
 	display: block;
 	padding-top: var(--padding);
 	padding-bottom: var(--padding);
 	font-size: var(--medium-font-size);
-}
+} */
 
 #post-form {
 	margin: auto;

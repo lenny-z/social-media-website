@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import './css/NavPanel.css';
 
 export default function NavPanel({isAuthorized}) {
 	return (

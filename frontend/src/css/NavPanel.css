@@ -1,0 +1,20 @@
+#nav-panel {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	transform: translate(var(--nav-panel-offset), 0);
+	width: var(--nav-panel-width);
+}
+
+#nav-panel>ol>li>a {
+	display: block;
+	padding-top: var(--padding);
+	padding-bottom: var(--padding);
+	font-size: var(--medium-font-size);
+}
+
+#nav-header {
+	padding-top: var(--padding);
+	padding-bottom: var(--padding);
+	font-size: var(--large-font-size);
+}
