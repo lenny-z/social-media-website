@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NavPanel from './NavPanel.js';
 import './css/App.css';
@@ -22,7 +22,7 @@ export default function App() {
 			}
 		} catch (err) {
 			if (err.response && err.response.status === 401) {
-				// setAuthorized(false);
+				setAuthorized(false);
 				navigate('/login'); //implement a better flow later
 			}
 		}
@@ -34,7 +34,7 @@ export default function App() {
 
 	return (
 		<>
-			<NavPanel />
+			<NavPanel isAuthorized={isAuthorized} />
 			<Outlet />
 		</>
 	);

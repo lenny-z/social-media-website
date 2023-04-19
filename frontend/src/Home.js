@@ -18,7 +18,7 @@ export async function loader() {
 
 		data.posts = res.data;
 	} catch (err) {
-		util.log(err);
+		console.log(err);
 	}
 
 	return data;

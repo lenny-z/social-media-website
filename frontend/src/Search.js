@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
+import ContentPanel from './ContentPanel.js';
 import SearchResult from './SearchResult.js';
 import './css/Search.css';
 
@@ -62,21 +63,23 @@ export default function Search() {
 	return (
 		<>
 			<ContentHeader>Search</ContentHeader>
-			<form id='search-form' onSubmit={handleSubmit}>
-				<input
-					id='search-input'
-					type='text'
-					value={terms}
-					onChange={handleTerms}
-				/>
-				<input
-					type='submit'
-					value='Search'
-				/>
-			</form>
-			<ol id='search-results'>
-				{renderResults}
-			</ol>
+			<ContentPanel>
+				<form id='search-form' onSubmit={handleSubmit}>
+					<input
+						id='search-input'
+						type='text'
+						value={terms}
+						onChange={handleTerms}
+					/>
+					<input
+						type='submit'
+						value='Search'
+					/>
+				</form>
+				<ol id='search-results'>
+					{renderResults}
+				</ol>
+			</ContentPanel>
 		</>
 	);
 }

@@ -1,8 +1,9 @@
 import { useLoaderData, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
+import ContentPanel from './ContentPanel.js';
 import PostsList from './PostsList.js';
-import FollowButton, {getFollow} from './FollowButton.js';
+import FollowButton, { getFollow } from './FollowButton.js';
 import './css/Profile.css';
 
 const util = require('@lenny_zhou/util');
@@ -31,13 +32,25 @@ export default function Profile() {
 	const params = useParams();
 	const data = useLoaderData();
 
+	// return (
+	// 	<>
+	// 		<div id='profile-header'>
+	// 			<ContentHeader contentHeader={params.username} />
+	// 			<FollowButton username={params.username} />
+	// 		</div>
+	// 		<PostsList posts={data.posts} />
+	// 	</>
+	// );
+
 	return (
 		<>
-			<div id='profile-header'>
-				<ContentHeader contentHeader={params.username} />
+			<ContentHeader>
+				{params.username}
 				<FollowButton username={params.username} />
-			</div>
-			<PostsList posts={data.posts} />
+			</ContentHeader>
+			<ContentPanel>
+				<PostsList posts={data.posts} />
+			</ContentPanel>
 		</>
 	);
 }
