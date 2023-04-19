@@ -22,7 +22,8 @@ export default function Settings() {
 
 	return (
 		<>
-			<ContentHeader contentHeader='Settings' />
+			{/* <ContentHeader contentHeader='Settings' /> */}
+			<ContentHeader>Settings</ContentHeader>
 			<input
 				type='button'
 				value='Log Out'

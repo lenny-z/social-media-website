@@ -56,14 +56,14 @@
 	font-size: var(--medium-font-size);
 }
 
-#content-header{
+/* #content-header{
 	position: fixed;
 	width: var(--content-panel-width);
 	top: 0px;
 	left: 0px;
 	transform: translate(var(--content-panel-offset), 0);
 	z-index: 1;
-}
+} */
 
 #content-panel{
 	position: absolute;
@@ -108,7 +108,7 @@ input[value='Post'] {
 
 /* Search.js */
 
-#search-form {
+/* #search-form {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -122,4 +122,4 @@ input[value='Post'] {
 input[value='Search'] {
 	flex-grow: 0;
 	padding: var(--padding);
-}
+} */

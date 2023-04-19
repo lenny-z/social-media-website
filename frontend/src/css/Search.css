@@ -1,0 +1,17 @@
+#search-form {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	padding-top: var(--padding);
+	padding-bottom: var(--padding);
+}
+
+#search-input {
+	flex-grow: 1;
+	padding: var(--padding);
+}
+
+input[value='Search'] {
+	flex-grow: 0;
+	padding: var(--padding);
+}

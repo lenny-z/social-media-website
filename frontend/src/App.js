@@ -2,31 +2,31 @@ import { useState, useEffect } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import NavPanel from './NavPanel.js';
-import ContentHeader from './ContentHeader.js';
+// import ContentHeader from './ContentHeader.js';
 import './css/App.css';
 
 const util = require('@lenny_zhou/util');
 
 export default function App() {
-	const location = useLocation();
-	const [contentHeader, setContentHeader] = useState(null);
+	// const location = useLocation();
+	// const [contentHeader, setContentHeader] = useState(null);
 	const [isAuthorized, setAuthorized] = useState(false);
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		switch (location.pathname) {
-			case '/':
-				setContentHeader('Home');
-				break;
+	// useEffect(() => {
+	// 	switch (location.pathname) {
+	// 		case '/':
+	// 			setContentHeader('Home');
+	// 			break;
 
-			case '/search':
-				setContentHeader('Search');
-				break;
+	// 		case '/search':
+	// 			setContentHeader('Search');
+	// 			break;
 
-			default:
-				setContentHeader('No Content Header');
-		}
-	}, [location.pathname]);
+	// 		default:
+	// 			setContentHeader('No Content Header');
+	// 	}
+	// }, [location.pathname]);
 
 	async function getAuthorized() {
 		util.log('App.isAuthorized:');
@@ -53,7 +53,7 @@ export default function App() {
 	return (
 		<>
 			<NavPanel />
-			<ContentHeader contentHeader={contentHeader} />
+			{/* <ContentHeader contentHeader={contentHeader} /> */}
 			<div id='content-panel'>
 				<Outlet />
 			</div>
