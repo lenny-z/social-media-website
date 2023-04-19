@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
+import ContentPanel from './ContentPanel.js';
 import './css/Settings.css';
 
 export default function Settings() {
@@ -23,11 +24,13 @@ export default function Settings() {
 	return (
 		<>
 			<ContentHeader>Settings</ContentHeader>
-			<input
-				type='button'
-				value='Log Out'
-				onClick={handleLogout}
-			/>
+			<ContentPanel>
+				<input
+					type='button'
+					value='Log Out'
+					onClick={handleLogout}
+				/>
+			</ContentPanel>
 		</>
 	)
 }
