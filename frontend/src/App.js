@@ -13,21 +13,19 @@ export default function App() {
 	const [isAuthorized, setAuthorized] = useState(false);
 	const navigate = useNavigate();
 
-	// let contentHeader = null;
-
 	useEffect(() => {
 		switch (location.pathname) {
 			case '/':
-				// contentHeader = 'Home';
 				setContentHeader('Home');
 				break;
 
+			case '/search':
+				setContentHeader('Search');
+				break;
+
 			default:
-				// contentHeader = '';
 				setContentHeader('No Content Header');
 		}
-
-		util.log(contentHeader);
 	}, [location.pathname]);
 
 	async function getAuthorized() {

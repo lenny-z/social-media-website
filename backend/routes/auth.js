@@ -25,7 +25,7 @@ router.get('/authorize', authorize, async (req, res) => {
 	if (req.session.userID) {
 		try {
 			const username = await queries.getUsername(req.session.userID);
-			util.log(`username: ${username}`, 4);
+			util.log(`username: ${username}`, 1);
 			res.status(200).send({ username: username });
 		} catch (err) {
 			console.error(err);

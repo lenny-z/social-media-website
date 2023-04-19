@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useSearchParams, useLoaderData } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useSearchParams, useLoaderData, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import SearchResult from './SearchResult.js';
@@ -20,10 +20,14 @@ async function getSearchResults(serializedParams) {
 	}
 }
 
+function getSearchParams(){
+	return new URL(document.location).searchParams;
+}
+
 export async function loader() {
 	util.log('Search.loader:');
 	const data = {};
-	const params = new URL(document.location).searchParams;
+	const params = getSearchParams();
 
 	try {
 		data.searchResults = await getSearchResults(params.toString());
@@ -36,15 +40,27 @@ export async function loader() {
 
 export default function Search() {
 	const data = useLoaderData();
+	const location = useLocation();
 	const [terms, setTerms] = useState('');
 	const [searchParams, setSearchParams] = useSearchParams();
-	const [searchResults, setSearchResults] = useState(data.searchResults);
+	// const [searchResults, setSearchResults] = useState(data.searchResults);
+	const [searchResults, setSearchResults] = useState([]);
 
 	const renderResults = searchResults.map(searchResult =>
 		<li key={searchResult.id}>
 			<SearchResult username={searchResult.username} />
 		</li>
 	);
+
+	async function showSearchResults(serializedParams){
+		setSearchResults(await getSearchResults(serializedParams));
+	}
+
+	useEffect(() => {
+		util.log('Search.useEffect:');
+		// util.log(`document.location: ${document.location}`)
+		showSearchResults(getSearchParams().toString());
+	}, [location]);
 
 	async function handleSubmit(event) {
 		event.preventDefault();
