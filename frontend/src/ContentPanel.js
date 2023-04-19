@@ -1,4 +1,4 @@
-// import './css/ContentHeader.css';
+import './css/ContentPanel.css';
 
 export default function ContentPanel({ children }) {
 	return (

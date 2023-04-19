@@ -35,9 +35,7 @@ export default function App() {
 	return (
 		<>
 			<NavPanel />
-			{/* <div id='content-panel'> */}
 			<Outlet />
-			{/* </div> */}
 		</>
 	);
 }
