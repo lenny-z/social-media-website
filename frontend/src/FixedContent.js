@@ -2,9 +2,8 @@ import { useRef } from 'react';
 
 const util = require('@lenny_zhou/util');
 
-export default function FixedContent({ childRenderer }) {
+export default function FixedContent({ child, renderChild }) {
 	const heightRef = useRef(null);
-	const Child = childRenderer(heightRef);
 
 	return (
 		<>
@@ -15,7 +14,7 @@ export default function FixedContent({ childRenderer }) {
 			// 	height: heightRef.current.clientHeight
 			// }}
 			/>
-			<Child />
+			{renderChild(child, heightRef)}
 		</>
 	);
 }
