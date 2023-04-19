@@ -56,15 +56,6 @@
 	font-size: var(--medium-font-size);
 }
 
-/* #content-header{
-	position: fixed;
-	width: var(--content-panel-width);
-	top: 0px;
-	left: 0px;
-	transform: translate(var(--content-panel-offset), 0);
-	z-index: 1;
-} */
-
 #content-panel{
 	position: absolute;
 	width: var(--content-panel-width);
@@ -105,21 +96,3 @@ input[value='Post'] {
 	padding: var(--padding);
 	text-align: center;
 }
-
-/* Search.js */
-
-/* #search-form {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-}
-
-#search-input {
-	flex-grow: 1;
-	padding: var(--padding);
-}
-
-input[value='Search'] {
-	flex-grow: 0;
-	padding: var(--padding);
-} */

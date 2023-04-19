@@ -22,7 +22,6 @@ export default function Settings() {
 
 	return (
 		<>
-			{/* <ContentHeader contentHeader='Settings' /> */}
 			<ContentHeader>Settings</ContentHeader>
 			<input
 				type='button'

@@ -1,6 +1,7 @@
 import { useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
+import ContentPanel from './ContentPanel.js';
 import PostsList from './PostsList.js';
 
 const util = require('@lenny_zhou/util');
@@ -29,7 +30,9 @@ export default function Home() {
 	return (
 		<>
 			<ContentHeader>Home</ContentHeader>
-			<PostsList posts={data.posts} />
+			<ContentPanel>
+				<PostsList posts={data.posts} />
+			</ContentPanel>
 		</>
 	);
 }

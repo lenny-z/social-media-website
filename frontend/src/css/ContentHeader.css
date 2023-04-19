@@ -3,8 +3,8 @@
 	width: var(--content-panel-width);
 	top: 0px;
 	left: 0px;
-	/* transform: translate(var(--content-panel-offset), 0); */
-	transform: translate(100, 0);
+	transform: translate(var(--content-panel-offset), 0);
+	/* transform: translate(100, 0); */
 	z-index: 1;
 	padding-top: var(--padding);
 	padding-bottom: var(--padding);

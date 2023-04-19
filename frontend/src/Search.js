@@ -61,7 +61,6 @@ export default function Search() {
 
 	return (
 		<>
-			{/* <ContentHeader contentHeader='Search' /> */}
 			<ContentHeader>Search</ContentHeader>
 			<form id='search-form' onSubmit={handleSubmit}>
 				<input
