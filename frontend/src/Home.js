@@ -27,12 +27,18 @@ export async function loader() {
 export default function Home() {
 	const data = useLoaderData();
 
+	// return (
+	// 	<>
+	// 		<ContentPanel>
+	// 			<ContentHeader>Home</ContentHeader>
+	// 			<PostsList posts={data.posts} />
+	// 		</ContentPanel>
+	// 	</>
+	// );
 	return (
-		<>
-			<ContentPanel>
-				<ContentHeader>Home</ContentHeader>
-				<PostsList posts={data.posts} />
-			</ContentPanel>
-		</>
+		<ContentPanel
+			header='Home'
+			body={<PostsList posts={data.posts} />}
+		/>
 	);
 }

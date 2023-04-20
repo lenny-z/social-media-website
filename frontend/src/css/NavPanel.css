@@ -1,8 +1,7 @@
 #nav-panel {
-	/* position: fixed; */
-	/* top: 0px; */
-	/* left: 0px; */
-	/* transform: translate(var(--nav-panel-offset), 0); */
+	flex-grow: 0;
+	flex-shrink: 0;
+	flex-basis: auto;
 	width: var(--nav-panel-width);
 }
 

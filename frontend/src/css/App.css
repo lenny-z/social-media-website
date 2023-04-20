@@ -8,21 +8,7 @@
 	--id-password-width: 200px;
 	--content-panel-width: 600px;
 	--nav-panel-width: 300px;
-
-	/* --total-app-width: calc(
-		var(--content-panel-width) + var(--nav-panel-width)
-	);
-
-	--nav-panel-offset: calc(
-		50vw - var(--total-app-width) / 2
-	);
-
-	--content-panel-offset: calc(
-		var(--nav-panel-offset) + var(--nav-panel-width)
-	); */
-
 	--post-input-height: 100px;
-	/* --header-height: 58px; */
 }
 
 * {
@@ -33,6 +19,11 @@
 	list-style: none;
 	background: white;
 	box-sizing: border-box;
+	overflow: hidden;
+}
+
+html, body{
+	height: 100%;
 }
 
 #root{
@@ -41,6 +32,7 @@
 	flex-wrap: nowrap;
 	justify-content: center;
 	align-items: flex-start;
+	height: 100%;
 }
 
 #post-form {

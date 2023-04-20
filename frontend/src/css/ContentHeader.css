@@ -1,11 +1,7 @@
-#content-header{
-	/* position: fixed; */
+/* #content-header{
 	width: var(--content-panel-width);
-	/* top: 0px; */
-	/* left: 0px; */
-	/* transform: translate(var(--content-panel-offset), 0); */
 	z-index: 1;
 	padding-top: var(--padding);
 	padding-bottom: var(--padding);
 	font-size: var(--large-font-size);
-}
+} */
