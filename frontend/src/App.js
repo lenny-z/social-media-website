@@ -8,17 +8,21 @@ const util = require('@lenny_zhou/util');
 
 export default function App() {
 	const [isAuthorized, setAuthorized] = useState(false);
+	const [username, setUsername] = useState('');
 	const navigate = useNavigate();
 
 	async function getAuthorized() {
 		util.log('App.isAuthorized:');
 
 		try {
-			const res = await axios.get(process.env.REACT_APP_AUTHORIZE,
-				{ withCredentials: true });
+			const res = await axios.get(
+				process.env.REACT_APP_AUTHORIZE,
+				{ withCredentials: true }
+			);
 
 			if (res.status === 200) {
 				setAuthorized(true);
+				setUsername(res.data.username);
 			}
 		} catch (err) {
 			if (err.response && err.response.status === 401) {
@@ -34,7 +38,7 @@ export default function App() {
 
 	return (
 		<>
-			<NavPanel isAuthorized={isAuthorized} />
+			<NavPanel isAuthorized={isAuthorized} username={username} />
 			<div id='content-panel'>
 				<Outlet />
 			</div>

@@ -3,8 +3,8 @@ import './css/PostsList.css';
 
 export default function PostsList({posts}) {
 	function jsDate(pgDate){
-		const tailRegex = /\.\w*/;
-		return new Date(pgDate.replace(tailRegex, ''));
+		const pgDateTailRegex = /\.\w*/;
+		return new Date(pgDate.replace(pgDateTailRegex, ''));
 	}
 
 	const formattedPosts = posts ? posts.map(post => ({
