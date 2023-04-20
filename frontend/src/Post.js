@@ -6,7 +6,7 @@ export default function Post({ poster, body, timePosted }) {
 		<div className='post-div'>
 			<Link className='username-link' to={`/${poster}`}>{poster}</Link>
 			<div className='time-posted-div'>
-				{timePosted}
+				{timePosted.toDateString()}
 			</div>
 			<div className='body-div'>
 				{body}

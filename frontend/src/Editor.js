@@ -22,6 +22,7 @@ export default function Editor({ showPosts }) {
 			);
 
 			if (res.status === 201) {
+				setBody('');
 				showPosts();
 			}
 		} catch (err) {
