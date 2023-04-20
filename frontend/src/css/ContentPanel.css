@@ -1,8 +1,8 @@
 #content-panel{
-	position: absolute;
+	/* position: absolute; */
 	width: var(--content-panel-width);
-	top: 0px;
-	left: 0px;
-	transform: translate(var(--content-panel-offset), 0);
+	/* top: 0px; */
+	/* left: 0px; */
+	/* transform: translate(var(--content-panel-offset), 0); */
 	padding-top: var(--header-height);
 }

@@ -29,8 +29,8 @@ export default function Home() {
 
 	return (
 		<>
-			<ContentHeader>Home</ContentHeader>
 			<ContentPanel>
+				<ContentHeader>Home</ContentHeader>
 				<PostsList posts={data.posts} />
 			</ContentPanel>
 		</>
