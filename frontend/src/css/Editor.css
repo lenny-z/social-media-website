@@ -1,8 +1,3 @@
-/* #post-form {
-	margin: auto;
-	width: var(--content-panel-width);
-} */
-
 #post-form{
 	flex-grow: 0;
 	flex-shrink: 0;
@@ -12,12 +7,11 @@
 #post-input {
 	margin-top: var(--padding);
 	margin-bottom: var(--padding);
-	box-sizing: border-box;
 	width: 100%;
 	height: var(--post-input-height);
 	padding: var(--padding);
+	resize: vertical;
 }
-
 
 input[value='Post'] {
 	display: block;

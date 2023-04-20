@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
@@ -7,17 +8,36 @@ import PostsList from './PostsList.js';
 
 const util = require('@lenny_zhou/util');
 
+async function getPosts() {
+	try {
+		const res = await axios.get(
+			process.env.REACT_APP_FEED_POSTS,
+			{ withCredentials: true }
+		);
+
+		if (res.status === 200) {
+			return res.data;
+		}
+
+		return null;
+	} catch (err) {
+		console.log(err);
+		throw err;
+	}
+}
+
 export async function loader() {
 	util.log('Home.loader:');
 	const data = {};
 
 	try {
-		var res = await axios.get(
-			process.env.REACT_APP_FEED_POSTS,
-			{ withCredentials: true }
-		);
+		// const res = await axios.get(
+		// 	process.env.REACT_APP_FEED_POSTS,
+		// 	{ withCredentials: true }
+		// );
 
-		data.posts = res.data;
+		// data.posts = res.data;
+		data.posts = await getPosts();
 	} catch (err) {
 		console.log(err);
 	}
@@ -27,13 +47,19 @@ export async function loader() {
 
 export default function Home() {
 	const data = useLoaderData();
+	const [posts, setPosts] = useState(data.posts)
+
+	async function showPosts() {
+		setPosts(await getPosts());
+	}
 
 	return (
 		<>
 			<ContentHeader>Home</ContentHeader>
-			<Editor />
+			<Editor showPosts={showPosts} />
 			<ContentBody>
-				<PostsList posts={data.posts} />
+				{/* <PostsList posts={data.posts} /> */}
+				<PostsList posts={posts} />
 			</ContentBody>
 		</>
 	);
