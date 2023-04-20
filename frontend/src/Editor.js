@@ -1,21 +1,25 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './css/Editor.css';
 
 export default function Editor({ getPosts }) {
-	const [post, setPost] = useState('');
+	const [body, setBody] = useState('');
 	const navigate = useNavigate();
 
 	async function handleSubmit(event) {
 		event.preventDefault();
 
 		const req = {
-			post: post
+			body: body
 		};
 
 		try {
-			const res = await axios.post(process.env.REACT_APP_POSTS, req,
-				{ withCredentials: true });
+			const res = await axios.post(
+				process.env.REACT_APP_POSTS,
+				req,
+				{ withCredentials: true }
+			);
 
 			if (res.status === 201) {
 				getPosts();
@@ -29,7 +33,7 @@ export default function Editor({ getPosts }) {
 	}
 
 	function handleText(event) {
-		setPost(event.target.value);
+		setBody(event.target.value);
 	}
 
 	return (
@@ -39,7 +43,7 @@ export default function Editor({ getPosts }) {
 		>
 			<textarea
 				id='post-input'
-				value={post}
+				value={body}
 				onChange={handleText}
 			/>
 			<input

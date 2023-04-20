@@ -1,7 +1,8 @@
 import { useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
-import ContentPanel from './ContentPanel.js';
+import Editor from './Editor.js';
+import ContentBody from './ContentBody.js';
 import PostsList from './PostsList.js';
 
 const util = require('@lenny_zhou/util');
@@ -27,18 +28,13 @@ export async function loader() {
 export default function Home() {
 	const data = useLoaderData();
 
-	// return (
-	// 	<>
-	// 		<ContentPanel>
-	// 			<ContentHeader>Home</ContentHeader>
-	// 			<PostsList posts={data.posts} />
-	// 		</ContentPanel>
-	// 	</>
-	// );
 	return (
-		<ContentPanel
-			header='Home'
-			body={<PostsList posts={data.posts} />}
-		/>
+		<>
+			<ContentHeader>Home</ContentHeader>
+			<Editor />
+			<ContentBody>
+				<PostsList posts={data.posts} />
+			</ContentBody>
+		</>
 	);
 }

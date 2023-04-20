@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
-import ContentPanel from './ContentPanel.js';
+import ContentBody from './ContentBody.js';
 import SearchResult from './SearchResult.js';
 import './css/Search.css';
 
@@ -59,7 +59,7 @@ export default function Search() {
 	return (
 		<>
 			<ContentHeader>Search</ContentHeader>
-			<ContentPanel>
+			<ContentBody>
 				<form id='search-form' onSubmit={handleSubmit}>
 					<input
 						id='search-input'
@@ -75,7 +75,7 @@ export default function Search() {
 				<ol id='search-results'>
 					{renderResults}
 				</ol>
-			</ContentPanel>
+			</ContentBody>
 		</>
 	);
 }

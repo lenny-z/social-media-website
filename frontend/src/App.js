@@ -35,7 +35,9 @@ export default function App() {
 	return (
 		<>
 			<NavPanel isAuthorized={isAuthorized} />
-			<Outlet />
+			<div id='content-panel'>
+				<Outlet />
+			</div>
 		</>
 	);
 }

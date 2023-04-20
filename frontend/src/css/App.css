@@ -6,7 +6,7 @@
 	--medium-font-size: 24px;
 	--large-font-size: 36px;
 	--id-password-width: 200px;
-	--content-panel-width: 600px;
+	--content-panel-width: 900px;
 	--nav-panel-width: 300px;
 	--post-input-height: 100px;
 }
@@ -35,11 +35,27 @@ html, body{
 	height: 100%;
 }
 
-#post-form {
+#content-panel{
+	flex-grow: 0;
+	flex-shrink: 1;
+	flex-basis: auto;
+
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	width: var(--content-panel-width);
+	height: 100%;
+}
+
+#content-body>*{
+	padding-right: var(--padding);
+}
+
+/* #post-form {
 	margin: auto;
 	width: var(--content-panel-width);
 }
-
 
 #post-input {
 	margin-top: var(--padding);
@@ -58,7 +74,7 @@ input[value='Post'] {
 	margin-left: auto;
 	margin-right: 0;
 	padding: var(--padding);
-}
+} */
 
 .error-message {
 	padding: var(--padding);

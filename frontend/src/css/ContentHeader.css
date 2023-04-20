@@ -1,7 +1,11 @@
-/* #content-header{
+#content-header{
+	flex-grow: 0;
+	flex-shrink: 0;
+	flex-basis: auto;
+	
 	width: var(--content-panel-width);
 	z-index: 1;
 	padding-top: var(--padding);
 	padding-bottom: var(--padding);
 	font-size: var(--large-font-size);
-} */
+}
