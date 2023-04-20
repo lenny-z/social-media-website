@@ -52,6 +52,11 @@ html, body{
 	padding-right: var(--padding);
 }
 
+.hoverable:hover{
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 .error-message {
 	padding: var(--padding);
 	text-align: center;

@@ -14,3 +14,8 @@
 	flex-grow: 0;
 	padding: var(--padding);
 }
+
+#follow-button:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}

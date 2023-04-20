@@ -7,7 +7,6 @@ export default function NavPanel({ isAuthorized, username }) {
 			<header id='nav-header'>Social Network</header>
 			<ol>
 				<li><Link to={'/'}>Home</Link></li>
-				{/* {isAuthorized && <li>Profile</li>} */}
 				{isAuthorized && <li><Link to={`/${username}`}>Profile</Link></li>}
 				{isAuthorized && <li>Collections</li>}
 				<li><Link to={'/search'}>Search</Link></li>

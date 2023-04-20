@@ -17,3 +17,39 @@
 	padding-bottom: var(--padding);
 	font-style: italic;
 }
+
+.body-div {
+	padding-bottom: var(--padding);
+}
+
+/* input[value='Reply']{
+	border: none;
+} */
+
+/* input[value='Reply']:hover{
+	cursor: pointer;
+	text-decoration: underline;
+} */
+
+.post-footer{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+
+.post-footer>input{
+	flex-grow: 1;
+	flex-shrink: 0;
+	flex-basis: auto;
+	border: none;
+	text-align: left;
+}
+
+/* .reply-button {
+	border: none;
+} */
+
+/* .reply-button:hover {
+	cursor: pointer;
+	text-decoration: underline;
+} */
