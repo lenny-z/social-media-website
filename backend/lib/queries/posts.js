@@ -17,7 +17,8 @@ exports.getFeedPosts = async (userID) => {
 	const query = `SELECT posts.id, username, time_posted, body
 		FROM users INNER JOIN posts ON users.id = poster_id
 		WHERE poster_id
-		IN (SELECT followed_id FROM follows WHERE follower_id = $1);`;
+		IN (SELECT followed_id FROM follows WHERE follower_id = $1
+		UNION SELECT $1);`;
 
 	const params = [userID];
 
