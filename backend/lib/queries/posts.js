@@ -46,3 +46,6 @@ exports.getProfilePosts = async (username) => {
 		throw err;
 	}
 };
+
+exports.getReplyPosts = async(parentID) => {
+}
