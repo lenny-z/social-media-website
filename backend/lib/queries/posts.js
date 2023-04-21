@@ -32,9 +32,11 @@ exports.getFeedPosts = async (userID) => {
 };
 
 exports.getProfilePosts = async (username) => {
-	const query = `SELECT posts.id, username, time_posted, body
-		FROM users INNER JOIN posts ON users.id = poster_id
-		WHERE poster_id = (SELECT id FROM users WHERE username = $1);`;
+	// const query = `SELECT posts.id, username, time_posted, body
+	// 	FROM users INNER JOIN posts ON users.id = poster_id
+	// 	WHERE poster_id = (SELECT id FROM users WHERE username = $1);`;
+	const query = `SELECT id, username, parent_id, time_posted, body
+		FROM posts_view WHERE username = $1;`;
 
 	const params = [username];
 

@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS posts_view;
 DROP TABLE IF EXISTS follows;
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS salted_password_hashes;
@@ -23,6 +24,10 @@ CREATE TABLE posts (
 	time_posted	TIMESTAMPTZ NOT NULL
 );
 
+CREATE VIEW posts_view AS
+	SELECT posts.id AS id, username, parent_id, time_posted, body
+	FROM users INNER JOIN posts ON users.id = poster_id;
+
 CREATE TABLE follows (
 	id			BIGSERIAL PRIMARY KEY,
 	follower_id	BIGINT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
@@ -40,6 +45,8 @@ CREATE ROLE social_network_backend;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON users, salted_password_hashes, posts,
 	follows TO social_network_backend;
+
+GRANT SELECT ON posts_view TO social_network_backend;
 
 GRANT USAGE, SELECT ON SEQUENCE users_id_seq TO social_network_backend;
 GRANT USAGE, SELECT ON SEQUENCE salted_password_hashes_id_seq TO

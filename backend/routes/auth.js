@@ -6,7 +6,7 @@ const argon2 = require('argon2');
 const session = require('../lib/session.js');
 
 async function authorize(req, res, next) {
-	util.log('authorize(req, res, next):');
+	util.log('authorize:');
 	util.log(`req.session.userID: ${req.session.userID}`, 1);
 
 	if (req.session.userID) {
@@ -90,7 +90,7 @@ router.post('/register', async (req, res) => {
 		const userID = await queries.getUserID(req.body.email)
 			|| await queries.getUserID(req.body.username);
 
-		util.log(`userID: ${userID}`, 4);
+		util.log(`userID: ${userID}`, 1);
 
 		if (userID === null) {
 			const saltedPasswordHash = await argon2.hash(req.body.password);
@@ -98,7 +98,7 @@ router.post('/register', async (req, res) => {
 				saltedPasswordHash);
 
 			const newUserID = await queries.getUserID(req.body.email);
-			util.log(`newUserID: ${newUserID}`, 4);
+			util.log(`newUserID: ${newUserID}`, 1);
 
 			if (await session.set(req, newUserID)) {
 				res.sendStatus(201); // 201 Created

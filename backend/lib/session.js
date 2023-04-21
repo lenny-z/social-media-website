@@ -1,7 +1,6 @@
 const redis = require('redis');
 const RedisStore = require('connect-redis').default;
 const session = require('express-session');
-// const util = require('./util.js');
 const util = require('@lenny_zhou/util');
 
 const redisClient = redis.createClient({
@@ -25,6 +24,7 @@ const sessionOptions = {
 	saveUninitialized: true,
 	secret: process.env.SESSION_SECRET,
 	store: redisStore,
+	unset: 'destroy',
 
 	cookie: {
 		httpOnly: true,
@@ -46,7 +46,7 @@ exports.set = (req, userID) => {
 				reject(false);
 			} else {
 				req.session.userID = userID;
-				util.log(`req.session.userID: ${req.session.userID}`, 4);
+				util.log(`req.session.userID: ${req.session.userID}`, 1);
 
 				req.session.save((err) => {
 					if (err) {
