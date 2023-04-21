@@ -22,15 +22,6 @@
 	padding-bottom: var(--padding);
 }
 
-/* input[value='Reply']{
-	border: none;
-} */
-
-/* input[value='Reply']:hover{
-	cursor: pointer;
-	text-decoration: underline;
-} */
-
 .post-footer{
 	display: flex;
 	flex-direction: row;
@@ -44,12 +35,3 @@
 	border: none;
 	text-align: left;
 }
-
-/* .reply-button {
-	border: none;
-} */
-
-/* .reply-button:hover {
-	cursor: pointer;
-	text-decoration: underline;
-} */

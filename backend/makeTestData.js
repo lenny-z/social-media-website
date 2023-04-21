@@ -1,5 +1,6 @@
 const NUM_USERS = 20;
-const NUM_POSTS = 100;
+const NUM_ORIGINAL_POSTS = 100;
+const NUM_REPLIES_PER_CALL = 100;
 
 const pool = require('./lib/pool.js');
 const crypto = require('crypto');
@@ -61,50 +62,96 @@ async function makeUsers() {
 	}
 }
 
+async function getUserIDs() {
+	console.log('getUserIDs:');
+	const query = `SELECT id FROM users;`;
+	// const params = [table];
+	// const res = await pool.query(query, params);
+	const res = await pool.query(query);
+	const ids = res.rows.map(row => row.id);
+	return ids;
+}
+
 async function makePasswords() {
 	console.log('makePasswords:');
 	const query = `INSERT INTO salted_password_hashes(user_id,
-		salted_password_hash) VALUES((SELECT id FROM users WHERE username
-		= $1), $2);`;
+		salted_password_hash) VALUES($1, $2);`;
 
-	for (const username of usernames) {
-		const params = [username, crypto.randomBytes(16).toString('hex')];
+	const ids = await getUserIDs();
+
+	for (const id of ids) {
+		const params = [id, crypto.randomBytes(16).toString('hex')];
 		pool.query(query, params);
 	}
 }
 
-const posts = [
-	`bruh what is this weather`,
-	`did yall see that ludicrous display last night`,
-	`Database management, never again.`,
-	`What opinion has got you like this?`,
-	`fresh cut fr`,
-	`Stream tonight at 9 EST!`,
-	`Love all y'all who met up w/ me at the con last night!`,
-	`Web dev looking for work, resume in bio. DM me!`,
-	`Looking for videographer, pay will be on a per-video basis. DM me :D`,
-	`fuck it we ball`,
-	`how do some people just write regex. how do you live life like that`,
-	`Sports Team will never reclaim its glory unless it replaces Coachie McCoachface`,
+const postBodies = [
+	`Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
+	`Donec turpis velit, sollicitudin et diam nec, pretium pretium lectus.`,
+	`Nam scelerisque aliquam massa, quis elementum odio.`,
+	`Integer bibendum luctus placerat.`,
+	`Cras enim magna, scelerisque vitae feugiat eu, lobortis in ligula.`,
+	`Sed vitae pretium eros.`,
+	`Cras magna mauris, lobortis id diam quis, faucibus volutpat dolor.`,
+	`Praesent facilisis nisl sed libero aliquam semper.`,
+	`Etiam vestibulum consectetur odio, a fringilla sem pellentesque et.`,
+	`Pellentesque gravida, massa et vestibulum scelerisque, dui augue viverra quam, non auctor risus est et erat.`,
+	`Etiam vestibulum iaculis velit, et pulvinar diam vulputate non.`,
+	`Phasellus nec dui at turpis venenatis auctor.`,
+	`Morbi in tempus est.`,
+	`Aliquam cursus dui sit amet purus congue aliquam.`,
+	`Nunc suscipit elit sed turpis ultricies, sit amet rutrum mi consequat.`,
+	`Vivamus eu ante tempus, porttitor felis quis, ullamcorper quam.`
 ];
 
 const minDate = new Date(1970, 0, 1);
 const maxDate = new Date(Date.now());
 
+function getRandomDate() {
+	return myRandom(minDate.getTime(), maxDate.getTime());
+}
 
 async function makePosts() {
 	console.log('makePosts:');
+	const ids = await getUserIDs();
 
-	for (var i = 0; i < NUM_POSTS; i++) {
-		const username = getRandomElement(usernames);
-		const date = myRandom(minDate.getTime(), maxDate.getTime());
-		const post = getRandomElement(posts);
+	for (var i = 0; i < NUM_ORIGINAL_POSTS; i++) {
+		const id = getRandomElement(ids);
+		const date = getRandomDate();
+		const postBody = getRandomElement(postBodies);
 
 		const query = `INSERT INTO posts(poster_id, body, time_posted)
-			VALUES((SELECT id FROM users WHERE username = $1),
-			$2, to_timestamp($3 / 1000.0));`;
+			VALUES($1, $2, to_timestamp($3 / 1000.0));`;
 
-		const params = [username, post, date];
+		const params = [id, postBody, date];
+		pool.query(query, params);
+	}
+}
+
+async function getPostIDs() {
+	console.log('getPostIDs:');
+	const query = `SELECT id FROM posts;`;
+	const res = await pool.query(query);
+	const ids = res.rows.map(row => row.id);
+	return ids;
+}
+
+async function makeReplies() {
+	console.log('makeReplies:');
+	const parentIDs = await getPostIDs('posts');
+	const posterIDs = await getUserIDs('users');
+
+	
+	for (var i = 0; i < NUM_REPLIES_PER_CALL; i++) {
+		const parentID = getRandomElement(parentIDs);
+		const posterID = getRandomElement(posterIDs);
+		const date = getRandomDate();
+		const postBody = getRandomElement(postBodies);
+		
+		const query = `INSERT INTO posts(poster_id, parent_id, body, time_posted)
+			VALUES($1, $2, $3, to_timestamp($4 / 1000.0));`;
+
+		const params = [posterID, parentID, postBody, date];
 		pool.query(query, params);
 	}
 }
@@ -114,6 +161,7 @@ async function makeTestData() {
 	await makeUsers();
 	await makePasswords();
 	await makePosts();
+	await makeReplies();
 }
 
 makeTestData();

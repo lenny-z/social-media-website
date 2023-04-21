@@ -7,11 +7,15 @@
 
 #profile-header-username {
 	flex-grow: 1;
+	flex-shrink: 1;
+	flex-basis: auto;
 	font-size: var(--large-font-size);
 }
 
 #follow-button {
 	flex-grow: 0;
+	flex-shrink: 0;
+	flex-basis: auto;
 	padding: var(--padding);
 }
 

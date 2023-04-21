@@ -31,12 +31,6 @@ export async function loader() {
 	const data = {};
 
 	try {
-		// const res = await axios.get(
-		// 	process.env.REACT_APP_FEED_POSTS,
-		// 	{ withCredentials: true }
-		// );
-
-		// data.posts = res.data;
 		data.posts = await getPosts();
 	} catch (err) {
 		console.log(err);
@@ -58,7 +52,6 @@ export default function Home() {
 			<ContentHeader>Home</ContentHeader>
 			<Editor showPosts={showPosts} />
 			<ContentBody>
-				{/* <PostsList posts={data.posts} /> */}
 				<PostsList posts={posts} />
 			</ContentBody>
 		</>

@@ -4,10 +4,15 @@ import Editor from './Editor.js';
 import './css/Post.css';
 
 export default function Post({ poster, body, timePosted }) {
-	const [inReplyMode, setReplyMode] = useState(false);
+	const [showRepliesMode, setShowRepliesMode] = useState(false);
+	const [replyMode, setReplyMode] = useState(false);
+
+	function toggleShowRepliesMode() {
+		setShowRepliesMode(!showRepliesMode);
+	}
 
 	function toggleReplyMode() {
-		setReplyMode(!inReplyMode);
+		setReplyMode(!replyMode);
 	}
 
 	return (
@@ -23,16 +28,17 @@ export default function Post({ poster, body, timePosted }) {
 				<input
 					className='hoverable'
 					type='button'
-					value='Show Replies'
+					value={showRepliesMode ? 'Hide Replies' : 'Show Replies'}
+					onClick={toggleShowRepliesMode}
 				/>
 				<input
-					className='reply-button hoverable'
+					className='hoverable'
 					type='button'
-					value={inReplyMode ? 'Cancel' : 'Reply'}
+					value={replyMode ? 'Cancel' : 'Reply'}
 					onClick={toggleReplyMode}
 				/>
 			</div>
-			{inReplyMode && <Editor />}
+			{replyMode && <Editor />}
 		</div>
 	);
 }

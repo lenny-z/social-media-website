@@ -1,9 +1,9 @@
 #content-header{
-	flex-grow: 0;
-	flex-shrink: 0;
+	flex-grow: 1;
+	flex-shrink: 1;
 	flex-basis: auto;
 	
-	width: var(--content-panel-width);
+	/* width: var(--content-panel-width); */
 	z-index: 1;
 	padding-top: var(--padding);
 	padding-bottom: var(--padding);
