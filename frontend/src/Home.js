@@ -52,7 +52,7 @@ export default function Home() {
 			<ContentHeader>Home</ContentHeader>
 			<Editor showPosts={showPosts} />
 			<ContentBody>
-				<PostsList posts={posts} />
+				<PostsList posts={posts} parentPostID={null} />
 			</ContentBody>
 		</>
 	);

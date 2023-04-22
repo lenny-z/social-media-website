@@ -39,7 +39,7 @@ export default function Post({ id, poster, body, timePosted }) {
 					onClick={toggleReplyMode}
 				/>
 			</div>
-			{replyMode && <Editor />}
+			{replyMode && <Editor parentPostID={id}/>}
 			{showRepliesMode && <Replies parentID={id} />}
 		</div>
 	);

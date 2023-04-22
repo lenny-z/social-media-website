@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './css/Editor.css';
 
-export default function Editor({ showPosts }) {
+export default function Editor({ showPosts, parentPostID }) {
 	const [body, setBody] = useState('');
 	const navigate = useNavigate();
 
@@ -11,6 +11,7 @@ export default function Editor({ showPosts }) {
 		event.preventDefault();
 
 		const req = {
+			parentID: parentPostID,
 			body: body
 		};
 

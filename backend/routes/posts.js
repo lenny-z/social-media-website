@@ -7,7 +7,13 @@ router.post('/', authorize, async (req, res) => {
 	console.log('POST to /posts:');
 
 	try {
-		await queries.makePost(req.session.userID, req.body.body, Date.now());
+		await queries.makePost(
+			req.session.userID,
+			req.body.parentID,
+			req.body.body,
+			Date.now()
+		);
+		
 		res.sendStatus(201); // 201 Created
 	} catch (err) {
 		console.error(err);
