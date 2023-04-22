@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Editor from './Editor.js';
+import Replies from './Replies.js';
 import './css/Post.css';
 
-export default function Post({ poster, body, timePosted }) {
+export default function Post({ id, poster, body, timePosted }) {
 	const [showRepliesMode, setShowRepliesMode] = useState(false);
 	const [replyMode, setReplyMode] = useState(false);
 
@@ -39,6 +40,7 @@ export default function Post({ poster, body, timePosted }) {
 				/>
 			</div>
 			{replyMode && <Editor />}
+			{showRepliesMode && <Replies parentID={id} />}
 		</div>
 	);
 }

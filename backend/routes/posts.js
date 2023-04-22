@@ -20,7 +20,7 @@ router.get('/profile/:username', async (req, res) => {
 
 	try {
 		const dbRes = await queries.getProfilePosts(req.params.username);
-		res.status(200).send(dbRes.rows); // 200 OK
+		res.status(200).send(dbRes); // 200 OK
 	} catch (err) {
 		console.error(err);
 		res.sendStatus(500);
@@ -30,10 +30,22 @@ router.get('/profile/:username', async (req, res) => {
 router.get('/feed', authorize, async (req, res) => {
 	util.log('GET to /posts/feed:');
 
-	try{
+	try {
 		const dbRes = await queries.getFeedPosts(req.session.userID);
 		res.status(200).send(dbRes);
-	}catch(err){
+	} catch (err) {
+		console.error(err);
+		res.sendStatus(500);
+	}
+});
+
+router.get('/replies/:postID', async (req, res) => {
+	util.log('GET to /posts/replies:');
+
+	try {
+		const dbRes = await queries.getReplyPosts(req.params.postID);
+		res.status(200).send(dbRes);
+	} catch (err) {
 		console.error(err);
 		res.sendStatus(500);
 	}

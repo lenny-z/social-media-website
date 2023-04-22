@@ -25,8 +25,9 @@ CREATE TABLE posts (
 );
 
 CREATE VIEW posts_view AS
-	SELECT posts.id AS id, username, parent_id, time_posted, body
-	FROM users INNER JOIN posts ON users.id = poster_id;
+	SELECT posts.id AS id, poster_id, username AS poster_username,
+		parent_id, time_posted, body FROM users INNER JOIN posts
+		ON users.id = poster_id;
 
 CREATE TABLE follows (
 	id			BIGSERIAL PRIMARY KEY,
@@ -48,9 +49,12 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON users, salted_password_hashes, posts,
 
 GRANT SELECT ON posts_view TO social_network_backend;
 
-GRANT USAGE, SELECT ON SEQUENCE users_id_seq TO social_network_backend;
-GRANT USAGE, SELECT ON SEQUENCE salted_password_hashes_id_seq TO
-	social_network_backend;
+-- GRANT USAGE, SELECT ON SEQUENCE users_id_seq TO social_network_backend;
+-- GRANT USAGE, SELECT ON SEQUENCE salted_password_hashes_id_seq TO
+-- 	social_network_backend;
 
-GRANT USAGE, SELECT ON SEQUENCE posts_id_seq TO social_network_backend;
-GRANT USAGE, SELECT ON SEQUENCE follows_id_seq TO social_network_backend;
+-- GRANT USAGE, SELECT ON SEQUENCE posts_id_seq TO social_network_backend;
+-- GRANT USAGE, SELECT ON SEQUENCE follows_id_seq TO social_network_backend;
+
+GRANT USAGE, SELECT ON SEQUENCE users_id_seq, salted_password_hashes_id_seq,
+	posts_id_seq, follows_id_seq TO social_network_backend;

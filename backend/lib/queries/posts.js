@@ -14,11 +14,14 @@ exports.makePost = async (userID, post, timePosted) => {
 };
 
 exports.getFeedPosts = async (userID) => {
-	const query = `SELECT posts.id, username, time_posted, body
-		FROM users INNER JOIN posts ON users.id = poster_id
-		WHERE poster_id
-		IN (SELECT followed_id FROM follows WHERE follower_id = $1
-		UNION SELECT $1);`;
+	// const query = `SELECT posts.id, username, time_posted, body
+	// 	FROM users INNER JOIN posts ON users.id = poster_id
+	// 	WHERE poster_id
+	// 	IN (SELECT followed_id FROM follows WHERE follower_id = $1
+	// 	UNION SELECT $1);`;
+	const query = `SELECT id, poster_username, time_posted, body
+		FROM posts_view WHERE poster_id IN (SELECT followed_id FROM follows
+		WHERE follower_id = $1 UNION SELECT $1);`;
 
 	const params = [userID];
 
@@ -32,22 +35,31 @@ exports.getFeedPosts = async (userID) => {
 };
 
 exports.getProfilePosts = async (username) => {
-	// const query = `SELECT posts.id, username, time_posted, body
-	// 	FROM users INNER JOIN posts ON users.id = poster_id
-	// 	WHERE poster_id = (SELECT id FROM users WHERE username = $1);`;
-	const query = `SELECT id, username, parent_id, time_posted, body
-		FROM posts_view WHERE username = $1;`;
+	const query = `SELECT id, poster_username, time_posted, body
+		FROM posts_view WHERE poster_username = $1;`;
 
 	const params = [username];
 
 	try {
 		const res = await pool.query(query, params);
-		return res;
+		return res.rows;
 	} catch (err) {
 		console.error(err);
 		throw err;
 	}
 };
 
-exports.getReplyPosts = async(parentID) => {
+exports.getReplyPosts = async (parentID) => {
+	const query = `SELECT id, poster_username, time_posted, body
+		FROM posts_view WHERE parent_id = $1;`;
+
+	const params = [parentID];
+
+	try {
+		const res = await pool.query(query, params);
+		return res.rows;
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
 }

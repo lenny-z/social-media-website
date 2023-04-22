@@ -12,7 +12,7 @@ export async function loader({ params }) {
 	const data = {};
 
 	try {
-		var res = await axios.get(
+		const res = await axios.get(
 			`${process.env.REACT_APP_PROFILE_POSTS}/${params.username}`
 		);
 

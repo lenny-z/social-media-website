@@ -9,7 +9,7 @@ export default function PostsList({posts}) {
 
 	const formattedPosts = posts ? posts.map(post => ({
 		id: post.id,
-		poster: post.username,
+		poster: post.poster_username,
 		timePosted: jsDate(post.time_posted),
 		body: post.body
 	})) : [];
@@ -21,6 +21,7 @@ export default function PostsList({posts}) {
 	const renderPosts = formattedPosts.map(post =>
 		<li key={post.id} className='post-li'>
 			<Post
+				id={post.id}
 				poster={post.poster}
 				timePosted={post.timePosted}
 				body={post.body}
