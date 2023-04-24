@@ -29,8 +29,13 @@ export default function PostsList({posts}) {
 		</li>
 	);
 
-	return (
-		<ol id='posts-list'>
+	// return (
+	// 	<ol id='posts-list'>
+	// 		{renderPosts}
+	// 	</ol>
+	// );
+	return (	
+		<ol className='posts-list'>
 			{renderPosts}
 		</ol>
 	);

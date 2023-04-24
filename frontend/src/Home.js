@@ -43,14 +43,14 @@ export default function Home() {
 	const data = useLoaderData();
 	const [posts, setPosts] = useState(data.posts)
 
-	async function showPosts() {
+	async function getAndShowPosts() {
 		setPosts(await getPosts());
 	}
 
 	return (
 		<>
 			<ContentHeader>Home</ContentHeader>
-			<Editor getAndShowPosts={showPosts} parentPostID={null}/>
+			<Editor getAndShowPosts={getAndShowPosts} parentPostID={null}/>
 			<ContentBody>
 				<PostsList posts={posts} />
 			</ContentBody>

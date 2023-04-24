@@ -21,7 +21,6 @@ export default function Post({ id, poster, body, timePosted }) {
 
 			if (res.status === 200) {
 				setReplies(res.data);
-				// return res.data;
 				setShowRepliesMode(true);
 			}
 		} catch (err) {
@@ -29,13 +28,22 @@ export default function Post({ id, poster, body, timePosted }) {
 		}
 	}
 
+	async function getAndShowRepliesAfterReply() {
+		await getAndShowReplies();
+		setReplyMode(false);
+	}
+
+	function hideReplies() {
+		setShowRepliesMode(false);
+	}
+
 	async function toggleShowRepliesMode() {
 		if (showRepliesMode === false) {
 			getAndShowReplies();
 		} else {
-			setShowRepliesMode(false);
+			// setShowRepliesMode(false);
+			hideReplies();
 		}
-		// setShowRepliesMode(!showRepliesMode);
 	}
 
 	function toggleReplyMode() {
@@ -65,9 +73,14 @@ export default function Post({ id, poster, body, timePosted }) {
 					onClick={toggleReplyMode}
 				/>
 			</div>
-			{replyMode && <Editor getAndShowPosts={getAndShowReplies} parentPostID={id} />}
-			{/* {showRepliesMode && <Replies parentID={id} />} */}
-			{showRepliesMode && <PostsList posts={replies} />}
+			{replyMode && <Editor
+				getAndShowPosts={getAndShowRepliesAfterReply}
+				parentPostID={id}
+			/>}
+			<div className='replies-div'>
+				<div className='hide-replies-bar' onClick={hideReplies} />
+				{showRepliesMode && <PostsList posts={replies} />}
+			</div>
 		</div>
 	);
 }

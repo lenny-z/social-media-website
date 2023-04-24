@@ -9,6 +9,7 @@
 	--content-panel-width: 900px;
 	--nav-panel-width: 300px;
 	--post-input-height: 100px;
+	--hide-reply-bar-width: 16px;
 }
 
 * {
@@ -47,10 +48,6 @@ html, body{
 	width: var(--content-panel-width);
 	height: 100%;
 }
-
-/* #content-body{
-	margin-top: var(--padding);
-} */
 
 #content-body>*{
 	padding-right: var(--padding);

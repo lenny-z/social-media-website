@@ -1,4 +1,3 @@
 .post-li:not(:last-child) {
 	padding-bottom: var(--padding);
-	/* padding-top: var(--padding); */
 }
