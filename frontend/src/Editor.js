@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './css/Editor.css';
 
-export default function Editor({ showPosts, parentPostID }) {
+export default function Editor({ getAndShowPosts, parentPostID }) {
 	const [body, setBody] = useState('');
 	const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ export default function Editor({ showPosts, parentPostID }) {
 
 			if (res.status === 201) {
 				setBody('');
-				showPosts();
+				getAndShowPosts();
 			}
 		} catch (err) {
 			console.log(err);

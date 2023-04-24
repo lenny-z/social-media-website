@@ -50,7 +50,7 @@ export default function Home() {
 	return (
 		<>
 			<ContentHeader>Home</ContentHeader>
-			<Editor showPosts={showPosts} parentPostID={null}/>
+			<Editor getAndShowPosts={showPosts} parentPostID={null}/>
 			<ContentBody>
 				<PostsList posts={posts} />
 			</ContentBody>

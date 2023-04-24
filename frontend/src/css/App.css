@@ -48,9 +48,9 @@ html, body{
 	height: 100%;
 }
 
-#content-body{
+/* #content-body{
 	margin-top: var(--padding);
-}
+} */
 
 #content-body>*{
 	padding-right: var(--padding);

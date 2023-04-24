@@ -32,7 +32,7 @@ exports.getFeedPosts = async (userID) => {
 
 exports.getProfilePosts = async (username) => {
 	const query = `SELECT id, poster_username, time_posted, body
-		FROM posts_view WHERE poster_username = $1;`;
+		FROM posts_view WHERE parent_id IS NULL AND poster_username = $1;`;
 
 	const params = [username];
 
