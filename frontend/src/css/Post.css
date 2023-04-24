@@ -1,26 +1,29 @@
 .post-div {
-	margin: auto;
-	box-sizing: border-box;
+	/* margin: auto; */
+	/* box-sizing: border-box; */
 	border: 1px solid;
+	padding: var(--padding);
 }
 
 .username-link {
 	display: inline-block;
-	padding: var(--padding);
-	padding-bottom: 0px;
+	/* padding: var(--padding); */
+	/* padding-bottom: 0px; */
+	padding-right: var(--padding);
 	font-weight: bold;
 }
 
 .time-posted-div {
 	display: inline-block;
-	padding: var(--padding);
-	padding-bottom: 0px;
+	/* padding: var(--padding); */
+	/* padding-bottom: 0px; */
 	font-style: italic;
 }
 
 .body-div {
-	padding: var(--padding);
-	padding-bottom: 0px;
+	padding-top: var(--padding);
+	/* padding: var(--padding); */
+	/* padding-bottom: 0px; */
 }
 
 .post-footer {
@@ -34,7 +37,9 @@
 	flex-shrink: 1;
 	flex-basis: auto;
 	border: none;
-	padding: var(--padding);
+	/* padding: var(--padding); */
+	padding-top: var(--padding);
+	padding-bottom: var(--padding);
 	text-align: left;
 }
 
@@ -51,7 +56,7 @@
 	width: var(--hide-reply-bar-width);
 }
 
-.hide-replies-bar:hover{
+.hide-replies-bar:hover {
 	background: #bfbfbf;
 	cursor: pointer;
 }

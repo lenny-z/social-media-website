@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Editor from './Editor.js';
-// import Replies from './Replies.js';
 import PostsList from './PostsList.js';
 import axios from 'axios';
 import './css/Post.css';
@@ -41,7 +40,6 @@ export default function Post({ id, poster, body, timePosted }) {
 		if (showRepliesMode === false) {
 			getAndShowReplies();
 		} else {
-			// setShowRepliesMode(false);
 			hideReplies();
 		}
 	}
