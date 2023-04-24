@@ -15,8 +15,9 @@ exports.makePost = async (userID, parentID, body, timePosted) => {
 
 exports.getFeedPosts = async (userID) => {
 	const query = `SELECT id, poster_username, time_posted, body
-		FROM posts_view WHERE poster_id IN (SELECT followed_id FROM follows
-		WHERE follower_id = $1 UNION SELECT $1);`;
+		FROM posts_view WHERE parent_id IS NULL AND poster_id
+		IN (SELECT followed_id FROM follows WHERE follower_id
+		= $1 UNION SELECT $1);`;
 
 	const params = [userID];
 

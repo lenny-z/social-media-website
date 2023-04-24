@@ -12,7 +12,6 @@ export default function Replies({ parentID }) {
 			const res = await axios.get(
 				`${process.env.REACT_APP_REPLY_POSTS}/${parentID}`
 			);
-			// util.log(res);
 
 			if (res.status === 200) {
 				setReplies(res.data);
