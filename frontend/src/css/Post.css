@@ -1,14 +1,11 @@
 .post-div {
 	margin: auto;
 	box-sizing: border-box;
-	/* padding: var(--padding); */
 	border: 1px solid;
 }
 
 .username-link {
 	display: inline-block;
-	/* padding-bottom: var(--padding); */
-	/* padding-right: var(--padding); */
 	padding: var(--padding);
 	padding-bottom: 0px;
 	font-weight: bold;
@@ -16,14 +13,12 @@
 
 .time-posted-div {
 	display: inline-block;
-	/* padding-bottom: var(--padding); */
 	padding: var(--padding);
 	padding-bottom: 0px;
 	font-style: italic;
 }
 
 .body-div {
-	/* padding-bottom: var(--padding); */
 	padding: var(--padding);
 	padding-bottom: 0px;
 }

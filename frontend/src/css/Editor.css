@@ -6,7 +6,6 @@
 
 #post-input {
 	margin-top: var(--padding);
-	/* margin-bottom: var(--padding); */
 	width: 100%;
 	height: var(--post-input-height);
 	padding: var(--padding);
@@ -16,7 +15,6 @@
 input[value='Post'] {
 	display: block;
 	margin-top: var(--padding);
-	/* margin-bottom: var(--padding); */
 	margin-left: auto;
 	margin-right: 0;
 	padding: var(--padding);
