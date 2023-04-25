@@ -13,7 +13,7 @@ router.post('/', authorize, async (req, res) => {
 			req.body.body,
 			Date.now()
 		);
-		
+
 		res.sendStatus(201); // 201 Created
 	} catch (err) {
 		console.error(err);
@@ -51,6 +51,18 @@ router.get('/replies/:postID', async (req, res) => {
 	try {
 		const dbRes = await queries.getReplyPosts(req.params.postID);
 		res.status(200).send(dbRes);
+	} catch (err) {
+		console.error(err);
+		res.sendStatus(500);
+	}
+});
+
+router.get('/replies/count/:postID', async (req, res) => {
+	util.log('GET to /posts/replies/count:');
+
+	try {
+		const dbRes = await queries.getNumReplies(req.params.postID);
+		res.status(200).send(0); //stub
 	} catch (err) {
 		console.error(err);
 		res.sendStatus(500);

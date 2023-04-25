@@ -48,39 +48,6 @@ export default function Post({ id, poster, body, timePosted }) {
 		setReplyMode(!replyMode);
 	}
 
-	// return (
-	// 	<div className='post-div'>
-	// 		<Link className='username-link' to={`/${poster}`}>{poster}</Link>
-	// 		<div className='time-posted-div'>
-	// 			{timePosted.toDateString()}
-	// 		</div>
-	// 		<div className='body-div'>
-	// 			{body}
-	// 		</div>
-	// 		<div className='post-footer'>
-	// 			<input
-	// 				className='hoverable'
-	// 				type='button'
-	// 				value={showRepliesMode ? 'Hide Replies' : 'Show Replies'}
-	// 				onClick={toggleShowRepliesMode}
-	// 			/>
-	// 			<input
-	// 				className='hoverable'
-	// 				type='button'
-	// 				value={replyMode ? 'Cancel' : 'Reply'}
-	// 				onClick={toggleReplyMode}
-	// 			/>
-	// 		</div>
-	// 		{replyMode && <Editor
-	// 			getAndShowPosts={getAndShowRepliesAfterReply}
-	// 			parentPostID={id}
-	// 		/>}
-	// 		<div className='replies-div'>
-	// 			<div className='hide-replies-bar' onClick={hideReplies} />
-	// 			{showRepliesMode && <PostsList posts={replies} />}
-	// 		</div>
-	// 	</div>
-	// );
 	return (
 		<div className='post-div'>
 			<Link className='username-link' to={`/${poster}`}>{poster}</Link>

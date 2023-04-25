@@ -31,7 +31,6 @@
 	flex-basis: auto;
 	border: none;
 	padding-top: var(--padding);
-	/* padding-bottom: var(--padding); */
 	text-align: left;
 }
 

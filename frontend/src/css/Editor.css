@@ -15,7 +15,6 @@
 input[value='Post'] {
 	display: block;
 	margin-top: var(--padding);
-	/* margin-bottom: var(--padding); */
 	margin-left: auto;
 	margin-right: 0;
 	padding: var(--padding);

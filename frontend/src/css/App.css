@@ -51,8 +51,6 @@ body {
 }
 
 #content-body {
-	/* padding-bottom: var(--padding); */
-	/* padding-top: var(--padding); */
 	margin-top: var(--padding);
 }
 
