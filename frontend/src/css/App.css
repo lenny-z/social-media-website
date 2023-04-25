@@ -48,11 +48,12 @@ body {
 	justify-content: flex-start;
 	width: var(--content-panel-width);
 	height: 100%;
-	/* padding-bottom: var(--padding); */
 }
 
 #content-body {
-	padding-bottom: var(--padding);
+	/* padding-bottom: var(--padding); */
+	/* padding-top: var(--padding); */
+	margin-top: var(--padding);
 }
 
 #content-body>* {
