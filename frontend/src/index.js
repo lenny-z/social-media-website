@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import App from './App.js';
+import App, {loader as appLoader} from './App.js';
 import Error from './Error.js';
 import Login from './Login.js';
 import Register from './Register.js';
@@ -23,6 +23,7 @@ const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <App />,
+		loader: appLoader,
 		errorElement: <Error />,
 		children: [
 			{
