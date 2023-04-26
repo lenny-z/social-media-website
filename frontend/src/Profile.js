@@ -1,4 +1,4 @@
-import { useLoaderData, useParams } from 'react-router-dom';
+import { useLoaderData, useParams, useRouteLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
@@ -31,6 +31,10 @@ export async function loader({ params }) {
 export default function Profile() {
 	const params = useParams();
 	const data = useLoaderData();
+	const appData = useRouteLoaderData('app');
+	util.log(data);
+	util.log(params);
+	util.log(appData);
 
 	return (
 		<>
@@ -39,7 +43,9 @@ export default function Profile() {
 					<div id='profile-header-username'>
 						{params.username}
 					</div>
-					<FollowButton username={params.username} />
+					{(appData.username !== params.username) &&
+						<FollowButton username={params.username} />
+					}
 				</div>
 			</ContentHeader>
 			<ContentBody>
