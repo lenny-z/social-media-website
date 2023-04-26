@@ -11,7 +11,8 @@ export default function PostsList({posts}) {
 		id: post.id,
 		poster: post.poster_username,
 		timePosted: jsDate(post.time_posted),
-		body: post.body
+		body: post.body,
+		numReplies: post.num_replies
 	})) : [];
 
 	formattedPosts.sort((a, b) => {
@@ -25,6 +26,7 @@ export default function PostsList({posts}) {
 				poster={post.poster}
 				timePosted={post.timePosted}
 				body={post.body}
+				numReplies={post.numReplies}
 			/>
 		</li>
 	);

@@ -70,12 +70,5 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON users, salted_password_hashes, posts,
 
 GRANT SELECT ON posts_view, num_replies_view TO social_network_backend;
 
--- GRANT USAGE, SELECT ON SEQUENCE users_id_seq TO social_network_backend;
--- GRANT USAGE, SELECT ON SEQUENCE salted_password_hashes_id_seq TO
--- 	social_network_backend;
-
--- GRANT USAGE, SELECT ON SEQUENCE posts_id_seq TO social_network_backend;
--- GRANT USAGE, SELECT ON SEQUENCE follows_id_seq TO social_network_backend;
-
 GRANT USAGE, SELECT ON SEQUENCE users_id_seq, salted_password_hashes_id_seq,
 	posts_id_seq, follows_id_seq TO social_network_backend;

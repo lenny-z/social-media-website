@@ -7,7 +7,7 @@ import './css/Post.css';
 
 const util = require('@lenny_zhou/util');
 
-export default function Post({ id, poster, body, timePosted }) {
+export default function Post({ id, poster, body, timePosted, numReplies }) {
 	const [replies, setReplies] = useState([]);
 	const [showRepliesMode, setShowRepliesMode] = useState(false);
 	const [replyMode, setReplyMode] = useState(false);
@@ -61,7 +61,7 @@ export default function Post({ id, poster, body, timePosted }) {
 				<input
 					className='hoverable'
 					type='button'
-					value={showRepliesMode ? 'Hide Replies' : 'Show Replies'}
+					value={`${showRepliesMode ? 'Hide Replies' : 'Show Replies'} (${numReplies ? numReplies : 0})`}
 					onClick={toggleShowRepliesMode}
 				/>
 				<input

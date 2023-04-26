@@ -14,7 +14,7 @@ exports.makePost = async (userID, parentID, body, timePosted) => {
 };
 
 exports.getFeedPosts = async (userID) => {
-	const query = `SELECT id, poster_username, time_posted, body
+	const query = `SELECT id, poster_username, time_posted, body, num_replies
 		FROM posts_view WHERE parent_id IS NULL AND poster_id
 		IN (SELECT followed_id FROM follows WHERE follower_id
 		= $1 UNION SELECT $1);`;
@@ -31,7 +31,7 @@ exports.getFeedPosts = async (userID) => {
 };
 
 exports.getProfilePosts = async (username) => {
-	const query = `SELECT id, poster_username, time_posted, body
+	const query = `SELECT id, poster_username, time_posted, body, num_replies
 		FROM posts_view WHERE parent_id IS NULL AND poster_username = $1;`;
 
 	const params = [username];
@@ -46,7 +46,7 @@ exports.getProfilePosts = async (username) => {
 };
 
 exports.getReplyPosts = async (parentID) => {
-	const query = `SELECT id, poster_username, time_posted, body
+	const query = `SELECT id, poster_username, time_posted, body, num_replies
 		FROM posts_view WHERE parent_id = $1;`;
 
 	const params = [parentID];
