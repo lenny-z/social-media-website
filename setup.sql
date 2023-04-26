@@ -1,4 +1,5 @@
 DROP VIEW IF EXISTS posts_view;
+DROP VIEW IF EXISTS num_replies_view;
 DROP TABLE IF EXISTS follows;
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS salted_password_hashes;
@@ -24,10 +25,30 @@ CREATE TABLE posts (
 	time_posted	TIMESTAMPTZ NOT NULL
 );
 
+CREATE VIEW num_replies_view AS
+	SELECT
+		parent_id,
+		COUNT(*) AS num_replies
+	FROM
+		posts
+	WHERE
+		parent_id IS NOT NULL
+	GROUP BY
+		parent_id;
+
 CREATE VIEW posts_view AS
-	SELECT posts.id AS id, poster_id, username AS poster_username,
-		parent_id, time_posted, body FROM users INNER JOIN posts
-		ON users.id = poster_id;
+	SELECT
+		posts.id AS id,
+		poster_id,
+		username AS poster_username,
+		posts.parent_id AS parent_id,
+		time_posted,
+		body,
+		num_replies
+	FROM
+		users
+	INNER JOIN posts ON users.id = poster_id
+	LEFT JOIN num_replies_view ON posts.id = num_replies_view.parent_id;
 
 CREATE TABLE follows (
 	id			BIGSERIAL PRIMARY KEY,
@@ -47,7 +68,7 @@ CREATE ROLE social_network_backend;
 GRANT SELECT, INSERT, UPDATE, DELETE ON users, salted_password_hashes, posts,
 	follows TO social_network_backend;
 
-GRANT SELECT ON posts_view TO social_network_backend;
+GRANT SELECT ON posts_view, num_replies_view TO social_network_backend;
 
 -- GRANT USAGE, SELECT ON SEQUENCE users_id_seq TO social_network_backend;
 -- GRANT USAGE, SELECT ON SEQUENCE salted_password_hashes_id_seq TO

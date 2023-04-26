@@ -58,7 +58,7 @@ exports.getReplyPosts = async (parentID) => {
 		console.error(err);
 		throw err;
 	}
-}
+};
 
 exports.getNumReplies = async (parentID) => {
 	const query = `SELECT COUNT(*) FROM posts WHERE parent_id = $1;`;
@@ -71,4 +71,4 @@ exports.getNumReplies = async (parentID) => {
 		console.error(err);
 		throw err;
 	}
-}
+};
