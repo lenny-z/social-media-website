@@ -1,5 +1,5 @@
 input[value='Log Out']{
-	margin-top: var(--padding);
-	margin-bottom: var(--padding);
+	/* margin-top: var(--padding); */
+	/* margin-bottom: var(--padding); */
 	padding: var(--padding);
 }

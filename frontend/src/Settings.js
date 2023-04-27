@@ -11,7 +11,11 @@ export default function Settings() {
 		console.log('Settings.handleLogout:');
 
 		try {
-			const res = await axios.post(process.env.REACT_APP_LOGOUT);
+			const res = await axios.post(
+				process.env.REACT_APP_LOGOUT,
+				{},
+				{ withCredentials: true }
+			);
 
 			if (res.status === 200) {
 				navigate('/');

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useRouteLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import Editor from './Editor.js';
@@ -27,7 +27,7 @@ async function getPosts() {
 }
 
 export async function loader() {
-	util.log('Home.loader:');
+	// util.log('Home.loader:');
 	const data = {};
 
 	try {
@@ -42,6 +42,8 @@ export async function loader() {
 export default function Home() {
 	const data = useLoaderData();
 	const [posts, setPosts] = useState(data.posts)
+	const appData = useRouteLoaderData('app');
+	util.log(appData);
 
 	async function getAndShowPosts() {
 		setPosts(await getPosts());
@@ -50,7 +52,10 @@ export default function Home() {
 	return (
 		<>
 			<ContentHeader>Home</ContentHeader>
-			<Editor getAndShowPosts={getAndShowPosts} parentPostID={null}/>
+			{appData.isAuthorized && <Editor
+				getAndShowPosts={getAndShowPosts}
+				parentPostID={null}
+			/>}
 			<ContentBody>
 				<PostsList posts={posts} />
 			</ContentBody>

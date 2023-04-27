@@ -32,9 +32,7 @@ export default function Profile() {
 	const params = useParams();
 	const data = useLoaderData();
 	const appData = useRouteLoaderData('app');
-	util.log(data);
-	// util.log(params);
-	// util.log(appData);
+	// util.log(data);
 
 	return (
 		<>

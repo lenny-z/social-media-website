@@ -1,5 +1,4 @@
 const router = require('express').Router();
-// const util = require('../lib/util.js');
 const util = require('@lenny_zhou/util');
 const queries = require('../lib/queries.js');
 const argon2 = require('argon2');
@@ -64,8 +63,8 @@ router.post('/login', async (req, res) => {
 	}
 });
 
-router.post('/logout', (req, res) => {
-	util.log('GET to /:')
+router.post('/logout', authorize, (req, res) => {
+	util.log('POST to /logout:')
 	req.session.userID = null;
 
 	req.session.save((err) => {
