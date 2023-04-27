@@ -7,10 +7,11 @@ import './css/Post.css';
 
 const util = require('@lenny_zhou/util');
 
-export default function Post({ id, poster, body, timePosted, numReplies }) {
+export default function Post({ id, poster, body, timePosted, initNumReplies }) {
 	const [replies, setReplies] = useState([]);
 	const [showRepliesMode, setShowRepliesMode] = useState(false);
 	const [replyMode, setReplyMode] = useState(false);
+	const [numReplies, setNumReplies] = useState(initNumReplies);
 
 	async function getAndShowReplies() {
 		try {
@@ -20,6 +21,7 @@ export default function Post({ id, poster, body, timePosted, numReplies }) {
 
 			if (res.status === 200) {
 				setReplies(res.data);
+				setNumReplies(replies.length);
 				setShowRepliesMode(true);
 			}
 		} catch (err) {

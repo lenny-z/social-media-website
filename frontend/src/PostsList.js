@@ -26,7 +26,7 @@ export default function PostsList({posts}) {
 				poster={post.poster}
 				timePosted={post.timePosted}
 				body={post.body}
-				numReplies={post.numReplies}
+				initNumReplies={post.numReplies}
 			/>
 		</li>
 	);
