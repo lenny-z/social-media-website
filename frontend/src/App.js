@@ -1,4 +1,5 @@
 import { Outlet, useNavigate, useLoaderData } from 'react-router-dom';
+import { useState } from 'react';
 import axios from 'axios';
 import NavPanel from './NavPanel.js';
 import './css/App.css';
@@ -30,17 +31,21 @@ export async function loader() {
 
 export default function App() {
 	const data = useLoaderData();
+	const [isAuthorized, setAuthorized] = useState(data.isAuthorized);
+	const username = data.username;
 	const navigate = useNavigate();
 
-	if (data.isAuthorized === false) {
+	// if (data.isAuthorized === false) {
+	if (isAuthorized) {
 		navigate('/login');
 	}
 
 	return (
 		<>
-			<NavPanel isAuthorized={data.isAuthorized} username={data.username} />
+			{/* <NavPanel isAuthorized={data.isAuthorized} username={data.username} /> */}
+			<NavPanel isAuthorized={isAuthorized} username={data.username} />
 			<div id='content-panel'>
-				<Outlet />
+				<Outlet context={[isAuthorized, setAuthorized, username]} />
 			</div>
 		</>
 	);

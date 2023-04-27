@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLoaderData, useRouteLoaderData } from 'react-router-dom';
+import { useLoaderData, useRouteLoaderData, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import Editor from './Editor.js';
@@ -27,7 +27,6 @@ async function getPosts() {
 }
 
 export async function loader() {
-	// util.log('Home.loader:');
 	const data = {};
 
 	try {
@@ -41,9 +40,11 @@ export async function loader() {
 
 export default function Home() {
 	const data = useLoaderData();
+	const outletContext = useOutletContext();
+	util.log(outletContext);
 	const [posts, setPosts] = useState(data.posts)
 	const appData = useRouteLoaderData('app');
-	util.log(appData);
+	// util.log(appData);
 
 	async function getAndShowPosts() {
 		setPosts(await getPosts());
