@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Editor from './Editor.js';
 import PostsList from './PostsList.js';
@@ -21,7 +21,7 @@ export default function Post({ id, poster, body, timePosted, initNumReplies }) {
 
 			if (res.status === 200) {
 				setReplies(res.data);
-				setNumReplies(replies.length);
+				setNumReplies(res.data.length);
 				setShowRepliesMode(true);
 			}
 		} catch (err) {
@@ -49,6 +49,10 @@ export default function Post({ id, poster, body, timePosted, initNumReplies }) {
 	function toggleReplyMode() {
 		setReplyMode(!replyMode);
 	}
+
+	// useEffect(() => {
+	// 	setNumReplies(replies.length);
+	// }, [replies]);
 
 	return (
 		<div className='post-div'>
