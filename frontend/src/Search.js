@@ -59,19 +59,20 @@ export default function Search() {
 	return (
 		<>
 			<ContentHeader>Search</ContentHeader>
+			<form id='search-form' onSubmit={handleSubmit}>
+				<input
+					id='search-input'
+					type='text'
+					value={terms}
+					onChange={handleTerms}
+					placeholder='Username'
+				/>
+				<input
+					type='submit'
+					value='Search'
+				/>
+			</form>
 			<ContentBody>
-				<form id='search-form' onSubmit={handleSubmit}>
-					<input
-						id='search-input'
-						type='text'
-						value={terms}
-						onChange={handleTerms}
-					/>
-					<input
-						type='submit'
-						value='Search'
-					/>
-				</form>
 				<ol id='search-results'>
 					{renderResults}
 				</ol>

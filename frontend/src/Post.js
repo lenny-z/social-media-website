@@ -50,10 +50,6 @@ export default function Post({ id, poster, body, timePosted, initNumReplies }) {
 		setReplyMode(!replyMode);
 	}
 
-	// useEffect(() => {
-	// 	setNumReplies(replies.length);
-	// }, [replies]);
-
 	return (
 		<div className='post-div'>
 			<Link className='username-link' to={`/${poster}`}>{poster}</Link>
