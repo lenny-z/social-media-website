@@ -16,7 +16,7 @@ function indent(str, numTabs) {
 	return str.replace(/^/gm, ('\t').repeat(numTabs));
 }
 
-exports.log = (log, numTabs = 0) => {
+function log(label = null, log, numTabs = 0) {
 	if (process.env.NODE_ENV === 'development') {
 		let outLog = '';
 
@@ -54,7 +54,60 @@ exports.log = (log, numTabs = 0) => {
 				outLog = prettyJSON(log);
 		}
 
-		const out = indent(outLog, numTabs);
-		console.log(out);
+		if (label) {
+			outLog = `${label}: ${outLog}`;
+		}
+
+		// const out = indent(outLog, numTabs);
+		outLog = indent(outLog, numTabs);
+		console.log(outLog);
 	}
-};
+}
+
+// function log(label, log, numTabs=0){
+// 	log(`${label}: ${log(log)}`, numTabs);
+// }
+
+// exports.log = (log, numTabs = 0) => {
+// if (process.env.NODE_ENV === 'development') {
+// 	let outLog = '';
+
+// 	switch (typeof log) {
+// 		case 'undefined':
+// 			outLog = 'UNDEFINED';
+// 			break;
+
+// 		case 'object':
+// 			if (log === null) {
+// 				outLog = 'NULL';
+// 			} else {
+// 				outLog = prettyJSON(log);
+// 			}
+
+// 			break;
+
+// 		case 'boolean':
+// 			outLog = log.toString();
+// 			break;
+
+// 		case 'number':
+// 			outLog = log.toString();
+// 			break;
+
+// 		case 'string':
+// 			outLog = log;
+// 			break;
+
+// 		case 'function':
+// 			outLog = log.toString();
+// 			break;
+
+// 		default:
+// 			outLog = prettyJSON(log);
+// 	}
+
+// 	const out = indent(outLog, numTabs);
+// 	console.log(out);
+// }
+// };
+exports.log = log;

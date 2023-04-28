@@ -12,14 +12,6 @@ import Profile, { loader as profileLoader } from './Profile.js';
 import Settings from './Settings.js';
 
 const router = createBrowserRouter([
-	// {
-	// 	path: '/login',
-	// 	element: <Login />
-	// },
-	// {
-	// 	path: '/register',
-	// 	element: <Register />
-	// },
 	{
 		path: '/',
 		element: <App />,

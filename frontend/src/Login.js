@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
@@ -8,6 +8,7 @@ import './css/Login.css';
 export default function Login() {
 	const [identifier, setIdentifier] = useState('');
 	const [password, setPassword] = useState('');
+	const setAuthorized = useOutletContext()[1];
 	const navigate = useNavigate();
 
 	async function handleSubmit(event) {
@@ -26,6 +27,7 @@ export default function Login() {
 			console.log(`\tres.data: ${res.data}`);
 
 			if (res.status === 200) { // 200 OK
+				setAuthorized(true);
 				navigate('/');
 			}
 		} catch (err) {

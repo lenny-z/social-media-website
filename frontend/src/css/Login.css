@@ -1,8 +1,3 @@
-/* #login-form{ */
-	/* margin: auto; */
-	/* width: var(--id-password-width); */
-/* } */
-
 label[for='identifier-input'],
 label[for='password-input'] {
 	display: block;

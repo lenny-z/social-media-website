@@ -39,10 +39,10 @@ export async function loader() {
 }
 
 export default function Home() {
+	util.log('Home:');
 	const data = useLoaderData();
-	// const [isAuthorized, setAuthorized, username] = useOutletContext();
 	const isAuthorized = useOutletContext[0];
-	util.log(isAuthorized);
+	util.log(isAuthorized, 1);
 	const [posts, setPosts] = useState(data.posts)
 
 	async function getAndShowPosts() {
