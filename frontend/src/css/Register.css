@@ -1,5 +1,5 @@
 #register-form {
-	margin: auto;
+	/* margin: auto; */
 	width: var(--id-password-width);
 }
 
@@ -7,17 +7,17 @@ label[for='email-input'],
 label[for='username-input'],
 label[for='password-input'] {
 	display: block;
-	padding-top: var(--padding);
+	/* padding-top: var(--padding); */
 	padding-bottom: var(--padding);
 }
 
 #email-input,
 #username-input,
 #password-input {
-	margin-top: var(--padding);
+	/* margin-top: var(--padding); */
 	margin-bottom: var(--padding);
 	/* Prevent extension past parent */
-	box-sizing: border-box;
+	/* box-sizing: border-box; */
 	width: 100%;
 	padding: var(--padding);
 }

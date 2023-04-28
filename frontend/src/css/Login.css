@@ -1,18 +1,18 @@
 #login-form{
-	margin: auto;
+	/* margin: auto; */
 	width: var(--id-password-width);
 }
 
 label[for='identifier-input'],
 label[for='password-input'] {
 	display: block;
-	padding-top: var(--padding);
+	/* padding-top: var(--padding); */
 	padding-bottom: var(--padding);
 }
 
 #identifier-input,
 #password-input {
-	margin-top: var(--padding);
+	/* margin-top: var(--padding); */
 	margin-bottom: var(--padding);
 	box-sizing: border-box; /* Prevent extension past parent */
 	width: 100%;
@@ -21,14 +21,14 @@ label[for='password-input'] {
 
 input[value='Log In'] {
 	display: block;
-	margin: auto;
-	margin-top: var(--padding);
+	/* margin: auto; */
+	/* margin-top: var(--padding); */
 	margin-bottom: var(--padding);
 	padding: var(--padding);
 }
 
 a[href='/register'] {
-	display: block;
-	padding: var(--padding);
+	/* display: block; */
+	/* padding: var(--padding); */
 	text-align: center;
 }
