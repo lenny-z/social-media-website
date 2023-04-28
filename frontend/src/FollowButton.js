@@ -50,7 +50,7 @@ export default function FollowButton({ username }) {
 				setFollowing(await getFollow(username));
 			}
 		} catch (err) {
-			util.log(err);
+			util.logHelper(err);
 		}
 	}
 

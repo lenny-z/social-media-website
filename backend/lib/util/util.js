@@ -16,7 +16,7 @@ function indent(str, numTabs) {
 	return str.replace(/^/gm, ('\t').repeat(numTabs));
 }
 
-function log(label = null, log, numTabs = 0) {
+function logHelper(log, numTabs = 0) {
 	if (process.env.NODE_ENV === 'development') {
 		let outLog = '';
 
@@ -54,60 +54,30 @@ function log(label = null, log, numTabs = 0) {
 				outLog = prettyJSON(log);
 		}
 
-		if (label) {
-			outLog = `${label}: ${outLog}`;
-		}
-
 		// const out = indent(outLog, numTabs);
-		outLog = indent(outLog, numTabs);
-		console.log(outLog);
+		if (numTabs > 0) {
+			outLog = indent(outLog, numTabs);
+		}
+		// console.log(out);
+		// console.log(outLog);
+		return outLog;
 	}
 }
 
-// function log(label, log, numTabs=0){
-// 	log(`${label}: ${log(log)}`, numTabs);
+// function llog(label, unlabeledLog, numTabs = 0) { // Labeled log
+// process.stdout.write(`${label}: `);
+// console.log(`${label}: ${log(unlabeledLog, numTabs)}`);
+// logHelper(unlabeledLog, numTabs);
 // }
 
-// exports.log = (log, numTabs = 0) => {
-// if (process.env.NODE_ENV === 'development') {
-// 	let outLog = '';
+// exports.log = logHelper;
+// exports.llog = llog;
 
-// 	switch (typeof log) {
-// 		case 'undefined':
-// 			outLog = 'UNDEFINED';
-// 			break;
+exports.log = (log, numTabs = 0) => {
+	console.log(logHelper(log, numTabs));
+};
 
-// 		case 'object':
-// 			if (log === null) {
-// 				outLog = 'NULL';
-// 			} else {
-// 				outLog = prettyJSON(log);
-// 			}
-
-// 			break;
-
-// 		case 'boolean':
-// 			outLog = log.toString();
-// 			break;
-
-// 		case 'number':
-// 			outLog = log.toString();
-// 			break;
-
-// 		case 'string':
-// 			outLog = log;
-// 			break;
-
-// 		case 'function':
-// 			outLog = log.toString();
-// 			break;
-
-// 		default:
-// 			outLog = prettyJSON(log);
-// 	}
-
-// 	const out = indent(outLog, numTabs);
-// 	console.log(out);
-// }
-// };
-exports.log = log;
+// Labeled log:
+exports.llog = (label, log, numTabs = 0) => {
+	console.log(logHelper(`${label}: ${logHelper(log)}`, numTabs));
+};
