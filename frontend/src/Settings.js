@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
@@ -6,6 +6,7 @@ import './css/Settings.css';
 
 export default function Settings() {
 	const navigate = useNavigate();
+	const [isAuthorized, setAuthorized, username] = useOutletContext();
 
 	async function handleLogout() {
 		console.log('Settings.handleLogout:');
@@ -18,6 +19,7 @@ export default function Settings() {
 			);
 
 			if (res.status === 200) {
+				setAuthorized(false);
 				navigate('/');
 			}
 		} catch (err) {

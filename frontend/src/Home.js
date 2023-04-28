@@ -40,11 +40,12 @@ export async function loader() {
 
 export default function Home() {
 	const data = useLoaderData();
-	const outletContext = useOutletContext();
-	util.log(outletContext);
+	// const outletContext = useOutletContext();
+	// util.log(outletContext);
+	const [isAuthorized, setAuthorized, username] = useOutletContext();
+	// const isAuthorized = useOutletContext()[0];
 	const [posts, setPosts] = useState(data.posts)
-	const appData = useRouteLoaderData('app');
-	// util.log(appData);
+	// const appData = useRouteLoaderData('app');
 
 	async function getAndShowPosts() {
 		setPosts(await getPosts());
@@ -53,7 +54,11 @@ export default function Home() {
 	return (
 		<>
 			<ContentHeader>Home</ContentHeader>
-			{appData.isAuthorized && <Editor
+			{/* {appData.isAuthorized && <Editor
+				getAndShowPosts={getAndShowPosts}
+				parentPostID={null}
+			/>} */}
+			{isAuthorized && <Editor
 				getAndShowPosts={getAndShowPosts}
 				parentPostID={null}
 			/>}
