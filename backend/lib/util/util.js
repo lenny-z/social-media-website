@@ -1,4 +1,5 @@
 const PRETTY_JSON_MAX_LENGTH = 256;
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 function prettyJSON(jsonObj) {
 	const out = JSON.stringify(jsonObj, null, '\t');
@@ -17,7 +18,8 @@ function indent(str, numTabs) {
 }
 
 function logHelper(log, numTabs = 0) {
-	if (process.env.NODE_ENV === 'development') {
+	// if (process.env.NODE_ENV === 'development') {
+	if (IS_DEV) {
 		let outLog = '';
 
 		switch (typeof log) {
@@ -54,30 +56,24 @@ function logHelper(log, numTabs = 0) {
 				outLog = prettyJSON(log);
 		}
 
-		// const out = indent(outLog, numTabs);
 		if (numTabs > 0) {
 			outLog = indent(outLog, numTabs);
 		}
-		// console.log(out);
-		// console.log(outLog);
 		return outLog;
 	}
+	// return '';
+	// }
 }
 
-// function llog(label, unlabeledLog, numTabs = 0) { // Labeled log
-// process.stdout.write(`${label}: `);
-// console.log(`${label}: ${log(unlabeledLog, numTabs)}`);
-// logHelper(unlabeledLog, numTabs);
-// }
-
-// exports.log = logHelper;
-// exports.llog = llog;
-
 exports.log = (log, numTabs = 0) => {
-	console.log(logHelper(log, numTabs));
+	if (IS_DEV) {
+		console.log(logHelper(log, numTabs));
+	}
 };
 
 // Labeled log:
 exports.llog = (label, log, numTabs = 0) => {
-	console.log(logHelper(`${label}: ${logHelper(log)}`, numTabs));
+	if (IS_DEV) {
+		console.log(logHelper(`${label}: ${logHelper(log)}`, numTabs));
+	}
 };

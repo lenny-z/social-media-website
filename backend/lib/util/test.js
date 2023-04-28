@@ -14,32 +14,21 @@ const testObject = {
 	testKey: 'testValue'
 };
 
-function testThing(thing){
-	console.log('testThing:');
-	console.log(`\tthing: ${thing}`);
-	const thingType = typeof thing;
-	console.log(`\tthingType: ${thingType}`);
+// function testThing(thing){
+// 	console.log('testThing:');
+// 	console.log(`\tthing: ${thing}`);
+// 	const thingType = typeof thing;
+// 	console.log(`\tthingType: ${thingType}`);
 
-	if(thingType !== 'undefined'){
-		if(thing){
-			console.log(`\ttoString: ${thing.toString()}`);
-		}
-	}
+// 	if(thingType !== 'undefined'){
+// 		if(thing){
+// 			console.log(`\ttoString: ${thing.toString()}`);
+// 		}
+// 	}
 
-	console.log(`\tJSON.stringify: ${JSON.stringify(thing)}`);
-	console.log();
-}
-
-// testThing(testNull);
-// testThing(testBool);
-// testThing(testNum);
-// testThing(testStr);
-// testThing(testFunction);
-// testThing(testObject);
-
-// util.log({
-// 	testKey: 'testValue'
-// });
+// 	console.log(`\tJSON.stringify: ${JSON.stringify(thing)}`);
+// 	console.log();
+// }
 
 util.log(testUndefined);
 util.log(testNull);
@@ -48,3 +37,11 @@ util.log(testNum);
 util.log(testStr);
 util.log(testFunction);
 util.log(testObject);
+
+util.llog('testUndefined', testUndefined);
+util.llog('testNull', testNull);
+util.llog('testBool', testBool);
+util.llog('testNum', testNum);
+util.llog('testStr', testStr);
+util.llog('testFunction', testFunction);
+util.llog('testObject', testObject);
