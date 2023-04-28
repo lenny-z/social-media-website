@@ -50,7 +50,7 @@ export default function Login() {
 				Login
 			</ContentHeader>
 			<ContentBody>
-				<form id='login-form' onSubmit={handleSubmit}>
+				<form onSubmit={handleSubmit}>
 					<label htmlFor='identifier-input'>Email or username:</label>
 					<input
 						id='identifier-input'
@@ -69,8 +69,8 @@ export default function Login() {
 						type='submit'
 						value='Log In'
 					/>
-					<Link to={'/register'}>Register</Link>
 				</form>
+				<Link to={'/register'}>Register</Link>
 			</ContentBody>
 		</>
 	);

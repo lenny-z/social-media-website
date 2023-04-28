@@ -1,7 +1,7 @@
-#register-form {
-	/* margin: auto; */
-	width: var(--id-password-width);
-}
+/* #register-form { */
+/* margin: auto; */
+/* width: var(--id-password-width); */
+/* } */
 
 label[for='email-input'],
 label[for='username-input'],
@@ -18,21 +18,15 @@ label[for='password-input'] {
 	margin-bottom: var(--padding);
 	/* Prevent extension past parent */
 	/* box-sizing: border-box; */
-	width: 100%;
+	/* width: 100%; */
+	width: var(--id-password-width);
 	padding: var(--padding);
 }
 
 input[value='Register'] {
 	display: block;
-	margin: auto;
-	margin-top: var(--padding);
+	/* margin: auto; */
+	/* margin-top: var(--padding); */
 	margin-bottom: var(--padding);
 	padding: var(--padding);
 }
-
-/* a[href='/register'] {
-	display: block;
-	padding: var(--padding);
-	text-align: center;
-} */
-
