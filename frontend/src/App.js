@@ -27,6 +27,7 @@ export async function loader() {
 		console.log(err);
 	}
 
+	// util.log(data);
 	return data;
 }
 
@@ -36,15 +37,11 @@ export default function App() {
 	const username = data.username;
 	const navigate = useNavigate();
 
-	// if (!isAuthorized) {
-	// 	navigate('/login');
-	// }
-
-	useEffect(() => {
-		if (!isAuthorized) {
-			navigate('/login');
-		}
-	}, [isAuthorized]);
+	// useEffect(() => {
+	// 	if (!isAuthorized) {
+	// 		navigate('/login');
+	// 	}
+	// }, [isAuthorized]);
 
 	return (
 		<>

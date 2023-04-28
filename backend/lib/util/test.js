@@ -14,22 +14,6 @@ const testObject = {
 	testKey: 'testValue'
 };
 
-// function testThing(thing){
-// 	console.log('testThing:');
-// 	console.log(`\tthing: ${thing}`);
-// 	const thingType = typeof thing;
-// 	console.log(`\tthingType: ${thingType}`);
-
-// 	if(thingType !== 'undefined'){
-// 		if(thing){
-// 			console.log(`\ttoString: ${thing.toString()}`);
-// 		}
-// 	}
-
-// 	console.log(`\tJSON.stringify: ${JSON.stringify(thing)}`);
-// 	console.log();
-// }
-
 util.log(testUndefined);
 util.log(testNull);
 util.log(testBool);

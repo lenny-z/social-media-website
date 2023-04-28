@@ -18,7 +18,6 @@ function indent(str, numTabs) {
 }
 
 function logHelper(log, numTabs = 0) {
-	// if (process.env.NODE_ENV === 'development') {
 	if (IS_DEV) {
 		let outLog = '';
 
@@ -61,8 +60,6 @@ function logHelper(log, numTabs = 0) {
 		}
 		return outLog;
 	}
-	// return '';
-	// }
 }
 
 exports.log = (log, numTabs = 0) => {
