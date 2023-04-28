@@ -35,14 +35,12 @@ export default function App() {
 	const username = data.username;
 	const navigate = useNavigate();
 
-	// if (data.isAuthorized === false) {
 	if (isAuthorized === false) {
 		navigate('/login');
 	}
 
 	return (
 		<>
-			{/* <NavPanel isAuthorized={data.isAuthorized} username={data.username} /> */}
 			<NavPanel isAuthorized={isAuthorized} username={username} />
 			<div id='content-panel'>
 				<Outlet context={[isAuthorized, setAuthorized, username]} />

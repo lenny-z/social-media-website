@@ -4,7 +4,7 @@ const queries = require('../lib/queries.js');
 const argon2 = require('argon2');
 const session = require('../lib/session.js');
 
-async function authorize(req, res, next) {
+function authorize(req, res, next) {
 	util.log('authorize:');
 	util.log(`req.session.userID: ${req.session.userID}`, 1);
 

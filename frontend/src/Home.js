@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLoaderData, useRouteLoaderData, useOutletContext } from 'react-router-dom';
+import { useLoaderData, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import Editor from './Editor.js';
@@ -40,12 +40,10 @@ export async function loader() {
 
 export default function Home() {
 	const data = useLoaderData();
-	// const outletContext = useOutletContext();
-	// util.log(outletContext);
-	const [isAuthorized, setAuthorized, username] = useOutletContext();
-	// const isAuthorized = useOutletContext()[0];
+	// const [isAuthorized, setAuthorized, username] = useOutletContext();
+	const isAuthorized = useOutletContext[0];
+	util.log(isAuthorized);
 	const [posts, setPosts] = useState(data.posts)
-	// const appData = useRouteLoaderData('app');
 
 	async function getAndShowPosts() {
 		setPosts(await getPosts());
@@ -54,10 +52,6 @@ export default function Home() {
 	return (
 		<>
 			<ContentHeader>Home</ContentHeader>
-			{/* {appData.isAuthorized && <Editor
-				getAndShowPosts={getAndShowPosts}
-				parentPostID={null}
-			/>} */}
 			{isAuthorized && <Editor
 				getAndShowPosts={getAndShowPosts}
 				parentPostID={null}
