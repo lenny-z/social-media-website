@@ -7,12 +7,17 @@ export default function NavPanel({ isAuthorized, username }) {
 			<header id='nav-header'>Social Network</header>
 			<ol>
 				<li><Link to={'/'}>Home</Link></li>
-				{isAuthorized && <li><Link to={`/${username}`}>Profile</Link></li>}
+				{isAuthorized === true
+					&& <li><Link to={`/${username}`}>Profile</Link></li>
+				}
 				{/* {isAuthorized && <li>Collections</li>} */}
 				<li><Link to={'/search'}>Search</Link></li>
 				{/* {isAuthorized && <li>Notifications</li>} */}
 				{/* {isAuthorized && <li>Messages</li>} */}
-				<li><Link to={'/settings'}>Settings</Link></li>
+				{isAuthorized === true
+					&& <li><Link to={'/settings'}>Settings</Link></li>
+				}
+				{!isAuthorized && <li><Link to={'/login'}>Log In</Link></li>}
 			</ol>
 		</nav>
 	);
