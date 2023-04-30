@@ -1,13 +1,10 @@
-import { Outlet, useNavigate, useLoaderData } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Outlet, useLoaderData } from 'react-router-dom';
+import { useState, } from 'react';
 import axios from 'axios';
 import NavPanel from './NavPanel.js';
 import './css/App.css';
 
-// const util = require('@lenny_zhou/util');
-
 export async function loader() {
-	// util.log('App.loader:');
 	const data = {
 		isAuthorized: false,
 		username: null
@@ -27,7 +24,6 @@ export async function loader() {
 		console.log(err);
 	}
 
-	// util.log(data);
 	return data;
 }
 
@@ -35,13 +31,6 @@ export default function App() {
 	const data = useLoaderData();
 	const [isAuthorized, setAuthorized] = useState(data.isAuthorized);
 	const username = data.username;
-	// const navigate = useNavigate();
-
-	// useEffect(() => {
-	// 	if (!isAuthorized) {
-	// 		navigate('/login');
-	// 	}
-	// }, [isAuthorized]);
 
 	return (
 		<>

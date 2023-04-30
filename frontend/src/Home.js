@@ -6,7 +6,7 @@ import Editor from './Editor.js';
 import ContentBody from './ContentBody.js';
 import PostsList from './PostsList.js';
 
-const util = require('@lenny_zhou/util');
+// const util = require('@lenny_zhou/util');
 
 async function getPosts() {
 	try {
@@ -21,18 +21,21 @@ async function getPosts() {
 
 		return null;
 	} catch (err) {
-		console.log(err);
+		// console.log(err);
 		throw err;
 	}
 }
 
 export async function loader() {
-	const data = {};
+	const data = {
+		posts: null
+	};
 
 	try {
 		data.posts = await getPosts();
 	} catch (err) {
 		console.log(err);
+		// throw err;
 	}
 
 	return data;
@@ -55,7 +58,7 @@ export default function Home() {
 				parentPostID={null}
 			/>}
 			<ContentBody>
-				<PostsList posts={posts} />
+				{posts && <PostsList posts={posts} />}
 			</ContentBody>
 		</>
 	);

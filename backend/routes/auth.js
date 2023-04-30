@@ -5,10 +5,10 @@ const argon2 = require('argon2');
 const session = require('../lib/session.js');
 
 function authorize(req, res, next) {
-	util.log('authorize:');
-	util.log(`req.session.userID: ${req.session.userID}`, 1);
+	// util.log('authorize:');
+	// util.log(`req.session.userID: ${req.session.userID}`, 1);
 
-	if (req.session.userID) {
+	if (req.session && req.session.userID) {
 		next();
 	} else {
 		res.sendStatus(401); // 401 Unauthorized
@@ -18,8 +18,8 @@ function authorize(req, res, next) {
 exports.authorize = authorize;
 
 router.get('/authorize', authorize, async (req, res) => {
-	util.log('GET to /authorize:');
-	util.log(`req.session.userID: ${req.session.userID}`, 1);
+	// util.log('GET to /authorize:');
+	// util.log(`req.session.userID: ${req.session.userID}`, 1);
 
 	if (req.session.userID) {
 		try {
@@ -36,7 +36,7 @@ router.get('/authorize', authorize, async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-	console.log('POST to /login:');
+	// console.log('POST to /login:');
 
 	try {
 		const userID = await queries.getUserID(req.body.identifier);
@@ -67,17 +67,25 @@ router.post('/logout', authorize, (req, res) => {
 	util.log('POST to /logout:')
 	req.session.userID = null;
 
-	req.session.save((err) => {
+	// req.session.save((err) => {
+	// 	if (err) {
+	// 		res.sendStatus(500);
+	// 	} else {
+	// 		req.session.regenerate((err) => {
+	// 			if (err) {
+	// 				res.sendStatus(500);
+	// 			} else {
+	// 				res.sendStatus(200);
+	// 			}
+	// 		})
+	// 	}
+	// })
+	req.session.destroy((err) => {
 		if (err) {
+			console.error(err);
 			res.sendStatus(500);
 		} else {
-			req.session.regenerate((err) => {
-				if (err) {
-					res.sendStatus(500);
-				} else {
-					res.sendStatus(200);
-				}
-			})
+			res.sendStatus(200);
 		}
 	})
 });
