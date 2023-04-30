@@ -29,7 +29,7 @@ const router = createBrowserRouter([
 			{
 				path: '/',
 				element: <Home />,
-				loader: homeLoader
+				// loader: homeLoader
 			},
 			{
 				path: '/search',

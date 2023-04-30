@@ -51,7 +51,7 @@ exports.getAllPosts = async () => {
 		FROM posts_view;`;
 
 	try {
-		const res = await pool.query(query, params);
+		const res = await pool.query(query);
 		return res.rows;
 	} catch (err) {
 		console.error(err);

@@ -31,6 +31,7 @@ export async function loader({ params }) {
 export default function Profile() {
 	const params = useParams();
 	const data = useLoaderData();
+	const isAuthorized = useOutletContext()[0];
 	const username = useOutletContext()[2];
 
 	return (
@@ -40,7 +41,7 @@ export default function Profile() {
 					<div id='profile-header-username'>
 						{params.username}
 					</div>
-					{(username !== params.username) &&
+					{isAuthorized === true && username !== params.username &&
 						<FollowButton username={params.username} />
 					}
 				</div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLoaderData, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
@@ -6,73 +6,73 @@ import Editor from './Editor.js';
 import ContentBody from './ContentBody.js';
 import PostsList from './PostsList.js';
 
-// async function getPosts() {
-// 	try {
-// 		const res = await axios.get(
-// 			process.env.REACT_APP_FEED_POSTS,
-// 			{ withCredentials: true }
-// 		);
-
-// 		if (res.status === 200) {
-// 			return res.data;
-// 		}
-// 	} catch (err) {
-// 		console.error(err);
-// 	}
-
-// 	return null;
-// }
-
-async function getPosts(isAuthorized) {
+async function getPosts() {
 	try {
-		let res = null;
-
-		if (isAuthorized === true) {
-			res = await axios.get(
-				process.env.REACT_APP_FEED_POSTS,
-				{ withCredentials: true }
-			);
-		} else {
-			res = await axios.get(
-				process.env.REACT_APP_ALL_POSTS
-			);
-		}
+		const res = await axios.get(
+			process.env.REACT_APP_FEED_POSTS,
+			{ withCredentials: true }
+		);
 
 		if (res.status === 200) {
 			return res.data;
 		}
 
-		// return null;
+		return null;
 	} catch (err) {
 		console.error(err);
-		// throw err;
+		throw err;
 	}
-
-	return null;
 }
 
-export async function loader() {
-	const data = {
-		posts: null
-	};
+async function getAllPosts() {
+	try {
+		const res = await axios.get(
+			process.env.REACT_APP_ALL_POSTS
+		);
 
-	// try {
-	data.posts = await getPosts();
-	// } catch (err) {
-	// data.posts = null;
-	// }
+		if (res.status === 200) {
+			return res.data;
+		}
 
-	return data;
+		return null;
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
 }
+
+// export async function loader() {
+// 	const data = {
+// 		posts: null
+// 	};
+
+// 	// try {
+// 	data.posts = await getPosts();
+// 	// } catch (err) {
+// 	// data.posts = null;
+// 	// }
+
+// 	return data;
+// }
 
 export default function Home() {
-	const data = useLoaderData();
+	// const data = useLoaderData();
 	const isAuthorized = useOutletContext()[0];
-	const [posts, setPosts] = useState(data.posts)
+	// const [posts, setPosts] = useState(data.posts)
+	const [posts, setPosts] = useState([]);
 
 	async function getAndShowPosts() {
-		setPosts(await getPosts());
+		if (isAuthorized === true) {
+			setPosts(await getPosts());
+		} else {
+			setPosts(await getAllPosts());
+		}
 	}
+
+	useEffect(() => {
+		getAndShowPosts();
+	})
+
 
 	return (
 		<>
