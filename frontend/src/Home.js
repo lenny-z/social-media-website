@@ -6,18 +6,46 @@ import Editor from './Editor.js';
 import ContentBody from './ContentBody.js';
 import PostsList from './PostsList.js';
 
-async function getPosts() {
+// async function getPosts() {
+// 	try {
+// 		const res = await axios.get(
+// 			process.env.REACT_APP_FEED_POSTS,
+// 			{ withCredentials: true }
+// 		);
+
+// 		if (res.status === 200) {
+// 			return res.data;
+// 		}
+// 	} catch (err) {
+// 		console.error(err);
+// 	}
+
+// 	return null;
+// }
+
+async function getPosts(isAuthorized) {
 	try {
-		const res = await axios.get(
-			process.env.REACT_APP_FEED_POSTS,
-			{ withCredentials: true }
-		);
+		let res = null;
+
+		if (isAuthorized === true) {
+			res = await axios.get(
+				process.env.REACT_APP_FEED_POSTS,
+				{ withCredentials: true }
+			);
+		} else {
+			res = await axios.get(
+				process.env.REACT_APP_ALL_POSTS
+			);
+		}
 
 		if (res.status === 200) {
 			return res.data;
 		}
+
+		// return null;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
+		// throw err;
 	}
 
 	return null;
@@ -28,7 +56,12 @@ export async function loader() {
 		posts: null
 	};
 
+	// try {
 	data.posts = await getPosts();
+	// } catch (err) {
+	// data.posts = null;
+	// }
+
 	return data;
 }
 

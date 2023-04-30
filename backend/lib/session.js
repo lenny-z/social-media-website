@@ -37,8 +37,7 @@ const sessionOptions = {
 exports.manager = session(sessionOptions);
 
 exports.set = (req, userID) => {
-	util.log(`session.set:`);
-
+	// util.log(`session.set:`);
 	return new Promise((resolve, reject) => {
 		req.session.regenerate((err) => {
 			if (err) {

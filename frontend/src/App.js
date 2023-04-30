@@ -30,7 +30,6 @@ export async function loader() {
 export default function App() {
 	const data = useLoaderData();
 	const [isAuthorized, setAuthorized] = useState(data.isAuthorized);
-	// const username = data.username;
 	const [username, setUsername] = useState(data.username);
 
 	return (

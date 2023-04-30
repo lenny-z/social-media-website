@@ -56,7 +56,6 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/logout', authorize, (req, res) => {
-	// util.log('POST to /logout:')
 	req.session.userID = null;
 
 	req.session.destroy((err) => {
@@ -87,7 +86,6 @@ router.post('/register', async (req, res) => {
 			util.log(`newUserID: ${newUserID}`, 1);
 
 			if (await session.set(req, newUserID)) {
-				// res.sendStatus(201); // 201 Created
 				const username = await queries.getUsername(newUserID);
 				res.status(201).send({username: username});
 			} else {

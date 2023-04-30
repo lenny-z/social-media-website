@@ -9,6 +9,7 @@ exports.makePost = async (userID, parentID, body, timePosted) => {
 	try {
 		await pool.query(query, params);
 	} catch (err) {
+		console.error(err);
 		throw err;
 	}
 };
@@ -44,6 +45,19 @@ exports.getProfilePosts = async (username) => {
 		throw err;
 	}
 };
+
+exports.getAllPosts = async () => {
+	const query = `SELECT id, poster_username, time_posted, body, num_replies
+		FROM posts_view;`;
+
+	try {
+		const res = await pool.query(query, params);
+		return res.rows;
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+}
 
 exports.getReplyPosts = async (parentID) => {
 	const query = `SELECT id, poster_username, time_posted, body, num_replies
