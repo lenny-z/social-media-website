@@ -6,8 +6,6 @@ import Editor from './Editor.js';
 import ContentBody from './ContentBody.js';
 import PostsList from './PostsList.js';
 
-// const util = require('@lenny_zhou/util');
-
 async function getPosts() {
 	try {
 		const res = await axios.get(
@@ -18,12 +16,11 @@ async function getPosts() {
 		if (res.status === 200) {
 			return res.data;
 		}
-
-		return null;
 	} catch (err) {
-		// console.log(err);
-		throw err;
+		console.log(err);
 	}
+
+	return null;
 }
 
 export async function loader() {
@@ -31,13 +28,7 @@ export async function loader() {
 		posts: null
 	};
 
-	try {
-		data.posts = await getPosts();
-	} catch (err) {
-		console.log(err);
-		// throw err;
-	}
-
+	data.posts = await getPosts();
 	return data;
 }
 

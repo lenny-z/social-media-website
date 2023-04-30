@@ -45,8 +45,6 @@ exports.getUserID = async (identifier) => {
 };
 
 exports.getUsername = async (id) => {
-	util.log('getUsername:');
-
 	const query = `SELECT username FROM users WHERE id = $1;`;
 	const params = [id];
 
@@ -60,7 +58,8 @@ exports.getUsername = async (id) => {
 		}
 	} catch (err) {
 		console.error(err.stack);
-		return null;
+		// return null;
+		throw err;
 	}
 };
 

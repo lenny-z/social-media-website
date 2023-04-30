@@ -30,13 +30,19 @@ export async function loader() {
 export default function App() {
 	const data = useLoaderData();
 	const [isAuthorized, setAuthorized] = useState(data.isAuthorized);
-	const username = data.username;
+	// const username = data.username;
+	const [username, setUsername] = useState(data.username);
 
 	return (
 		<>
 			<NavPanel isAuthorized={isAuthorized} username={username} />
 			<div id='content-panel'>
-				<Outlet context={[isAuthorized, setAuthorized, username]} />
+				<Outlet context={[
+					isAuthorized,
+					setAuthorized,
+					username,
+					setUsername
+				]} />
 			</div>
 		</>
 	);

@@ -9,6 +9,7 @@ export default function Login() {
 	const [identifier, setIdentifier] = useState('');
 	const [password, setPassword] = useState('');
 	const setAuthorized = useOutletContext()[1];
+	const setUsername = useOutletContext()[3];
 	const navigate = useNavigate();
 
 	async function handleSubmit(event) {
@@ -24,10 +25,11 @@ export default function Login() {
 			const res = await axios.post(process.env.REACT_APP_LOGIN, user,
 				{ withCredentials: true });
 
-			console.log(`\tres.data: ${res.data}`);
+			// console.log(`\tres.data: ${res.data}`);
 
 			if (res.status === 200) { // 200 OK
 				setAuthorized(true);
+				setUsername(res.data.username);
 				navigate('/');
 			}
 		} catch (err) {

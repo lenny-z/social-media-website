@@ -5,9 +5,6 @@ const argon2 = require('argon2');
 const session = require('../lib/session.js');
 
 function authorize(req, res, next) {
-	// util.log('authorize:');
-	// util.log(`req.session.userID: ${req.session.userID}`, 1);
-
 	if (req.session && req.session.userID) {
 		next();
 	} else {
@@ -18,21 +15,22 @@ function authorize(req, res, next) {
 exports.authorize = authorize;
 
 router.get('/authorize', authorize, async (req, res) => {
-	// util.log('GET to /authorize:');
-	// util.log(`req.session.userID: ${req.session.userID}`, 1);
+	// if (req.session.userID) {
+	try {
+		const username = await queries.getUsername(req.session.userID);
 
-	if (req.session.userID) {
-		try {
-			const username = await queries.getUsername(req.session.userID);
-			util.log(`username: ${username}`, 1);
+		if(username){
 			res.status(200).send({ username: username });
-		} catch (err) {
-			console.error(err);
-			res.sendStatus(500);
+		}else{
+			res.sendStatus(401);
 		}
-	} else {
-		res.sendStatus(401);
+	} catch (err) {
+		console.error(err);
+		res.sendStatus(500);
 	}
+	// } else {
+	// res.sendStatus(401);
+	// }
 });
 
 router.post('/login', async (req, res) => {
@@ -40,14 +38,16 @@ router.post('/login', async (req, res) => {
 
 	try {
 		const userID = await queries.getUserID(req.body.identifier);
-		util.log(`userID: ${userID}`, 1);
+		// util.log(`userID: ${userID}`, 1);
 
 		if (userID) {
 			const saltedPasswordHash = await queries.getSaltedPasswordHash(userID);
 
 			if (await argon2.verify(saltedPasswordHash, req.body.password)) {
 				if (await session.set(req, userID)) {
-					res.sendStatus(200); // 200 OK
+					const username = await queries.getUsername(userID);
+					// res.sendStatus(200); // 200 OK
+					res.status(200).send({username: username});
 				} else {
 					res.sendStatus(500); // 500 Internal Server Error
 				}

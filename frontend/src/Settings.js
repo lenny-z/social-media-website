@@ -6,10 +6,12 @@ import './css/Settings.css';
 
 export default function Settings() {
 	const navigate = useNavigate();
-	const [isAuthorized, setAuthorized, username] = useOutletContext();
+	// const [isAuthorized, setAuthorized, username] = useOutletContext();
+	const setAuthorized = useOutletContext()[1];
+	const setUsername = useOutletContext()[3];
 
 	async function handleLogout() {
-		console.log('Settings.handleLogout:');
+		// console.log('Settings.handleLogout:');
 
 		try {
 			const res = await axios.post(
@@ -20,10 +22,12 @@ export default function Settings() {
 
 			if (res.status === 200) {
 				setAuthorized(false);
+				setUsername(null);
 				navigate('/');
 			}
 		} catch (err) {
-			console.log('Implement Settings.handleLogout error handling');
+			// console.log('Implement Settings.handleLogout error handling');
+			console.log(err);
 		}
 	}
 
