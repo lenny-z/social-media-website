@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
@@ -11,6 +11,8 @@ export default function Register() {
 	const [email, setEmail] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const setAuthorized = useOutletContext()[1];
+	const setReturnedUsername = useOutletContext()[3];
 	const navigate = useNavigate();
 
 	async function handleSubmit(event) {
@@ -27,6 +29,8 @@ export default function Register() {
 				{ withCredentials: true });
 
 			if (res.status === 201) {
+				setAuthorized(true);
+				setReturnedUsername(res.data.username);
 				navigate('/');
 			}
 		} catch (err) {

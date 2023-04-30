@@ -58,7 +58,6 @@ exports.getUsername = async (id) => {
 		}
 	} catch (err) {
 		console.error(err.stack);
-		// return null;
 		throw err;
 	}
 };
