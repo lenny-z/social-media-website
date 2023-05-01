@@ -1,11 +1,9 @@
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './css/Editor.css';
 
 export default function Editor({ getAndShowPosts, parentPostID }) {
 	const [body, setBody] = useState('');
-	// const navigate = useNavigate();
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -28,9 +26,6 @@ export default function Editor({ getAndShowPosts, parentPostID }) {
 			}
 		} catch (err) {
 			console.log(err);
-			// if (err.response && err.response.status === 401) {
-			// 	navigate('/');
-			// }
 		}
 	}
 

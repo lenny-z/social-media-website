@@ -25,7 +25,6 @@ export async function loader({ params }) {
 
 		data.isFollowing = await getFollow(params.username);
 	} catch (err) {
-		// util.log(err);
 		console.error(err);
 	}
 

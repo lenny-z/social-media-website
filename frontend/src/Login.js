@@ -27,7 +27,7 @@ export default function Login() {
 
 			if (res.status === 200) { // 200 OK
 				setAuthorized(true);
-				setUsername(res.data.username);
+				setUsername(res.data);
 				navigate('/');
 			}
 		} catch (err) {

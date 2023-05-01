@@ -19,7 +19,7 @@ router.get('/authorize', authorize, async (req, res) => {
 		const username = await queries.getUsername(req.session.userID);
 
 		if (username) {
-			res.status(200).send({ username: username });
+			res.status(200).send(username);
 		} else {
 			res.sendStatus(401);
 		}
@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
 			if (await argon2.verify(saltedPasswordHash, req.body.password)) {
 				if (await session.set(req, userID)) {
 					const username = await queries.getUsername(userID);
-					res.status(200).send({ username: username });
+					res.status(200).send(username);
 				} else {
 					res.sendStatus(500); // 500 Internal Server Error
 				}
@@ -87,7 +87,7 @@ router.post('/register', async (req, res) => {
 
 			if (await session.set(req, newUserID)) {
 				const username = await queries.getUsername(newUserID);
-				res.status(201).send({username: username});
+				res.status(201).send(username);
 			} else {
 				res.sendStatus(500); // 500 Internal Server Error
 			}

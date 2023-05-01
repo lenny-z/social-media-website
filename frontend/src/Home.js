@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import Editor from './Editor.js';
@@ -17,7 +17,8 @@ async function getFeedPosts() {
 			return res.data;
 		}
 
-		return null;
+		// return null;
+		throw new Error('NOT 200');
 	} catch (err) {
 		console.error(err);
 		throw err;
@@ -34,7 +35,8 @@ async function getAllPosts() {
 			return res.data;
 		}
 
-		return null;
+		// return null;
+		throw new Error('NOT 200');
 	} catch (err) {
 		console.error(err);
 		throw err;
@@ -43,7 +45,9 @@ async function getAllPosts() {
 
 export default function Home() {
 	const isAuthorized = useOutletContext()[0];
+	console.log('isAuthorized: ' + isAuthorized);
 	const [posts, setPosts] = useState(null);
+	// const location = useLocation();
 
 	async function getAndShowPosts() {
 		try {
@@ -57,9 +61,10 @@ export default function Home() {
 		}
 	}
 
-	useEffect(() => {
+	useEffect(() => { // Move this functionality to loader
+		// console.log('using effect');
 		getAndShowPosts();
-	}, [])
+	});
 
 
 	return (

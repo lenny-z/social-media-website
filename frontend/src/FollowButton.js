@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import axios from 'axios';
-// import util from '@lenny_zhou/util';
 
 export async function getFollow(username) {
 	try {
@@ -51,7 +50,6 @@ export default function FollowButton({ username }) {
 				setFollowing(await getFollow(username));
 			}
 		} catch (err) {
-			// util.logHelper(err);
 			console.error(err);
 		}
 	}
@@ -67,7 +65,6 @@ export default function FollowButton({ username }) {
 				setFollowing(await getFollow(username));
 			}
 		} catch (err) {
-			// console.log(err);
 			console.error(err);
 		}
 	}
