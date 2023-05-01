@@ -10,8 +10,12 @@
 	font-size: var(--large-font-size);
 }
 
-#nav-panel>ol>li>a {
-	display: block;
+#nav-panel>ol>li {
 	padding-top: var(--padding);
+}
+
+#nav-panel>ol>li>a {
+	/* display: block; */
+	/* padding-top: var(--padding); */
 	font-size: var(--medium-font-size);
 }

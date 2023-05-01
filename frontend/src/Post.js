@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useOutletContext, useNavigate } from 'react-router-dom';
 import Editor from './Editor.js';
 import PostsList from './PostsList.js';
 import axios from 'axios';
@@ -12,6 +12,10 @@ export default function Post({ id, poster, body, timePosted, initNumReplies }) {
 	const [showRepliesMode, setShowRepliesMode] = useState(false);
 	const [replyMode, setReplyMode] = useState(false);
 	const [numReplies, setNumReplies] = useState(initNumReplies);
+	// const outletContext = useOutletContext();
+	// console.log(outletContext);
+	const isAuthorized = useOutletContext()[0];
+	const navigate = useNavigate();
 
 	async function getAndShowReplies() {
 		try {
@@ -25,7 +29,7 @@ export default function Post({ id, poster, body, timePosted, initNumReplies }) {
 				setShowRepliesMode(true);
 			}
 		} catch (err) {
-			util.log(err);
+			console.log(err);
 		}
 	}
 
@@ -47,7 +51,11 @@ export default function Post({ id, poster, body, timePosted, initNumReplies }) {
 	}
 
 	function toggleReplyMode() {
-		setReplyMode(!replyMode);
+		if (isAuthorized === true) {
+			setReplyMode(!replyMode);
+		} else {
+			navigate('/login');
+		}
 	}
 
 	return (

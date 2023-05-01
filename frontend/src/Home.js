@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useLoaderData, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import Editor from './Editor.js';
 import ContentBody from './ContentBody.js';
 import PostsList from './PostsList.js';
 
-async function getPosts() {
+async function getFeedPosts() {
 	try {
 		const res = await axios.get(
 			process.env.REACT_APP_FEED_POSTS,
@@ -41,29 +41,13 @@ async function getAllPosts() {
 	}
 }
 
-// export async function loader() {
-// 	const data = {
-// 		posts: null
-// 	};
-
-// 	// try {
-// 	data.posts = await getPosts();
-// 	// } catch (err) {
-// 	// data.posts = null;
-// 	// }
-
-// 	return data;
-// }
-
 export default function Home() {
-	// const data = useLoaderData();
 	const isAuthorized = useOutletContext()[0];
-	// const [posts, setPosts] = useState(data.posts)
 	const [posts, setPosts] = useState([]);
 
 	async function getAndShowPosts() {
 		if (isAuthorized === true) {
-			setPosts(await getPosts());
+			setPosts(await getFeedPosts());
 		} else {
 			setPosts(await getAllPosts());
 		}

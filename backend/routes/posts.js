@@ -16,7 +16,6 @@ router.post('/', authorize, async (req, res) => {
 
 		res.sendStatus(201); // 201 Created
 	} catch (err) {
-		// console.error(err);
 		res.sendStatus(500); // 500 Internal Server Error
 	}
 });
@@ -28,7 +27,6 @@ router.get('/profile/:username', async (req, res) => {
 		const dbRes = await queries.getProfilePosts(req.params.username);
 		res.status(200).send(dbRes); // 200 OK
 	} catch (err) {
-		// console.error(err);
 		res.sendStatus(500);
 	}
 });
@@ -40,7 +38,6 @@ router.get('/feed', authorize, async (req, res) => {
 		const dbRes = await queries.getFeedPosts(req.session.userID);
 		res.status(200).send(dbRes);
 	} catch (err) {
-		// console.error(err);
 		res.sendStatus(500);
 	}
 });
@@ -63,21 +60,8 @@ router.get('/replies/:postID', async (req, res) => {
 		const dbRes = await queries.getReplyPosts(req.params.postID);
 		res.status(200).send(dbRes);
 	} catch (err) {
-		// console.error(err);
 		res.sendStatus(500);
 	}
 });
-
-// router.get('/replies/count/:postID', async (req, res) => {
-// 	util.log('GET to /posts/replies/count:');
-
-// 	try {
-// 		const dbRes = await queries.getNumReplies(req.params.postID);
-// 		res.status(200).send(0); //stub
-// 	} catch (err) {
-// 		console.error(err);
-// 		res.sendStatus(500);
-// 	}
-// });
 
 module.exports = router;
