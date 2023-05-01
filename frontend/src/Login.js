@@ -1,15 +1,13 @@
 import { useState } from 'react';
-import { useNavigate, Link, useOutletContext } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
 import './css/Login.css';
 
-export default function Login({setAuthorized, setUsername}) {
+export default function Login({ setAuthorized, setUsername }) {
 	const [identifier, setIdentifier] = useState('');
 	const [password, setPassword] = useState('');
-	// const setAuthorized = useOutletContext()[1];
-	// const setUsername = useOutletContext()[3];
 	const navigate = useNavigate();
 
 	async function handleSubmit(event) {

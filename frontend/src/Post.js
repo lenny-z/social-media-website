@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { Link, useOutletContext, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Editor from './Editor.js';
 import PostsList from './PostsList.js';
 import axios from 'axios';
 import './css/Post.css';
-
-const util = require('@lenny_zhou/util');
 
 export default function Post({
 	id,
@@ -19,7 +17,6 @@ export default function Post({
 	const [showRepliesMode, setShowRepliesMode] = useState(false);
 	const [replyMode, setReplyMode] = useState(false);
 	const [numReplies, setNumReplies] = useState(initNumReplies);
-	// const isAuthorized = useOutletContext()[0];
 	const navigate = useNavigate();
 
 	async function getAndShowReplies() {

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import axios from 'axios';
 
-// import App, { loader as appLoader } from './App.js';
 import App from './App.js';
 import Error from './Error.js';
 import Login from './Login.js';
@@ -14,7 +13,8 @@ import Profile, { loader as profileLoader } from './Profile.js';
 import Settings from './Settings.js';
 
 function Index() {
-	// Default to unauthorized behavior
+	console.log('re-rendered');
+	// Default to unauthorized flow
 	const [isAuthorized, setAuthorized] = React.useState(false);
 	const [username, setUsername] = React.useState(null);
 
@@ -42,12 +42,14 @@ function Index() {
 		{
 			path: '/',
 			element: <App isAuthorized={isAuthorized} username={username} />,
-			// loader: appLoader,
 			errorElement: <Error />,
 			children: [
 				{
 					path: '/login',
-					element: <Login setAuthorized={setAuthorized} setUsername={setUsername} />
+					element: <Login
+						setAuthorized={setAuthorized}
+						setUsername={setUsername}
+					/>
 				},
 				{
 					path: '/register',
@@ -64,12 +66,19 @@ function Index() {
 				},
 				{
 					path: '/:username',
-					element: <Profile isAuthorized={isAuthorized} username={username} />,
+					element: <Profile
+						isAuthorized={isAuthorized}
+						username={username}
+					/>,
 					loader: profileLoader
 				},
 				{
 					path: '/settings',
-					element: <Settings />
+					element: <Settings
+						isAuthorized={isAuthorized}
+						setAuthorized={setAuthorized}
+						setUsername={setUsername}
+					/>
 				}
 			]
 		}

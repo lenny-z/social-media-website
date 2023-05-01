@@ -2,7 +2,6 @@ import Post from './Post.js';
 import './css/PostsList.css';
 
 export default function PostsList({ posts, isAuthorized }) {
-	console.log(posts);
 	function jsDate(pgDate) {
 		const pgDateTailRegex = /\.\w*/;
 		return new Date(pgDate.replace(pgDateTailRegex, ''));
@@ -28,6 +27,7 @@ export default function PostsList({ posts, isAuthorized }) {
 				timePosted={post.timePosted}
 				body={post.body}
 				initNumReplies={post.numReplies}
+				isAuthorized={isAuthorized}
 			/>
 		</li>
 	);

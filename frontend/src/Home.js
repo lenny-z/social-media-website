@@ -1,5 +1,5 @@
-// import { useState } from 'react';
-import { useOutletContext, useLoaderData } from 'react-router-dom';
+import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import Editor from './Editor.js';
@@ -70,7 +70,8 @@ export function loader(isAuthorized) {
 }
 
 export default function Home({ isAuthorized }) {
-	const [posts, setPosts] = useLoaderData().posts;
+	const data = useLoaderData();
+	const [posts, setPosts] = useState(data.posts);
 
 	async function getAndShowPosts() {
 		try {
@@ -83,11 +84,6 @@ export default function Home({ isAuthorized }) {
 			setPosts(null);
 		}
 	}
-
-	// useEffect(() => { // Move this functionality to loader
-	// 	getAndShowPosts();
-	// });
-
 
 	return (
 		<>
