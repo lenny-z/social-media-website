@@ -43,19 +43,23 @@ async function getAllPosts() {
 
 export default function Home() {
 	const isAuthorized = useOutletContext()[0];
-	const [posts, setPosts] = useState([]);
+	const [posts, setPosts] = useState(null);
 
 	async function getAndShowPosts() {
-		if (isAuthorized === true) {
-			setPosts(await getFeedPosts());
-		} else {
-			setPosts(await getAllPosts());
+		try {
+			if (isAuthorized === true) {
+				setPosts(await getFeedPosts());
+			} else {
+				setPosts(await getAllPosts());
+			}
+		} catch (err) {
+			setPosts(null);
 		}
 	}
 
 	useEffect(() => {
 		getAndShowPosts();
-	})
+	}, [])
 
 
 	return (

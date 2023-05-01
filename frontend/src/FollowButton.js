@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import axios from 'axios';
-import util from '@lenny_zhou/util';
+// import util from '@lenny_zhou/util';
 
 export async function getFollow(username) {
 	try {
@@ -15,6 +15,7 @@ export async function getFollow(username) {
 		}
 	} catch (err) {
 		console.log(err);
+		throw err;
 	}
 }
 
@@ -24,8 +25,8 @@ export default function FollowButton({ username }) {
 	const [isHovered, setHovered] = useState(false);
 	let buttonValue = '';
 
-	if (isFollowing) {
-		if (isHovered) {
+	if (isFollowing === true) {
+		if (isHovered === true) {
 			buttonValue = 'Unfollow';
 		} else {
 			buttonValue = 'Following';
@@ -50,7 +51,8 @@ export default function FollowButton({ username }) {
 				setFollowing(await getFollow(username));
 			}
 		} catch (err) {
-			util.logHelper(err);
+			// util.logHelper(err);
+			console.error(err);
 		}
 	}
 
@@ -65,7 +67,8 @@ export default function FollowButton({ username }) {
 				setFollowing(await getFollow(username));
 			}
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
+			console.error(err);
 		}
 	}
 

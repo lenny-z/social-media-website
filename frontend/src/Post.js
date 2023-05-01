@@ -12,8 +12,6 @@ export default function Post({ id, poster, body, timePosted, initNumReplies }) {
 	const [showRepliesMode, setShowRepliesMode] = useState(false);
 	const [replyMode, setReplyMode] = useState(false);
 	const [numReplies, setNumReplies] = useState(initNumReplies);
-	// const outletContext = useOutletContext();
-	// console.log(outletContext);
 	const isAuthorized = useOutletContext()[0];
 	const navigate = useNavigate();
 

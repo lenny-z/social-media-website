@@ -9,7 +9,10 @@ import './css/Profile.css';
 const util = require('@lenny_zhou/util');
 
 export async function loader({ params }) {
-	const data = {};
+	const data = {
+		posts: null,
+		isFollowing: null
+	};
 
 	try {
 		const res = await axios.get(
@@ -22,7 +25,8 @@ export async function loader({ params }) {
 
 		data.isFollowing = await getFollow(params.username);
 	} catch (err) {
-		util.log(err);
+		// util.log(err);
+		console.error(err);
 	}
 
 	return data;
@@ -41,8 +45,9 @@ export default function Profile() {
 					<div id='profile-header-username'>
 						{params.username}
 					</div>
-					{isAuthorized === true && username !== params.username &&
-						<FollowButton username={params.username} />
+					{isAuthorized === true
+						&& username !== params.username
+						&& <FollowButton username={params.username} />
 					}
 				</div>
 			</ContentHeader>
