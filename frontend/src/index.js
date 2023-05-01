@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import axios from 'axios';
 
-import App, { loader as appLoader } from './App.js';
+// import App, { loader as appLoader } from './App.js';
+import App from './App.js';
 import Error from './Error.js';
 import Login from './Login.js';
 import Register from './Register.js';
@@ -40,13 +41,13 @@ function Index() {
 	const router = createBrowserRouter([
 		{
 			path: '/',
-			element: <App />,
-			loader: appLoader,
+			element: <App isAuthorized={isAuthorized} username={username} />,
+			// loader: appLoader,
 			errorElement: <Error />,
 			children: [
 				{
 					path: '/login',
-					element: <Login />
+					element: <Login setAuthorized={setAuthorized} setUsername={setUsername} />
 				},
 				{
 					path: '/register',
@@ -54,7 +55,7 @@ function Index() {
 				},
 				{
 					path: '/',
-					element: <Home />,
+					element: <Home isAuthorized={isAuthorized} />,
 					loader: homeLoader(isAuthorized)
 				},
 				{
@@ -63,7 +64,7 @@ function Index() {
 				},
 				{
 					path: '/:username',
-					element: <Profile />,
+					element: <Profile isAuthorized={isAuthorized} username={username} />,
 					loader: profileLoader
 				},
 				{

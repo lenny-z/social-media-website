@@ -5,11 +5,11 @@ import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
 import './css/Login.css';
 
-export default function Login() {
+export default function Login({setAuthorized, setUsername}) {
 	const [identifier, setIdentifier] = useState('');
 	const [password, setPassword] = useState('');
-	const setAuthorized = useOutletContext()[1];
-	const setUsername = useOutletContext()[3];
+	// const setAuthorized = useOutletContext()[1];
+	// const setUsername = useOutletContext()[3];
 	const navigate = useNavigate();
 
 	async function handleSubmit(event) {

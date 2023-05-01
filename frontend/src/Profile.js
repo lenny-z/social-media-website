@@ -31,11 +31,11 @@ export async function loader({ params }) {
 	return data;
 }
 
-export default function Profile() {
+export default function Profile({ isAuthorized, username }) {
 	const params = useParams();
 	const data = useLoaderData();
-	const isAuthorized = useOutletContext()[0];
-	const username = useOutletContext()[2];
+	// const isAuthorized = useOutletContext()[0];
+	// const username = useOutletContext()[2];
 
 	return (
 		<>
@@ -51,7 +51,7 @@ export default function Profile() {
 				</div>
 			</ContentHeader>
 			<ContentBody>
-				<PostsList posts={data.posts} />
+				<PostsList posts={data.posts} isAuthorized={isAuthorized} />
 			</ContentBody>
 		</>
 	);

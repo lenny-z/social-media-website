@@ -1,8 +1,9 @@
 import Post from './Post.js';
 import './css/PostsList.css';
 
-export default function PostsList({posts}) {
-	function jsDate(pgDate){
+export default function PostsList({ posts, isAuthorized }) {
+	console.log(posts);
+	function jsDate(pgDate) {
 		const pgDateTailRegex = /\.\w*/;
 		return new Date(pgDate.replace(pgDateTailRegex, ''));
 	}
@@ -31,7 +32,7 @@ export default function PostsList({posts}) {
 		</li>
 	);
 
-	return (	
+	return (
 		<ol className='posts-list'>
 			{renderPosts}
 		</ol>

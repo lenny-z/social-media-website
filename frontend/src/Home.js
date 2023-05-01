@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useOutletContext, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
@@ -41,15 +41,12 @@ async function getAllPosts() {
 	}
 }
 
-export async function loader(isAuthorized) {
+export function loader(isAuthorized) {
 	if (isAuthorized === true) {
 		return async () => {
 			try {
-				const posts = await getFeedPosts();
-
 				const data = {
-					// posts: await getFeedPosts()
-					posts: posts
+					posts: await getFeedPosts()
 				}
 
 				return data;
@@ -60,11 +57,8 @@ export async function loader(isAuthorized) {
 	} else {
 		return async () => {
 			try {
-				const posts = await getAllPosts();
-				
 				const data = {
-					// posts: await getAllPosts()
-					posts: posts
+					posts: await getAllPosts()
 				}
 
 				return data;
@@ -75,10 +69,7 @@ export async function loader(isAuthorized) {
 	}
 }
 
-export default function Home() {
-	const isAuthorized = useOutletContext()[0];
-	console.log('isAuthorized: ' + isAuthorized);
-	// const [posts, setPosts] = useState(null);
+export default function Home({ isAuthorized }) {
 	const [posts, setPosts] = useLoaderData().posts;
 
 	async function getAndShowPosts() {
@@ -106,7 +97,7 @@ export default function Home() {
 				parentPostID={null}
 			/>}
 			<ContentBody>
-				{posts && <PostsList posts={posts} />}
+				{posts && <PostsList posts={posts} isAuthorized={isAuthorized} />}
 			</ContentBody>
 		</>
 	);

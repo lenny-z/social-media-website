@@ -7,12 +7,19 @@ import './css/Post.css';
 
 const util = require('@lenny_zhou/util');
 
-export default function Post({ id, poster, body, timePosted, initNumReplies }) {
+export default function Post({
+	id,
+	poster,
+	body,
+	timePosted,
+	initNumReplies,
+	isAuthorized
+}) {
 	const [replies, setReplies] = useState([]);
 	const [showRepliesMode, setShowRepliesMode] = useState(false);
 	const [replyMode, setReplyMode] = useState(false);
 	const [numReplies, setNumReplies] = useState(initNumReplies);
-	const isAuthorized = useOutletContext()[0];
+	// const isAuthorized = useOutletContext()[0];
 	const navigate = useNavigate();
 
 	async function getAndShowReplies() {
