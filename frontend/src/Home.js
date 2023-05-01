@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useOutletContext, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { useOutletContext, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import Editor from './Editor.js';
@@ -17,7 +17,6 @@ async function getFeedPosts() {
 			return res.data;
 		}
 
-		// return null;
 		throw new Error('NOT 200');
 	} catch (err) {
 		console.error(err);
@@ -35,7 +34,6 @@ async function getAllPosts() {
 			return res.data;
 		}
 
-		// return null;
 		throw new Error('NOT 200');
 	} catch (err) {
 		console.error(err);
@@ -43,11 +41,45 @@ async function getAllPosts() {
 	}
 }
 
+export async function loader(isAuthorized) {
+	if (isAuthorized === true) {
+		return async () => {
+			try {
+				const posts = await getFeedPosts();
+
+				const data = {
+					// posts: await getFeedPosts()
+					posts: posts
+				}
+
+				return data;
+			} catch (err) {
+				throw err;
+			}
+		}
+	} else {
+		return async () => {
+			try {
+				const posts = await getAllPosts();
+				
+				const data = {
+					// posts: await getAllPosts()
+					posts: posts
+				}
+
+				return data;
+			} catch (err) {
+				throw err;
+			}
+		}
+	}
+}
+
 export default function Home() {
 	const isAuthorized = useOutletContext()[0];
 	console.log('isAuthorized: ' + isAuthorized);
-	const [posts, setPosts] = useState(null);
-	// const location = useLocation();
+	// const [posts, setPosts] = useState(null);
+	const [posts, setPosts] = useLoaderData().posts;
 
 	async function getAndShowPosts() {
 		try {
@@ -61,10 +93,9 @@ export default function Home() {
 		}
 	}
 
-	useEffect(() => { // Move this functionality to loader
-		// console.log('using effect');
-		getAndShowPosts();
-	});
+	// useEffect(() => { // Move this functionality to loader
+	// 	getAndShowPosts();
+	// });
 
 
 	return (
