@@ -1,48 +1,13 @@
-import { Outlet, useLoaderData } from 'react-router-dom';
-import { useState, } from 'react';
-import axios from 'axios';
+import { Outlet } from 'react-router-dom';
 import NavPanel from './NavPanel.js';
 import './css/App.css';
 
-// export async function loader() {
-// 	const data = {
-// 		isAuthorized: false,
-// 		username: null
-// 	};
 
-// 	try {
-// 		const res = await axios.get(
-// 			process.env.REACT_APP_AUTHORIZE,
-// 			{ withCredentials: true }
-// 		);
-
-// 		if (res.status === 200) {
-// 			data.isAuthorized = true;
-// 			data.username = res.data;
-// 		}
-
-// 	} catch (err) {
-// 		console.error(err);
-// 	}
-
-// 	return data;
-// }
-
-export default function App({isAuthorized, username}) {
-	// const data = useLoaderData();
-	// const [isAuthorized, setAuthorized] = useState(data.isAuthorized);
-	// const [username, setUsername] = useState(data.username);
-
+export default function App({ isAuthorized, username }) {
 	return (
 		<>
 			<NavPanel isAuthorized={isAuthorized} username={username} />
 			<div id='content-panel'>
-				{/* <Outlet context={[
-					isAuthorized,
-					setAuthorized,
-					username,
-					setUsername
-				]} /> */}
 				<Outlet />
 			</div>
 		</>

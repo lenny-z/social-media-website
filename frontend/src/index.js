@@ -13,8 +13,6 @@ import Profile, { loader as profileLoader } from './Profile.js';
 import Settings from './Settings.js';
 
 function Index() {
-	console.log('re-rendered');
-	// Default to unauthorized flow
 	const [isAuthorized, setAuthorized] = React.useState(false);
 	const [username, setUsername] = React.useState(null);
 
@@ -47,6 +45,7 @@ function Index() {
 				{
 					path: '/login',
 					element: <Login
+						isAuthorized={isAuthorized}
 						setAuthorized={setAuthorized}
 						setUsername={setUsername}
 					/>
@@ -94,7 +93,6 @@ function Index() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
-		{/* <RouterProvider router={router} /> */}
 		<Index />
 	</React.StrictMode>
 );

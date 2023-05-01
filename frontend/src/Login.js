@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
 import './css/Login.css';
 
-export default function Login({ setAuthorized, setUsername }) {
+export default function Login({ isAuthorized, setAuthorized, setUsername }) {
 	const [identifier, setIdentifier] = useState('');
 	const [password, setPassword] = useState('');
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -26,7 +26,7 @@ export default function Login({ setAuthorized, setUsername }) {
 			if (res.status === 200) { // 200 OK
 				setAuthorized(true);
 				setUsername(res.data);
-				navigate('/');
+				// navigate('/');
 			}
 		} catch (err) {
 			if (err.response && err.response.status === 401) { // 401 Unauthorized
@@ -46,32 +46,35 @@ export default function Login({ setAuthorized, setUsername }) {
 
 	return (
 		<>
-			<ContentHeader>
-				Login
-			</ContentHeader>
-			<ContentBody>
-				<form onSubmit={handleSubmit}>
-					<label htmlFor='identifier-input'>Email or username:</label>
-					<input
-						id='identifier-input'
-						type='text'
-						value={identifier}
-						onChange={handleIdentifier}
-					/>
-					<label htmlFor='password-input'>Password:</label>
-					<input
-						id='password-input'
-						type='password'
-						value={password}
-						onChange={handlePassword}
-					/>
-					<input
-						type='submit'
-						value='Log In'
-					/>
-				</form>
-				<Link to={'/register'}>Register</Link>
-			</ContentBody>
+			{!isAuthorized && <>
+				<ContentHeader>
+					Login
+				</ContentHeader>
+				<ContentBody>
+					<form onSubmit={handleSubmit}>
+						<label htmlFor='identifier-input'>Email or username:</label>
+						<input
+							id='identifier-input'
+							type='text'
+							value={identifier}
+							onChange={handleIdentifier}
+						/>
+						<label htmlFor='password-input'>Password:</label>
+						<input
+							id='password-input'
+							type='password'
+							value={password}
+							onChange={handlePassword}
+						/>
+						<input
+							type='submit'
+							value='Log In'
+						/>
+					</form>
+					<Link to={'/register'}>Register</Link>
+				</ContentBody>
+			</>}
+			{isAuthorized === true && <Navigate to='/' />}
 		</>
 	);
 }
