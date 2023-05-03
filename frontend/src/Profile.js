@@ -34,8 +34,6 @@ export async function loader({ params }) {
 export default function Profile({ isAuthorized, username }) {
 	const params = useParams();
 	const data = useLoaderData();
-	// const isAuthorized = useOutletContext()[0];
-	// const username = useOutletContext()[2];
 
 	return (
 		<>

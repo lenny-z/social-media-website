@@ -48,7 +48,7 @@ exports.getProfilePosts = async (username) => {
 
 exports.getAllPosts = async () => {
 	const query = `SELECT id, poster_username, time_posted, body, num_replies
-		FROM posts_view;`;
+		FROM posts_view WHERE parent_id IS NULL;`;
 
 	try {
 		const res = await pool.query(query);
@@ -74,15 +74,15 @@ exports.getReplyPosts = async (parentID) => {
 	}
 };
 
-exports.getNumReplies = async (parentID) => {
-	const query = `SELECT COUNT(*) FROM posts WHERE parent_id = $1;`;
-	const params = [parentID];
+// exports.getNumReplies = async (parentID) => {
+// 	const query = `SELECT COUNT(*) FROM posts WHERE parent_id = $1;`;
+// 	const params = [parentID];
 
-	try {
-		const res = await pool.query(query, params);
-		console.log(res);
-	} catch (err) {
-		console.error(err);
-		throw err;
-	}
-};
+// 	try {
+// 		const res = await pool.query(query, params);
+// 		console.log(res);
+// 	} catch (err) {
+// 		console.error(err);
+// 		throw err;
+// 	}
+// };

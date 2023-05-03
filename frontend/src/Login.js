@@ -8,7 +8,6 @@ import './css/Login.css';
 export default function Login({ isAuthorized, setAuthorized, setUsername }) {
 	const [identifier, setIdentifier] = useState('');
 	const [password, setPassword] = useState('');
-	// const navigate = useNavigate();
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -26,7 +25,6 @@ export default function Login({ isAuthorized, setAuthorized, setUsername }) {
 			if (res.status === 200) { // 200 OK
 				setAuthorized(true);
 				setUsername(res.data);
-				// navigate('/');
 			}
 		} catch (err) {
 			if (err.response && err.response.status === 401) { // 401 Unauthorized
