@@ -52,7 +52,11 @@ function Index() {
 				},
 				{
 					path: '/register',
-					element: <Register />
+					element: <Register
+						isAuthorized={isAuthorized}
+						setAuthorized={setAuthorized}
+						setReturnedUsername={setUsername}
+					/>
 				},
 				{
 					path: '/',

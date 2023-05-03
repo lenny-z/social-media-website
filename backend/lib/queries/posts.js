@@ -73,16 +73,3 @@ exports.getReplyPosts = async (parentID) => {
 		throw err;
 	}
 };
-
-// exports.getNumReplies = async (parentID) => {
-// 	const query = `SELECT COUNT(*) FROM posts WHERE parent_id = $1;`;
-// 	const params = [parentID];
-
-// 	try {
-// 		const res = await pool.query(query, params);
-// 		console.log(res);
-// 	} catch (err) {
-// 		console.error(err);
-// 		throw err;
-// 	}
-// };
