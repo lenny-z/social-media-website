@@ -9,7 +9,6 @@ export default function RegisterUsername() {
 	const handleUsername = context[4];
 
 	const reqs = validator.username(username);
-	// console.log(reqs);
 
 	return (
 		<>
@@ -21,9 +20,6 @@ export default function RegisterUsername() {
 				onChange={handleUsername}
 			/>
 			<div className='validations'>
-				{/* {`Username contains only alphanumeric characters,
-				underscores, and hyphens:
-				${reqs.allowedCharsOnly}`} */}
 				{
 					showValid(
 						`Valid sequence of characters`,
@@ -52,8 +48,9 @@ export default function RegisterUsername() {
 					)
 				}
 			</div>
-			<nav>
+			<nav className='register-nav'>
 				<Link to={'/register/email'}>Back</Link>
+				<Link to={'/register/password'}>Next</Link>
 			</nav>
 		</>
 	)

@@ -20,10 +20,9 @@ export default function RegisterEmail() {
 				onChange={handleEmail}
 			/>
 			<div className='validations'>
-				{/* {`Email is valid: ${emailIsValid ? '✅' : '❌'}`} */}
 				{showValid('Email is valid', emailIsValid)}
 			</div>
-			<nav>
+			<nav className='register-nav'>
 				<Link to={'/register/username'}>Next</Link>
 			</nav>
 		</>

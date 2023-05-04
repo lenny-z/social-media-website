@@ -3,6 +3,7 @@ label[for='username-input'],
 label[for='password-input'] {
 	display: block;
 	padding-bottom: var(--padding);
+	font-size: var(--medium-font-size);
 }
 
 #email-input,
@@ -15,6 +16,23 @@ label[for='password-input'] {
 
 .validations {
 	padding-bottom: var(--padding);
+}
+
+.register-nav>a {
+	display: inline-block;
+	padding: var(--padding);
+}
+
+.register-nav>a:first-child {
+	padding-left: 0px;
+}
+
+.register-nav>a:not(:last-child) {
+	border-right: 2px solid gray;
+}
+
+.register-nav>a:last-child {
+	padding-right: 0px;
 }
 
 input[value='Register'] {

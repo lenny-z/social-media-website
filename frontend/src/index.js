@@ -10,6 +10,8 @@ import Login from './Login.js';
 import Register from './Register.js';
 import RegisterEmail from './RegisterEmail.js';
 import RegisterUsername from './RegisterUsername.js';
+import RegisterPassword from './RegisterPassword.js';
+
 import Home, { loader as homeLoader } from './Home.js';
 import Search from './Search.js';
 import Profile, { loader as profileLoader } from './Profile.js';
@@ -68,6 +70,10 @@ function Index() {
 						{
 							path: 'username',
 							element: <RegisterUsername />
+						},
+						{
+							path: 'password',
+							element: <RegisterPassword />
 						}
 					]
 				},

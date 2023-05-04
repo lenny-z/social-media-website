@@ -5,19 +5,16 @@ import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
 import './css/Register.css';
 
-const validator = require('@lenny_zhou/validator');
+// const validator = require('@lenny_zhou/validator');
 
 export default function Register({
 	isAuthorized,
 	setAuthorized,
 	setReturnedUsername
 }) {
-	// console.log('rerender');
 	const [email, setEmail] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
-
-	// const emailIsValid = validator.email(email);
 
 	function showValid(label, condition) {
 		return `${label}: ${condition === true ? '✅' : '❌'}`;
@@ -29,7 +26,10 @@ export default function Register({
 
 	function handleUsername(event) {
 		setUsername(event.target.value);
-		// console.log(validator.username(event.target.value));
+	}
+
+	function handlePassword(event) {
+		setPassword(event.target.value);
 	}
 
 	return (
@@ -43,13 +43,13 @@ export default function Register({
 					email,			// 1
 					handleEmail,	// 2
 					username,		// 3
-					handleUsername	// 4
+					handleUsername,	// 4
+					password,		// 5
+					handlePassword	// 6
 				]} />
 			</ContentBody>
 		</>
 	);
-
-	// const emailIsValid = validator.email(email);
 
 	// async function handleSubmit(event) {
 	// 	event.preventDefault();
@@ -77,9 +77,6 @@ export default function Register({
 
 
 
-	// function handlePassword(event) {
-	// 	setPassword(event.target.value);
-	// }
 
 	// return (
 	// 	<>
