@@ -6,7 +6,10 @@ import axios from 'axios';
 import App from './App.js';
 import Error from './Error.js';
 import Login from './Login.js';
+
 import Register from './Register.js';
+import RegisterEmail from './RegisterEmail.js';
+import RegisterUsername from './RegisterUsername.js';
 import Home, { loader as homeLoader } from './Home.js';
 import Search from './Search.js';
 import Profile, { loader as profileLoader } from './Profile.js';
@@ -56,7 +59,17 @@ function Index() {
 						isAuthorized={isAuthorized}
 						setAuthorized={setAuthorized}
 						setReturnedUsername={setUsername}
-					/>
+					/>,
+					children: [
+						{
+							path: 'email',
+							element: <RegisterEmail />
+						},
+						{
+							path: 'username',
+							element: <RegisterUsername />
+						}
+					]
 				},
 				{
 					path: '/',

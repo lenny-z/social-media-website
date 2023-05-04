@@ -69,7 +69,7 @@ export default function Login({ isAuthorized, setAuthorized, setUsername }) {
 							value='Log In'
 						/>
 					</form>
-					<Link to={'/register'}>Register</Link>
+					<Link to={'/register/email'}>Register</Link>
 				</ContentBody>
 			</>}
 			{isAuthorized === true && <Navigate to='/' />}
