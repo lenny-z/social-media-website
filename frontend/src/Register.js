@@ -19,6 +19,10 @@ export default function Register({
 
 	// const emailIsValid = validator.email(email);
 
+	function showValid(label, condition) {
+		return `${label}: ${condition === true ? '✅' : '❌'}`;
+	}
+
 	function handleEmail(event) {
 		setEmail(event.target.value);
 	}
@@ -35,11 +39,11 @@ export default function Register({
 			</ContentHeader>
 			<ContentBody>
 				<Outlet context={[	// Indices:
-					email,			// 0
-					handleEmail,	// 1
-					// emailIsValid,	// 2
-					username,		// 2
-					handleUsername	// 3
+					showValid,		// 0
+					email,			// 1
+					handleEmail,	// 2
+					username,		// 3
+					handleUsername	// 4
 				]} />
 			</ContentBody>
 		</>

@@ -10,7 +10,7 @@ exports.username = (username) => {
 		isString: false,
 		lengthAtLeast1: false,
 		lengthAtMost32: false,
-		allowedCharactersOnly: false
+		allowedCharsOnly: false
 	}
 
 	if (typeof username === 'string') {
@@ -28,7 +28,7 @@ exports.username = (username) => {
 	}
 
 	if (usernameCharsRegex.test(username) === true) {
-		requirements.allowedCharactersOnly = true;
+		requirements.allowedCharsOnly = true;
 	}
 
 	return requirements;

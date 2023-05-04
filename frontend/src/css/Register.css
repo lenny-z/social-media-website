@@ -13,6 +13,10 @@ label[for='password-input'] {
 	padding: var(--padding);
 }
 
+.validations {
+	padding-bottom: var(--padding);
+}
+
 input[value='Register'] {
 	display: block;
 	margin-bottom: var(--padding);
