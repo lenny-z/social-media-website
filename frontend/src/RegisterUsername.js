@@ -5,10 +5,11 @@ const validator = require('@lenny_zhou/validator');
 export default function RegisterUsername() {
 	const context = useOutletContext();
 	const showValid = context[0];
-	const username = context[3];
-	const handleUsername = context[4];
+	const username = context[4];
+	const handleUsername = context[5];
+	const reqs = context[6]
 
-	const reqs = validator.username(username);
+	// const reqs = validator.username(username);
 
 	return (
 		<>

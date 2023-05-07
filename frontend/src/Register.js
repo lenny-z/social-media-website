@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import axios from 'axios';
+import { Outlet } from 'react-router-dom';
+// import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
 import './css/Register.css';
 
-// const validator = require('@lenny_zhou/validator');
+const validator = require('@lenny_zhou/validator');
 
 export default function Register({
 	isAuthorized,
@@ -16,6 +16,10 @@ export default function Register({
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [retypePassword, setRetypePassword] = useState('');
+
+	const emailIsValid = validator.email(email);
+	const usernameIsValid = validator.username(username);
+	const passwordIsValid = validator.password(password);
 
 	function showValid(label, condition) {
 		return `${label}: ${condition === true ? '✅' : '❌'}`;
@@ -47,13 +51,15 @@ export default function Register({
 					showValid,				// 0
 					email,					// 1
 					handleEmail,			// 2
-					username,				// 3
-					handleUsername,			// 4
-					password,				// 5
-					handlePassword,			// 6
-					retypePassword,			// 7
-					handleRetypePassword,	// 8
-					isAuthorized
+					emailIsValid,			// 3
+					username,				// 4
+					handleUsername,			// 5
+					usernameIsValid,		// 6
+					password,				// 7
+					handlePassword,			// 8
+					retypePassword,			// 9
+					handleRetypePassword,	// 10
+					passwordIsValid			// 11
 				]} />
 			</ContentBody>
 		</>

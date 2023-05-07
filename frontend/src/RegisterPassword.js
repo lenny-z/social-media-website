@@ -5,13 +5,12 @@ const validator = require('@lenny_zhou/validator');
 export default function RegisterPassword() {
 	const context = useOutletContext();
 	const showValid = context[0];
-	const password = context[5];
-	const handlePassword = context[6];
-	const retypePassword = context[7];
-	const handleRetypePassword = context[8];
-	// const [password, handlePassword] = useOutletContext();
-	// console.log(password);
-	const reqs = validator.password(password);
+	const password = context[7];
+	const handlePassword = context[8];
+	const retypePassword = context[9];
+	const handleRetypePassword = context[10];
+	// const reqs = validator.password(password);
+	const reqs = context[11];
 
 	return (
 		<>

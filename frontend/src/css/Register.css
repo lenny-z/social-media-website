@@ -40,5 +40,7 @@ label[for='retype-password-input'] {
 }
 
 input[type='submit'] {
+	text-decoration: underline;
 	border: 0px;
+	cursor: pointer;
 }

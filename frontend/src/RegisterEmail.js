@@ -7,8 +7,9 @@ export default function RegisterEmail() {
 	const showValid = context[0];
 	const email = context[1];
 	const handleEmail = context[2];
+	const emailIsValid = context[3];
 
-	const emailIsValid = validator.email(email);
+	// const emailIsValid = validator.email(email);
 
 	return (
 		<>
