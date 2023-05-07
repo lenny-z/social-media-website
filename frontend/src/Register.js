@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-// import axios from 'axios';
+import { Outlet, Navigate } from 'react-router-dom';
+import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
 import './css/Register.css';
@@ -41,53 +41,58 @@ export default function Register({
 		setRetypePassword(event.target.value);
 	}
 
+	async function handleSubmit(event) {
+		event.preventDefault();
+
+		const user = {
+			email: email,
+			username: username,
+			password: password
+		};
+
+		try {
+			const res = await axios.post(process.env.REACT_APP_REGISTER, user,
+				{ withCredentials: true });
+
+			if (res.status === 201) {
+				setAuthorized(true);
+				setReturnedUsername(res.data);
+			}
+		} catch (err) {
+			if (err.response && err.response.status === 500) {
+				window.alert('Sorry, please try again.');
+			}
+		}
+	}
+
 	return (
 		<>
-			<ContentHeader>
-				Register
-			</ContentHeader>
-			<ContentBody>
-				<Outlet context={[			// Indices:
-					showValid,				// 0
-					email,					// 1
-					handleEmail,			// 2
-					emailIsValid,			// 3
-					username,				// 4
-					handleUsername,			// 5
-					usernameIsValid,		// 6
-					password,				// 7
-					handlePassword,			// 8
-					retypePassword,			// 9
-					handleRetypePassword,	// 10
-					passwordIsValid			// 11
-				]} />
-			</ContentBody>
+			{isAuthorized === true && <Navigate to='/' />}
+			{!isAuthorized && <>
+				<ContentHeader>
+					Register
+				</ContentHeader>
+				<ContentBody>
+					<Outlet context={[			// Indices:
+						showValid,				// 0
+						email,					// 1
+						handleEmail,			// 2
+						emailIsValid,			// 3
+						username,				// 4
+						handleUsername,			// 5
+						usernameIsValid,		// 6
+						password,				// 7
+						handlePassword,			// 8
+						retypePassword,			// 9
+						handleRetypePassword,	// 10
+						passwordIsValid,		// 11
+						handleSubmit			// 12
+					]} />
+				</ContentBody>
+			</>}
 		</>
 	);
 
-	// async function handleSubmit(event) {
-	// 	event.preventDefault();
-
-	// 	const user = {
-	// 		email: email,
-	// 		username: username,
-	// 		password: password
-	// 	};
-
-	// 	try {
-	// 		const res = await axios.post(process.env.REACT_APP_REGISTER, user,
-	// 			{ withCredentials: true });
-
-	// 		if (res.status === 201) {
-	// 			setAuthorized(true);
-	// 			setReturnedUsername(res.data);
-	// 		}
-	// 	} catch (err) {
-	// 		if (err.response && err.response.status === 500) {
-	// 			window.alert('Sorry, please try again.');
-	// 		}
-	// 	}
-	// }
 
 
 

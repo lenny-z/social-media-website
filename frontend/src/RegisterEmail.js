@@ -1,6 +1,6 @@
 import { useOutletContext, Link } from 'react-router-dom';
 
-const validator = require('@lenny_zhou/validator');
+// const validator = require('@lenny_zhou/validator');
 
 export default function RegisterEmail() {
 	const context = useOutletContext();
@@ -8,8 +8,6 @@ export default function RegisterEmail() {
 	const email = context[1];
 	const handleEmail = context[2];
 	const emailIsValid = context[3];
-
-	// const emailIsValid = validator.email(email);
 
 	return (
 		<>

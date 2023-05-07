@@ -9,8 +9,6 @@ export default function RegisterUsername() {
 	const handleUsername = context[5];
 	const reqs = context[6]
 
-	// const reqs = validator.username(username);
-
 	return (
 		<>
 			<label htmlFor='username-input'>Username:</label>

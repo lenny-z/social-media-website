@@ -1,6 +1,6 @@
 import { useOutletContext, Link } from 'react-router-dom';
 
-const validator = require('@lenny_zhou/validator');
+// const validator = require('@lenny_zhou/validator');
 
 export default function RegisterPassword() {
 	const context = useOutletContext();
@@ -9,12 +9,12 @@ export default function RegisterPassword() {
 	const handlePassword = context[8];
 	const retypePassword = context[9];
 	const handleRetypePassword = context[10];
-	// const reqs = validator.password(password);
 	const reqs = context[11];
+	const handleSubmit = context[12];
 
 	return (
 		<>
-			<form>
+			<form onSubmit={handleSubmit}>
 				<label htmlFor='password-input'>Password:</label>
 				<input
 					id='password-input'
