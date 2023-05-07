@@ -15,6 +15,7 @@ export default function Register({
 	const [email, setEmail] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const [retypePassword, setRetypePassword] = useState('');
 
 	function showValid(label, condition) {
 		return `${label}: ${condition === true ? '✅' : '❌'}`;
@@ -32,20 +33,27 @@ export default function Register({
 		setPassword(event.target.value);
 	}
 
+	function handleRetypePassword(event) {
+		setRetypePassword(event.target.value);
+	}
+
 	return (
 		<>
 			<ContentHeader>
 				Register
 			</ContentHeader>
 			<ContentBody>
-				<Outlet context={[	// Indices:
-					showValid,		// 0
-					email,			// 1
-					handleEmail,	// 2
-					username,		// 3
-					handleUsername,	// 4
-					password,		// 5
-					handlePassword	// 6
+				<Outlet context={[			// Indices:
+					showValid,				// 0
+					email,					// 1
+					handleEmail,			// 2
+					username,				// 3
+					handleUsername,			// 4
+					password,				// 5
+					handlePassword,			// 6
+					retypePassword,			// 7
+					handleRetypePassword,	// 8
+					isAuthorized
 				]} />
 			</ContentBody>
 		</>

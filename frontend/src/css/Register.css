@@ -1,6 +1,7 @@
 label[for='email-input'],
 label[for='username-input'],
-label[for='password-input'] {
+label[for='password-input'],
+label[for='retype-password-input'] {
 	display: block;
 	padding-bottom: var(--padding);
 	font-size: var(--medium-font-size);
@@ -8,7 +9,9 @@ label[for='password-input'] {
 
 #email-input,
 #username-input,
-#password-input {
+#password-input,
+#retype-password-input {
+	display: block;
 	margin-bottom: var(--padding);
 	width: var(--id-password-width);
 	padding: var(--padding);
@@ -18,25 +21,24 @@ label[for='password-input'] {
 	padding-bottom: var(--padding);
 }
 
-.register-nav>a {
-	display: inline-block;
-	padding: var(--padding);
+.register-nav>* {
+	display: inline;
+	padding-left: var(--padding);
+	padding-right: var(--padding);
 }
 
-.register-nav>a:first-child {
+.register-nav>:first-child {
 	padding-left: 0px;
 }
 
-.register-nav>a:not(:last-child) {
+.register-nav>:not(:last-child) {
 	border-right: 2px solid gray;
 }
 
-.register-nav>a:last-child {
+.register-nav>:last-child {
 	padding-right: 0px;
 }
 
-input[value='Register'] {
-	display: block;
-	margin-bottom: var(--padding);
-	padding: var(--padding);
+input[type='submit'] {
+	border: 0px;
 }

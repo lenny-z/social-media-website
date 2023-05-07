@@ -47,11 +47,11 @@ exports.password = (password) => {
 		return requirements;
 	}
 
-	if (username.length >= 14) {
+	if (password.length >= 14) {
 		requirements.lengthAtLeast14 = true;
 	}
 
-	if (username.length <= 128) {
+	if (password.length <= 128) {
 		requirements.lengthAtMost128 = true;
 	}
 

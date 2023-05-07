@@ -4,7 +4,7 @@ const util = require('@lenny_zhou/util');
 const authorize = require('./auth.js').authorize;
 
 router.post('/', authorize, async (req, res) => {
-	console.log('POST to /posts:');
+	// console.log('POST to /posts:');
 
 	try {
 		await queries.makePost(
@@ -21,7 +21,7 @@ router.post('/', authorize, async (req, res) => {
 });
 
 router.get('/profile/:username', async (req, res) => {
-	util.log('GET to /posts/profile:');
+	// util.log('GET to /posts/profile:');
 
 	try {
 		const dbRes = await queries.getProfilePosts(req.params.username);
@@ -32,7 +32,7 @@ router.get('/profile/:username', async (req, res) => {
 });
 
 router.get('/feed', authorize, async (req, res) => {
-	util.log('GET to /posts/feed:');
+	// util.log('GET to /posts/feed:');
 
 	try {
 		const dbRes = await queries.getFeedPosts(req.session.userID);
@@ -43,7 +43,7 @@ router.get('/feed', authorize, async (req, res) => {
 });
 
 router.get('/all', async (req, res) => {
-	console.log('GET to /posts/all:');
+	// console.log('GET to /posts/all:');
 
 	try {
 		const dbRes = await queries.getAllPosts();
@@ -54,7 +54,7 @@ router.get('/all', async (req, res) => {
 });
 
 router.get('/replies/:postID', async (req, res) => {
-	util.log('GET to /posts/replies:');
+	// util.log('GET to /posts/replies:');
 
 	try {
 		const dbRes = await queries.getReplyPosts(req.params.postID);

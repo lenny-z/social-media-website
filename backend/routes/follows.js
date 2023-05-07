@@ -4,7 +4,7 @@ const util = require('@lenny_zhou/util');
 const authorize = require('./auth.js').authorize;
 
 router.post('/', authorize, async (req, res) => {
-	util.log('POST to /follows:');
+	// util.log('POST to /follows:');
 
 	try {
 		await queries.makeFollow(
@@ -20,7 +20,7 @@ router.post('/', authorize, async (req, res) => {
 });
 
 router.get(`/:username`, authorize, async (req, res) => {
-	util.log(`GET to /follows/${req.params.username}:`);
+	// util.log(`GET to /follows/${req.params.username}:`);
 
 	try {
 		const dbRes = await queries.getFollow(
@@ -37,7 +37,7 @@ router.get(`/:username`, authorize, async (req, res) => {
 
 
 router.delete('/:username', authorize, async (req, res) => {
-	util.log('DELETE to /follows:');
+	// util.log('DELETE to /follows:');
 
 	try{
 		await queries.deleteFollow(
