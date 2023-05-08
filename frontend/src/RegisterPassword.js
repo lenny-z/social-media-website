@@ -1,7 +1,5 @@
 import { useOutletContext, Link } from 'react-router-dom';
 
-// const validator = require('@lenny_zhou/validator');
-
 export default function RegisterPassword() {
 	const context = useOutletContext();
 	const showValid = context[0];

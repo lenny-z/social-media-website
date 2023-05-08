@@ -92,48 +92,4 @@ export default function Register({
 			</>}
 		</>
 	);
-
-
-
-
-
-	// return (
-	// 	<>
-	// 		{isAuthorized === true && <Navigate to='/' />}
-	// 		{!isAuthorized && <>
-	// 			<ContentHeader>
-	// 				Register
-	// 			</ContentHeader>
-	// 			<ContentBody>
-	// 				<form onSubmit={handleSubmit}>
-	// 					<label htmlFor='email-input'>Email: </label>
-	// 					<input
-	// 						id='email-input'
-	// 						type='text'
-	// 						value={email}
-	// 						onChange={handleEmail}
-	// 					/>
-	// 					<label htmlFor='username-input'>Username: </label>
-	// 					<input
-	// 						id='username-input'
-	// 						type='text'
-	// 						value={username}
-	// 						onChange={handleUsername}
-	// 					/>
-	// 					<label htmlFor='password-input'>Password: </label>
-	// 					<input
-	// 						id='password-input'
-	// 						type='password'
-	// 						value={password}
-	// 						onChange={handlePassword}
-	// 					/>
-	// 					<input
-	// 						type='submit'
-	// 						value='Register'
-	// 					/>
-	// 				</form>
-	// 			</ContentBody>
-	// 		</>}
-	// 	</>
-	// );
 }
