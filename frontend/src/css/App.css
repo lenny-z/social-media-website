@@ -1,6 +1,8 @@
 /* Minimum accessible font size guideline: 16px */
 
 :root {
+	--border-width: 1px;
+	--border-radius: 4px;
 	--padding: 8px;
 	--small-font-size: 16px;
 	--medium-font-size: 24px;
@@ -14,6 +16,8 @@
 
 * {
 	margin: 0px;
+	border-width: var(--border-width);
+	border-radius: var(--border-radius);
 	padding: 0px;
 	font-size: var(--small-font-size);
 	font-family: Arial;
@@ -66,4 +70,8 @@ body {
 .error-message {
 	padding: var(--padding);
 	text-align: center;
+}
+
+input[type='submit'] {
+	border: 1px solid black;
 }

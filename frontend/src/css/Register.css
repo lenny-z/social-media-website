@@ -39,7 +39,7 @@ label[for='retype-password-input'] {
 	padding-right: 0px;
 }
 
-input[type='submit'] {
+input[value='Register'] {
 	text-decoration: underline;
 	border: 0px;
 	cursor: pointer;

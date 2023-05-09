@@ -65,6 +65,7 @@ export default function Login({ isAuthorized, setAuthorized, setUsername }) {
 							onChange={handlePassword}
 						/>
 						<input
+							className='hoverable'
 							type='submit'
 							value='Log In'
 						/>

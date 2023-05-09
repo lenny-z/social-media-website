@@ -44,6 +44,7 @@ export default function Editor({ getAndShowPosts, parentPostID }) {
 				onChange={handleText}
 			/>
 			<input
+				className='hoverable'
 				type='submit'
 				value='Post'
 			/>
