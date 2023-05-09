@@ -28,6 +28,7 @@ export default function Settings({ isAuthorized, setAuthorized, setUsername }) {
 				<ContentHeader>Settings</ContentHeader>
 				<ContentBody>
 					<input
+						className='hoverable'
 						type='button'
 						value='Log Out'
 						onClick={handleLogout}

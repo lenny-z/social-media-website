@@ -53,6 +53,8 @@ export default function Post({
 	}
 
 	function toggleReplyMode() {
+		console.log('Post.toggleReplyMode')
+		console.log(`isAuthorized: ${isAuthorized}`)
 		if (isAuthorized === true) {
 			setReplyMode(!replyMode);
 		} else {
@@ -89,7 +91,7 @@ export default function Post({
 			/>}
 			{showRepliesMode && <div className='replies-div'>
 				<div className='hide-replies-bar' onClick={hideReplies} />
-				<PostsList posts={replies} />
+				<PostsList posts={replies} isAuthorized={isAuthorized} />
 			</div>}
 		</div>
 	);
