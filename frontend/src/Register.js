@@ -16,11 +16,11 @@ export default function Register({
 	const [email, setEmail] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
-	const [retypePassword, setRetypePassword] = useState('');
+	const [retypedPassword, setRetypedPassword] = useState('');
 
 	const emailReqs = validator.email(email);
 	const usernameReqs = validator.username(username);
-	const passwordReqs = validator.password(password);
+	const passwordReqs = validator.password(password, retypedPassword);
 
 	function showValid(label, condition) {
 		return `${label}: ${condition === true ? '✅' : '❌'}`;
@@ -39,7 +39,7 @@ export default function Register({
 	}
 
 	function handleRetypePassword(event) {
-		setRetypePassword(event.target.value);
+		setRetypedPassword(event.target.value);
 	}
 
 	async function handleSubmit(event) {
@@ -73,7 +73,7 @@ export default function Register({
 				<ContentHeader>
 					Register
 				</ContentHeader>
-				<RegisterProgress
+				{/* <RegisterProgress
 					emailIsValid={validator.allReqsMet(
 						validator.reqsMet(emailReqs)
 					)}
@@ -83,6 +83,11 @@ export default function Register({
 					passwordIsValid={validator.allReqsMet(
 						validator.reqsMet(passwordReqs)
 					)}
+				/> */}
+				<RegisterProgress
+					emailIsValid={validator.allReqsMet(emailReqs)}
+					usernameIsValid={validator.allReqsMet(usernameReqs)}
+					passwordIsValid={validator.allReqsMet(passwordReqs)}
 				/>
 				<ContentBody>
 					<Outlet context={[			// Indices:
@@ -95,7 +100,7 @@ export default function Register({
 						usernameReqs,			// 6
 						password,				// 7
 						handlePassword,			// 8
-						retypePassword,			// 9
+						retypedPassword,		// 9
 						handleRetypePassword,	// 10
 						passwordReqs,			// 11
 						handleSubmit			// 12

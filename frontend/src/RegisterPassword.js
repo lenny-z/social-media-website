@@ -53,7 +53,7 @@ export default function RegisterPassword() {
 					{
 						showValid(
 							'Retyped password matches password',
-							password === retypePassword
+							reqs.isMatch
 						)
 					}
 				</div>
