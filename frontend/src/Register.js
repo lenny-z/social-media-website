@@ -18,9 +18,9 @@ export default function Register({
 	const [password, setPassword] = useState('');
 	const [retypePassword, setRetypePassword] = useState('');
 
-	const emailReqsMet = validator.email(email);
-	const usernameReqsMet = validator.username(username);
-	const passwordReqsMet = validator.password(password);
+	const emailReqs = validator.email(email);
+	const usernameReqs = validator.username(username);
+	const passwordReqs = validator.password(password);
 
 	function showValid(label, condition) {
 		return `${label}: ${condition === true ? '✅' : '❌'}`;
@@ -74,24 +74,30 @@ export default function Register({
 					Register
 				</ContentHeader>
 				<RegisterProgress
-					emailIsValid={validator.allReqsMet(emailReqsMet)}
-					usernameIsValid={validator.allReqsMet(usernameReqsMet)}
-					passwordIsValid={validator.allReqsMet(passwordReqsMet)}
+					emailIsValid={validator.allReqsMet(
+						validator.reqsMet(emailReqs)
+					)}
+					usernameIsValid={validator.allReqsMet(
+						validator.reqsMet(usernameReqs)
+					)}
+					passwordIsValid={validator.allReqsMet(
+						validator.reqsMet(passwordReqs)
+					)}
 				/>
 				<ContentBody>
 					<Outlet context={[			// Indices:
 						showValid,				// 0
 						email,					// 1
 						handleEmail,			// 2
-						emailReqsMet,			// 3
+						emailReqs,				// 3
 						username,				// 4
 						handleUsername,			// 5
-						usernameReqsMet,		// 6
+						usernameReqs,			// 6
 						password,				// 7
 						handlePassword,			// 8
 						retypePassword,			// 9
 						handleRetypePassword,	// 10
-						passwordReqsMet,		// 11
+						passwordReqs,			// 11
 						handleSubmit			// 12
 					]} />
 				</ContentBody>
