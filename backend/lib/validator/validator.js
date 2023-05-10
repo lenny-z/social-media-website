@@ -33,18 +33,12 @@ exports.reqsMet = (reqs) => {
 	}
 };
 
-// exports.allReqsMet = (reqsMet) => {
-// 	const notMet = reqsMet.notMet;
-// 	return Array.isArray(notMet) && notMet.length === 0;
-// }
-
 exports.email = (email) => {
 	const reqs = {
 		isValid: emailRegex.test(email)
 	}
 
 	return reqs;
-	// return emailRegex.test(email);
 };
 
 exports.username = (username) => {

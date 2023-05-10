@@ -1,5 +1,4 @@
 const router = require('express').Router();
-// const util = require('@lenny_zhou/util');
 const queries = require('../lib/queries.js');
 const argon2 = require('argon2');
 const session = require('../lib/session.js');

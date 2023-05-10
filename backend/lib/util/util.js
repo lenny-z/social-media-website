@@ -8,18 +8,12 @@ function prettyJSON(jsonObj) {
 		return `${out.substring(0, PRETTY_JSON_MAX_LENGTH)} ...\n`;
 	}
 
-	// return out + '\n';
 	return `${out}\n`;
 }
 
 exports.prettyJSON = prettyJSON;
 
-// function indent(str, numTabs) {
-// 	return str.replace(/^/gm, ('\t').repeat(numTabs));
-// }
-
 function pretty(obj) {
-	// if (IS_DEV) {
 	let str = '';
 
 	switch (typeof obj) {
@@ -56,11 +50,7 @@ function pretty(obj) {
 			str = prettyJSON(obj);
 	}
 
-	// if (numTabs > 0) {
-	// 	outStr = indent(outStr, numTabs);
-	// }
 	return str;
-	// }
 }
 
 exports.pretty = pretty;

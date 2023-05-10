@@ -1,6 +1,18 @@
+#register-progress-nav {
+	flex-grow: 0;
+	flex-shrink: 0;
+	flex-basis: auto;
+}
+
 #register-progress-nav>a {
 	display: inline-block;
 	padding: var(--padding);
+	background: #bfdfff;
+	/* border-radius: 0px; */
+}
+
+#register-progress-nav>.active {
+	background: #dfffdf;
 }
 
 label[for='email-input'],

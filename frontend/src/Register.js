@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Outlet, Navigate } from 'react-router-dom';
+import { Outlet, Navigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
@@ -21,6 +21,9 @@ export default function Register({
 	const emailReqs = validator.email(email);
 	const usernameReqs = validator.username(username);
 	const passwordReqs = validator.password(password, retypedPassword);
+
+	// const location = useLocation();
+	// console.log(location);
 
 	function showValid(label, condition) {
 		return `${label}: ${condition === true ? '✅' : '❌'}`;
@@ -73,17 +76,6 @@ export default function Register({
 				<ContentHeader>
 					Register
 				</ContentHeader>
-				{/* <RegisterProgress
-					emailIsValid={validator.allReqsMet(
-						validator.reqsMet(emailReqs)
-					)}
-					usernameIsValid={validator.allReqsMet(
-						validator.reqsMet(usernameReqs)
-					)}
-					passwordIsValid={validator.allReqsMet(
-						validator.reqsMet(passwordReqs)
-					)}
-				/> */}
 				<RegisterProgress
 					emailIsValid={validator.allReqsMet(emailReqs)}
 					usernameIsValid={validator.allReqsMet(usernameReqs)}
