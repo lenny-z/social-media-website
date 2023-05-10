@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@lenny_zhou/util": "^1.0.1",
+    "@lenny_zhou/util": "^3.0.0",
+    "@lenny_zhou/validator": "^2.0.0",
     "argon2": "^0.30.3",
     "connect-redis": "^7.0.1",
     "cors": "^2.8.5",

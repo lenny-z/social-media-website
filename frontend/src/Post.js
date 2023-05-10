@@ -53,8 +53,6 @@ export default function Post({
 	}
 
 	function toggleReplyMode() {
-		console.log('Post.toggleReplyMode')
-		console.log(`isAuthorized: ${isAuthorized}`)
 		if (isAuthorized === true) {
 			setReplyMode(!replyMode);
 		} else {

@@ -70,7 +70,6 @@ export function loader(isAuthorized) {
 }
 
 export default function Home({ isAuthorized }) {
-	console.log(`Home.isAuthorized: ${isAuthorized}`)
 	const data = useLoaderData();
 	const [posts, setPosts] = useState(data.posts);
 

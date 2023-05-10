@@ -8,69 +8,72 @@ function prettyJSON(jsonObj) {
 		return `${out.substring(0, PRETTY_JSON_MAX_LENGTH)} ...\n`;
 	}
 
-	return out + '\n';
-};
+	// return out + '\n';
+	return `${out}\n`;
+}
 
 exports.prettyJSON = prettyJSON;
 
-function indent(str, numTabs) {
-	return str.replace(/^/gm, ('\t').repeat(numTabs));
-}
+// function indent(str, numTabs) {
+// 	return str.replace(/^/gm, ('\t').repeat(numTabs));
+// }
 
-function logHelper(log, numTabs = 0) {
-	if (IS_DEV) {
-		let outLog = '';
+function pretty(obj) {
+	// if (IS_DEV) {
+	let str = '';
 
-		switch (typeof log) {
-			case 'undefined':
-				outLog = 'UNDEFINED';
-				break;
+	switch (typeof obj) {
+		case 'undefined':
+			str = 'UNDEFINED';
+			break;
 
-			case 'object':
-				if (log === null) {
-					outLog = 'NULL';
-				} else {
-					outLog = prettyJSON(log);
-				}
+		case 'object':
+			if (obj === null) {
+				str = 'NULL';
+			} else {
+				str = prettyJSON(obj);
+			}
 
-				break;
+			break;
 
-			case 'boolean':
-				outLog = log.toString();
-				break;
+		case 'boolean':
+			str = obj.toString();
+			break;
 
-			case 'number':
-				outLog = log.toString();
-				break;
+		case 'number':
+			str = obj.toString();
+			break;
 
-			case 'string':
-				outLog = log;
-				break;
+		case 'string':
+			str = obj;
+			break;
 
-			case 'function':
-				outLog = log.toString();
-				break;
+		case 'function':
+			str = obj.toString();
+			break;
 
-			default:
-				outLog = prettyJSON(log);
-		}
-
-		if (numTabs > 0) {
-			outLog = indent(outLog, numTabs);
-		}
-		return outLog;
+		default:
+			str = prettyJSON(obj);
 	}
+
+	// if (numTabs > 0) {
+	// 	outStr = indent(outStr, numTabs);
+	// }
+	return str;
+	// }
 }
+
+exports.pretty = pretty;
 
 exports.log = (log, numTabs = 0) => {
 	if (IS_DEV) {
-		console.log(logHelper(log, numTabs));
+		console.log(pretty(log, numTabs));
 	}
 };
 
 // Labeled log:
 exports.llog = (label, log, numTabs = 0) => {
 	if (IS_DEV) {
-		console.log(logHelper(`${label}: ${logHelper(log)}`, numTabs));
+		console.log(pretty(`${label}: ${pretty(log)}`, numTabs));
 	}
 };

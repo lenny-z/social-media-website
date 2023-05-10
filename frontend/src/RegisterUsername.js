@@ -1,6 +1,6 @@
 import { useOutletContext, Link } from 'react-router-dom';
 
-const validator = require('@lenny_zhou/validator');
+// const validator = require('@lenny_zhou/validator');
 
 export default function RegisterUsername() {
 	const context = useOutletContext();
@@ -19,33 +19,30 @@ export default function RegisterUsername() {
 				onChange={handleUsername}
 			/>
 			<div className='validations'>
-				{
-					showValid(
-						`Valid sequence of characters`,
-						reqs.isString
-					)
-				}
+				{showValid(
+					'Valid sequence of characters',
+					reqs.isString
+				)}
 				<br />
-				{
-					showValid(
-						`At least one character long`,
-						reqs.lengthAtLeast1
-					)
-				}
+				{showValid(
+					'Not a restricted username',
+					reqs.notProtected
+				)}
 				<br />
-				{
-					showValid(
-						`At most 32 characters long`,
-						reqs.lengthAtMost32
-					)
-				}
+				{showValid(
+					'At least one character long',
+					reqs.lengthAtLeast1
+				)}
 				<br />
-				{
-					showValid(
-						`Only alphanumerics, underscores, and hyphens`,
-						reqs.allowedCharsOnly
-					)
-				}
+				{showValid(
+					'At most 32 characters long',
+					reqs.lengthAtMost32
+				)}
+				<br />
+				{showValid(
+					'Only alphanumerics, underscores, and hyphens',
+					reqs.allowedCharsOnly
+				)}
 			</div>
 			<nav className='register-nav'>
 				<Link to={'/register/email'}>Back</Link>
