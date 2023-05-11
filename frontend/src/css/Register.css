@@ -8,7 +8,6 @@
 	display: inline-block;
 	padding: var(--padding);
 	background: #bfdfff;
-	/* border-radius: 0px; */
 }
 
 #register-progress-nav>.active {

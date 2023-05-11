@@ -1,23 +1,32 @@
 import { Link, useLocation } from 'react-router-dom';
 
-const locationToField = new Map();
-locationToField.set('/register/email', 'email');
-locationToField.set('/register/username', 'username');
-locationToField.set('/register/password', 'password');
+// const locationToField = new Map();
+// locationToField.set('/register/email', 'email');
+// locationToField.set('/register/username', 'username');
+// locationToField.set('/register/password', 'password');
+
+function RegisterProgressLink({ to, label, isValid }) {
+	const isActive = useLocation().pathname === to;
+
+	return (
+		<Link
+			to={to}
+			className={isActive === true ? 'active' : ''}
+		>
+			{`${label} ${isValid === true ? '✅' : '❌'}`}
+		</Link>
+	);
+}
 
 export default function RegisterProgress({
 	emailIsValid,
 	usernameIsValid,
 	passwordIsValid,
-	// activeField
 }) {
-	// console.log(locationToField);
 	const path = useLocation().pathname;
-	// console.log(path);
 	var activeField = null;
 
 	if (locationToField.has(path)) {
-		// console.log('foo')
 		activeField = locationToField.get(path);
 	}
 
@@ -31,7 +40,7 @@ export default function RegisterProgress({
 
 	return (
 		<nav id='register-progress-nav'>
-			<Link
+			{/* <Link
 				to='/register/email'
 				className={isActiveField('email')}
 			>
@@ -48,7 +57,11 @@ export default function RegisterProgress({
 				className={isActiveField('password')}
 			>
 				{showValid('Password', passwordIsValid)}
-			</Link>
+			</Link> */}
+			<RegisterProgressLink
+				to='/register/email'
+				label='Email'
+			/>
 		</nav>
 	);
 }
