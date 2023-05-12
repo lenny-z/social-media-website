@@ -4,14 +4,26 @@
 	flex-basis: auto;
 }
 
-#register-progress-nav>a {
+#register-progress-nav>ol>li {
+	float: left;
+	padding: var(--padding);
+	background: #bfdfff;
+	list-style-position: inside;
+	list-style-type: decimal;
+}
+
+/* #register-progress-nav>ol>li>a {
 	display: inline-block;
 	padding: var(--padding);
 	background: #bfdfff;
+} */
+
+#register-progress-nav>ol>.active {
+	background: #dfffdf;
 }
 
-#register-progress-nav>.active {
-	background: #dfffdf;
+#register-progress-nav>ol>li>a {
+	background: inherit;
 }
 
 label[for='email-input'],
