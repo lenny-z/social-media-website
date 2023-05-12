@@ -21,45 +21,24 @@ export default function RegisterProgress({
 	usernameIsValid,
 	passwordIsValid,
 }) {
-	// const path = useLocation().pathname;
-	// var activeField = null;
-
-	// if (locationToField.has(path)) {
-	// 	activeField = locationToField.get(path);
-	// }
-
-	// function showValid(label, condition) {
-	// 	return `${label} ${condition === true ? '✅' : '❌'}`;
-	// }
-
-	// function isActiveField(field) {
-	// 	return (activeField === field) ? 'active' : '';
-	// }
-
 	return (
 		<nav id='register-progress-nav'>
 			<ol>
-				{/* <li> */}
 				<RegisterProgressLink
 					to='/register/email'
 					label='Email'
 					isValid={emailIsValid}
 				/>
-				{/* </li> */}
-				{/* <li> */}
 				<RegisterProgressLink
 					to='/register/username'
 					label='Username'
 					isValid={usernameIsValid}
 				/>
-				{/* </li> */}
-				{/* <li> */}
 				<RegisterProgressLink
 					to='/register/password'
 					label='Password'
 					isValid={passwordIsValid}
 				/>
-				{/* </li> */}
 			</ol>
 		</nav>
 	);

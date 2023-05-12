@@ -12,18 +12,12 @@
 	list-style-type: decimal;
 }
 
-/* #register-progress-nav>ol>li>a {
-	display: inline-block;
-	padding: var(--padding);
-	background: #bfdfff;
-} */
-
 #register-progress-nav>ol>.active {
 	background: #dfffdf;
 }
 
 #register-progress-nav>ol>li>a {
-	background: inherit;
+	/* background: inherit; */
 }
 
 label[for='email-input'],

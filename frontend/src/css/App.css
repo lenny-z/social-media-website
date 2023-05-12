@@ -2,7 +2,6 @@
 
 :root {
 	--border-width: 1px;
-	/* --border-radius: 4px; */
 	--padding: 8px;
 	--small-font-size: 16px;
 	--medium-font-size: 24px;
@@ -12,17 +11,17 @@
 	--nav-panel-width: 300px;
 	--post-input-height: 100px;
 	--hide-reply-bar-width: 16px;
+	--popup-width: 400px;
 }
 
 * {
 	margin: 0px;
 	border-width: var(--border-width);
-	/* border-radius: var(--border-radius); */
 	padding: 0px;
 	font-size: var(--small-font-size);
 	font-family: Arial;
 	list-style: none;
-	background: white;
+	/* background: white; */
 	box-sizing: border-box;
 	overflow: hidden;
 	z-index: 0;

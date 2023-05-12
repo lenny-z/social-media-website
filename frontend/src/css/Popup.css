@@ -1,0 +1,7 @@
+.popup {
+	position: fixed;
+	bottom: var(--padding);
+	width: var(--popup-width);
+	padding: var(--padding);
+	background: red;
+}
