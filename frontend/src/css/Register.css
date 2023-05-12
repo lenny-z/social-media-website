@@ -16,10 +16,6 @@
 	background: #dfffdf;
 }
 
-#register-progress-nav>ol>li>a {
-	/* background: inherit; */
-}
-
 label[for='email-input'],
 label[for='username-input'],
 label[for='password-input'],

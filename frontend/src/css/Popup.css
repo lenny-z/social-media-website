@@ -1,7 +1,18 @@
 .popup {
 	position: fixed;
+	left: calc(50vw - var(--popup-width) / 2);
 	bottom: var(--padding);
 	width: var(--popup-width);
 	padding: var(--padding);
+	text-align: center;
 	background: red;
+	color: white;
+}
+
+.popup>input[value='OK'] {
+	border: none;
+	background: inherit;
+	color: white;
+	text-decoration: underline;
+	cursor: pointer;
 }
