@@ -1,7 +1,6 @@
 .post-div {
 	border: 1px solid;
 	padding: var(--padding);
-	/* padding-bottom: 0px; */
 }
 
 .username-link {
@@ -32,6 +31,7 @@
 	border: none;
 	padding-top: var(--padding);
 	text-align: left;
+	/* background: none; */
 }
 
 .replies-div {
