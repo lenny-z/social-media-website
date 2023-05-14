@@ -78,3 +78,19 @@ input {
 input[type='submit'] {
 	border: 1px solid black;
 }
+
+#alerts-list {
+	position: fixed;
+	left: calc(50vw - var(--alert-width) / 2);
+	/* bottom: var(--padding); */
+	bottom: 0px;
+	width: var(--alert-width);
+}
+
+/* #alerts-list>li:not(:last-child) {
+	margin-bottom: var(--padding);
+} */
+
+#alerts-list>li {
+	margin-bottom: var(--padding);
+}

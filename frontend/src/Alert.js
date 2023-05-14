@@ -1,11 +1,10 @@
 import './css/Alert.css';
 
-export default function Alert({ id, body, deleteThis }) {
+export default function Alert({ body, deleteThis }) {
 	return (
 		<div className='alert'>
 			<div className='alert-body'>
-				{id}
-				{/* {body} */}
+				{body}
 			</div>
 			<input
 				type='button'

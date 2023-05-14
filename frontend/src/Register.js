@@ -53,7 +53,7 @@ export default function Register({
 			|| !validator.allReqsMet(usernameReqs)
 			|| !validator.allReqsMet(passwordReqs)
 		) {
-			pushAlert('Invalid');
+			pushAlert((Math.random() + 1).toString(36).substring(7));
 			return;
 		}
 

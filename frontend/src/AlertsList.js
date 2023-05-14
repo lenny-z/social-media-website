@@ -2,16 +2,15 @@ import Alert from './Alert.js';
 import './css/AlertsList.css';
 
 export default function AlertsList({ alerts }) {
-	function deleteAlert(index){
+	function deleteAlert(index) {
 		return () => {
-			
+
 		}
 	}
 
 	const renderAlerts = alerts.map((alert, index) => {
 		<li key={index}>
 			<Alert
-				id={alert.id}
 				body={alert.body}
 				deleteThis={alert.deleteThis}
 			/>

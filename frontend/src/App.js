@@ -1,46 +1,47 @@
 import { useState, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import NavPanel from './NavPanel.js';
-import AlertsList from './AlertsList.js';
+// import AlertsList from './AlertsList.js';
+import Alert from './Alert.js';
 import './css/App.css';
 
 const MAX_NUM_ALERTS = process.env.REACT_APP_MAX_NUM_ALERTS;
 
 export default function App({ isAuthorized, username }) {
 	const [alerts, setAlerts] = useState([]);
-	// const idRef = useRef(0);
 
-	// function deleteAlert(id) {
-	// 	console.log(alerts);
-	// 	return () => {
-	// 		let newAlerts = alerts.slice();
+	function deleteAlert(index) {
+		return () => {
+			let newAlerts = alerts.slice();
+			newAlerts.splice(index, 1);
+			setAlerts(newAlerts);
+		};
+	}
 
-	// 		for (const index in newAlerts) {
-	// 			if (newAlerts[index].id === id) {
-	// 				newAlerts.splice(index, 1);
-	// 				break;
-	// 			}
-	// 		}
-
-	// 		setAlerts(newAlerts);
-	// 	}
-	// }
+	const renderAlerts = alerts.map((alert, index) => {
+		return (<li key={index}>
+			<Alert
+				id={index}
+				body={alert}
+				deleteThis={deleteAlert(index)}
+			/>
+		</li>);
+	});
 
 	function pushAlert(body) {
 		let newAlerts = alerts.slice();
 
-		newAlerts.push({
-			// id: idRef.current,
-			body: body,
-			// deleteThis: deleteAlert(idRef.current)
-		});
+		// newAlerts.push({
+		// 	body: body,
+		// });
+
+		newAlerts.push(body);
 
 		if (newAlerts.length > MAX_NUM_ALERTS) {
 			newAlerts = newAlerts.slice(-MAX_NUM_ALERTS);
 		}
 
 		setAlerts(newAlerts);
-		// idRef.current = idRef.current + 1;
 	}
 
 
@@ -50,7 +51,10 @@ export default function App({ isAuthorized, username }) {
 			<div id='content-panel'>
 				<Outlet context={[pushAlert]} />
 			</div>
-			<AlertsList alerts={alerts} />
+			{/* <AlertsList alerts={alerts} /> */}
+			<ol id='alerts-list'>
+				{renderAlerts}
+			</ol>
 		</>
 	);
 }
