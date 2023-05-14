@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Outlet, Navigate } from 'react-router-dom';
+import { Outlet, Navigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
 import RegisterProgress from './RegisterProgress.js';
-// import Alert from './Alert.js';
-import AlertOutlet, { pushAlert } from './AlertOutlet.js';
+// import AlertOutlet, { pushAlert } from './AlertOutlet.js';
 import './css/Register.css';
 
 const validator = require('@lenny_zhou/validator');
@@ -19,12 +18,12 @@ export default function Register({
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [retypedPassword, setRetypedPassword] = useState('');
-	// const [showPopup, setShowPopup] = useState(false);
-	// const [popupBody, setPopupBody] = useState('');
 
 	const emailReqs = validator.email(email);
 	const usernameReqs = validator.username(username);
 	const passwordReqs = validator.password(password, retypedPassword);
+
+	const pushAlert = useOutletContext()[0];
 
 	function showValid(label, condition) {
 		return `${label}: ${condition === true ? '✅' : '❌'}`;
@@ -46,10 +45,6 @@ export default function Register({
 		setRetypedPassword(event.target.value);
 	}
 
-	// function handleAcknowledgePopup() {
-	// 	setShowPopup(false);
-	// }
-
 	async function handleSubmit(event) {
 		event.preventDefault();
 
@@ -58,11 +53,8 @@ export default function Register({
 			|| !validator.allReqsMet(usernameReqs)
 			|| !validator.allReqsMet(passwordReqs)
 		) {
-			// setShowPopup(true);
-			// console.log(showPopup);
-			// setPopupBody('Some requirements not met.') // TODO: make more descriptive
-			// popupOutlet.push('blarg');
-			pushAlert('blarg');
+			// console.log('invalid');
+			pushAlert('Invalid');
 			return;
 		}
 
@@ -117,18 +109,6 @@ export default function Register({
 					]} />
 				</ContentBody>
 			</>}
-			{/* {showPopup === true && <Popup
-				body={popupBody}
-				trigger={showPopup}
-				handleAcknowledge={handleAcknowledgePopup}
-			/>} */}
-			{/* <Popup
-				trigger={showPopup}
-				setTrigger={setShowPopup}
-				body={popupBody}
-			/> */}
-			{/* {AlertOutlet.render()} */}
-			<AlertOutlet />
 		</>
 	);
 }
