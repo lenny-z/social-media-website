@@ -1,13 +1,7 @@
 import Alert from './Alert.js';
-// const alerts = [];
-
-// export function pushAlert(body) {
-// 	alerts.push(body);
-// 	console.log(alerts);
-// }
+import './css/AlertsList.css';
 
 export default function AlertsList({ alerts }) {
-	console.log(alerts);
 	const renderAlerts = alerts.map(
 		alert =>
 			<li key={alert.id}>
@@ -18,11 +12,8 @@ export default function AlertsList({ alerts }) {
 	);
 
 	return (
-		<ol>
+		<ol id='alerts-list'>
 			{renderAlerts}
 		</ol>
 	);
 }
-
-// exports.render = () => {
-// };

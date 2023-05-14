@@ -53,7 +53,6 @@ export default function Register({
 			|| !validator.allReqsMet(usernameReqs)
 			|| !validator.allReqsMet(passwordReqs)
 		) {
-			// console.log('invalid');
 			pushAlert('Invalid');
 			return;
 		}

@@ -1,15 +1,16 @@
-.popup {
-	position: fixed;
+.alert {
+	/* position: fixed;
 	left: calc(50vw - var(--popup-width) / 2);
 	bottom: var(--padding);
-	width: var(--popup-width);
+	width: var(--popup-width); */
+	width: 100%;
 	padding: var(--padding);
 	text-align: center;
 	background: red;
 	color: white;
 }
 
-.popup>input[value='OK'] {
+.alert>input[value='OK'] {
 	border: none;
 	background: inherit;
 	color: white;
