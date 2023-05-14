@@ -8,31 +8,31 @@ const MAX_NUM_ALERTS = process.env.REACT_APP_MAX_NUM_ALERTS;
 
 export default function App({ isAuthorized, username }) {
 	const [alerts, setAlerts] = useState([]);
-	const idRef = useRef(0);
+	// const idRef = useRef(0);
 
-	function deleteAlert(id) {
-		console.log(id);
-		return () => {
-			let newAlerts = alerts.slice();
+	// function deleteAlert(id) {
+	// 	console.log(alerts);
+	// 	return () => {
+	// 		let newAlerts = alerts.slice();
 
-			for (const index in newAlerts) {
-				if (newAlerts[index].id === id) {
-					newAlerts.splice(index, 1);
-					break;
-				}
-			}
+	// 		for (const index in newAlerts) {
+	// 			if (newAlerts[index].id === id) {
+	// 				newAlerts.splice(index, 1);
+	// 				break;
+	// 			}
+	// 		}
 
-			setAlerts(newAlerts);
-		}
-	}
+	// 		setAlerts(newAlerts);
+	// 	}
+	// }
 
 	function pushAlert(body) {
 		let newAlerts = alerts.slice();
 
 		newAlerts.push({
-			id: idRef.current,
+			// id: idRef.current,
 			body: body,
-			deleteThis: deleteAlert(idRef.current)
+			// deleteThis: deleteAlert(idRef.current)
 		});
 
 		if (newAlerts.length > MAX_NUM_ALERTS) {
@@ -40,7 +40,7 @@ export default function App({ isAuthorized, username }) {
 		}
 
 		setAlerts(newAlerts);
-		idRef.current = idRef.current + 1;
+		// idRef.current = idRef.current + 1;
 	}
 
 
