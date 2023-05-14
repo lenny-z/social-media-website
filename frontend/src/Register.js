@@ -4,7 +4,6 @@ import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
 import RegisterProgress from './RegisterProgress.js';
-// import AlertOutlet, { pushAlert } from './AlertOutlet.js';
 import './css/Register.css';
 
 const validator = require('@lenny_zhou/validator');
@@ -53,7 +52,8 @@ export default function Register({
 			|| !validator.allReqsMet(usernameReqs)
 			|| !validator.allReqsMet(passwordReqs)
 		) {
-			pushAlert((Math.random() + 1).toString(36).substring(7));
+			// pushAlert((Math.random() + 1).toString(36).substring(7));
+			pushAlert('invalid');
 			return;
 		}
 

@@ -1,7 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import NavPanel from './NavPanel.js';
-// import AlertsList from './AlertsList.js';
 import Alert from './Alert.js';
 import './css/App.css';
 
@@ -30,11 +29,6 @@ export default function App({ isAuthorized, username }) {
 
 	function pushAlert(body) {
 		let newAlerts = alerts.slice();
-
-		// newAlerts.push({
-		// 	body: body,
-		// });
-
 		newAlerts.push(body);
 
 		if (newAlerts.length > MAX_NUM_ALERTS) {
@@ -51,7 +45,6 @@ export default function App({ isAuthorized, username }) {
 			<div id='content-panel'>
 				<Outlet context={[pushAlert]} />
 			</div>
-			{/* <AlertsList alerts={alerts} /> */}
 			<ol id='alerts-list'>
 				{renderAlerts}
 			</ol>
