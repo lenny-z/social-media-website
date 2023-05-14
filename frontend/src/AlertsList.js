@@ -7,6 +7,7 @@ export default function AlertsList({ alerts }) {
 			<li key={alert.id}>
 				<Alert
 					body={alert.body}
+					deleteThis={alert.deleteThis}
 				/>
 			</li>
 	);
