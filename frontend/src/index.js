@@ -8,9 +8,9 @@ import Error from './Error.js';
 import Login from './Login.js';
 
 import Register from './Register.js';
-import RegisterEmail from './RegisterEmail.js';
-import RegisterUsername from './RegisterUsername.js';
-import RegisterPassword from './RegisterPassword.js';
+// import RegisterEmail from './RegisterEmail.js';
+// import RegisterUsername from './RegisterUsername.js';
+// import RegisterPassword from './RegisterPassword.js';
 
 import Home, { loader as homeLoader } from './Home.js';
 import Search from './Search.js';

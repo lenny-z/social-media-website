@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Outlet, Navigate, useOutletContext } from 'react-router-dom';
+import { Navigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
-import RegisterProgress from './RegisterProgress.js';
+// import RegisterProgress from './RegisterProgress.js';
 import './css/Register.css';
 
 const validator = require('@lenny_zhou/validator');
@@ -40,7 +40,7 @@ export default function Register({
 		setPassword(event.target.value);
 	}
 
-	function handleRetypePassword(event) {
+	function handleRetypedPassword(event) {
 		setRetypedPassword(event.target.value);
 	}
 
@@ -52,7 +52,6 @@ export default function Register({
 			|| !validator.allReqsMet(usernameReqs)
 			|| !validator.allReqsMet(passwordReqs)
 		) {
-			// pushAlert((Math.random() + 1).toString(36).substring(7));
 			pushAlert('invalid');
 			return;
 		}
@@ -85,27 +84,7 @@ export default function Register({
 				<ContentHeader>
 					Register
 				</ContentHeader>
-				{/* <RegisterProgress
-					emailIsValid={validator.allReqsMet(emailReqs)}
-					usernameIsValid={validator.allReqsMet(usernameReqs)}
-					passwordIsValid={validator.allReqsMet(passwordReqs)}
-				/> */}
 				<ContentBody>
-					{/* <Outlet context={[			// Indices:
-						showValid,				// 0
-						email,					// 1
-						handleEmail,			// 2
-						emailReqs,				// 3
-						username,				// 4
-						handleUsername,			// 5
-						usernameReqs,			// 6
-						password,				// 7
-						handlePassword,			// 8
-						retypedPassword,		// 9
-						handleRetypePassword,	// 10
-						passwordReqs,			// 11
-						handleSubmit			// 12
-					]} /> */}
 					<form onSubmit={handleSubmit}>
 						<label htmlFor='email-input'>Email:</label>
 						<input
@@ -113,6 +92,31 @@ export default function Register({
 							type='text'
 							value={email}
 							onChange={handleEmail}
+						/>
+						<label htmlFor='username-input'>Username:</label>
+						<input
+							id='username-input'
+							type='text'
+							value={username}
+							onChange={handleUsername}
+						/>
+						<label htmlFor='password-input'>Password:</label>
+						<input
+							id='password-input'
+							type='password'
+							value={password}
+							onChange={handlePassword}
+						/>
+						<label htmlFor='retype-password-input'>Retype password:</label>
+						<input
+							id='retype-password-input'
+							type='password'
+							value={retypedPassword}
+							onChange={handleRetypedPassword}
+						/>
+						<input
+							type='submit'
+							value='Register'
 						/>
 					</form>
 				</ContentBody>
