@@ -3,6 +3,7 @@ import { Navigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
+import Validations from './Validations.js';
 // import './css/Register.css';
 import './css/Auth.css';
 
@@ -18,15 +19,27 @@ export default function Register({
 	const [password, setPassword] = useState('');
 	const [retypedPassword, setRetypedPassword] = useState('');
 
-	const emailReqs = validator.email(email);
-	const usernameReqs = validator.username(username);
-	const passwordReqs = validator.password(password, retypedPassword);
+	const emailReqsNotMet = validator.reqsNotMet(
+		validator.email(email)
+	);
+
+	const usernameReqsNotMet = validator.reqsNotMet(
+		validator.username(username)
+	);
+
+	const passwordReqsNotMet = validator.reqsNotMet(
+		validator.password(password)
+	);
+
+	const retypedPasswordReqsNotMet = validator.reqsNotMet(
+		validator.retypedPassword(password, retypedPassword)
+	);
 
 	const pushAlert = useOutletContext()[0];
 
-	function showValid(label, condition) {
-		return `${label}: ${condition === true ? '✅' : '❌'}`;
-	}
+	// function showValid(label, condition) {
+	// 	return `${label}: ${condition === true ? '✅' : '❌'}`;
+	// }
 
 	function handleEmail(event) {
 		setEmail(event.target.value);
@@ -48,9 +61,9 @@ export default function Register({
 		event.preventDefault();
 
 		if (
-			!validator.allReqsMet(emailReqs)
-			|| !validator.allReqsMet(usernameReqs)
-			|| !validator.allReqsMet(passwordReqs)
+			!validator.allReqsMet(emailReqsNotMet)
+			|| !validator.allReqsMet(usernameReqsNotMet)
+			|| !validator.allReqsMet(passwordReqsNotMet)
 		) {
 			pushAlert('invalid');
 			return;
@@ -93,6 +106,7 @@ export default function Register({
 							value={email}
 							onChange={handleEmail}
 						/>
+						<Validations reqsNotMet={emailReqsNotMet} />
 						<label htmlFor='username-input'>Username:</label>
 						<input
 							id='username-input'
@@ -100,6 +114,7 @@ export default function Register({
 							value={username}
 							onChange={handleUsername}
 						/>
+						<Validations reqsNotMet={usernameReqsNotMet} />
 						<label htmlFor='password-input'>Password:</label>
 						<input
 							id='password-input'
@@ -107,6 +122,7 @@ export default function Register({
 							value={password}
 							onChange={handlePassword}
 						/>
+						<Validations reqsNotMet={passwordReqsNotMet} />
 						<label htmlFor='retyped-password-input'>Retype password:</label>
 						<input
 							id='retyped-password-input'
@@ -114,6 +130,7 @@ export default function Register({
 							value={retypedPassword}
 							onChange={handleRetypedPassword}
 						/>
+						<Validations reqsNotMet={retypedPasswordReqsNotMet} />
 						<input
 							type='submit'
 							value='Register'

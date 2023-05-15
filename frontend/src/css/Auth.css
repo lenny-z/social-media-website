@@ -5,6 +5,7 @@ label[for='password-input'],
 label[for='retyped-password-input'] {
 	display: block;
 	padding-bottom: var(--padding);
+	font-size: var(--medium-font-size);
 }
 
 #identifier-input,
@@ -24,6 +25,11 @@ input[value='Register'] {
 	padding: var(--padding);
 }
 
-/* a[href='/register'] {
-	text-align: center;
-} */
+.validations {
+	padding-bottom: var(--padding);
+}
+
+/* .validations>li { */
+	/* list-style-position: inside; */
+	/* list-style-type: disc; */
+/* } */

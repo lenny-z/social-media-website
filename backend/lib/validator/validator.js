@@ -1,11 +1,11 @@
 const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 const usernameCharsRegex = /^[a-zA-Z0-9_-]*$/;
 
-exports.allReqsMet = (reqs) => {
-	const keys = Object.keys(reqs);
+exports.allReqsMet = (validation) => {
+	const reqs = Object.keys(validation);
 
-	for (const req of keys) {
-		if (reqs[req].value !== true) {
+	for (const req of reqs) {
+		if (validation[req].value !== true) {
 			return false;
 		}
 	}
@@ -13,33 +13,13 @@ exports.allReqsMet = (reqs) => {
 	return true;
 };
 
-//Requirements met and not met
-// exports.reqsMet = (reqs) => {
-// 	const keys = Object.keys(reqs);
-// 	const met = [];
-// 	const notMet = [];
-
-// 	for (const req of keys) {
-// 		if (reqs[req] === true) {
-// 			met.push(req);
-// 		} else {
-// 			notMet.push(req);
-// 		}
-// 	}
-
-// 	return {
-// 		met: met,
-// 		notMet: notMet
-// 	}
-// };
-
 exports.reqsNotMet = (validation) => {
 	const reqs = Object.keys(validation);
 	const reqsNotMet = [];
 
 	for (const req of reqs) {
-		if (!reqs[req].value) {
-			reqsNotMet.push(reqs[req].description)
+		if (!validation[req].value) {
+			reqsNotMet.push(validation[req].description)
 		}
 	}
 
@@ -47,9 +27,6 @@ exports.reqsNotMet = (validation) => {
 }
 
 exports.email = (email) => {
-	// const reqs = {
-	// 	isValid: emailRegex.test(email)
-	// }
 	const reqs = {
 		isValid: {
 			description: 'Email must be valid.',
@@ -68,13 +45,6 @@ exports.username = (username) => {
 		'settings'
 	];
 
-	// const reqs = {
-	// 	isString: false,
-	// 	notProtected: false,
-	// 	lengthAtLeast1: false,
-	// 	lengthAtMost32: false,
-	// 	allowedCharsOnly: false
-	// };
 	const reqs = {
 		isString: {
 			description: 'Must be valid sequence of characters.',
@@ -117,22 +87,22 @@ exports.username = (username) => {
 	}
 
 	if (usernameCharsRegex.test(username) === true) {
-		reqs.allowedCharsOnly = true;
+		reqs.allowedCharsOnly.value = true;
 	}
 
 	return reqs;
 };
 
-exports.password = (password, retypedPassword) => {
+exports.password = (password) => {
 	const reqs = {
 		isString: {
 			description: 'Must be valid sequence of characters.',
 			value: false
 		},
-		isMatch: {
-			description: 'Retyped password must match password.',
-			value: false
-		},
+		// isMatch: {
+		// 	description: 'Retyped password must match password.',
+		// 	value: false
+		// },
 		lengthAtLeast14: {
 			description: 'Must be at least 14 characters long.',
 			value: false
@@ -149,9 +119,9 @@ exports.password = (password, retypedPassword) => {
 		return reqs;
 	}
 
-	if (password === retypedPassword) {
-		reqs.isMatch.value = true;
-	}
+	// if (password === retypedPassword) {
+	// 	reqs.isMatch.value = true;
+	// }
 
 	if (password.length >= 14) {
 		reqs.lengthAtLeast14.value = true;
@@ -159,6 +129,17 @@ exports.password = (password, retypedPassword) => {
 
 	if (password.length <= 128) {
 		reqs.lengthAtMost128.value = true;
+	}
+
+	return reqs;
+}
+
+exports.retypedPassword = (password, retypedPassword) => {
+	const reqs = {
+		isMatch: {
+			description: 'Retyped password must match password.',
+			value: password === retypedPassword
+		}
 	}
 
 	return reqs;
