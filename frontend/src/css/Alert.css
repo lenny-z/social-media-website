@@ -6,8 +6,9 @@
 	width: 100%;
 	padding: var(--padding);
 	text-align: center;
-	background: red;
+	background: #ff3f3f;
 	color: white;
+	border-radius: var(--padding);
 }
 
 .alert>input[value='OK'] {

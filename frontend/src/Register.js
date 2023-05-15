@@ -21,7 +21,11 @@ export default function Register({
 	const validateEmail = validator.email(email);
 	const validateUsername = validator.username(username);
 	const validatePassword = validator.password(password);
-	const validateRetypedPassword = validator.retypedPassword(retypedPassword);
+
+	const validateRetypedPassword = validator.retypedPassword(
+		password,
+		retypedPassword
+	);
 
 	const emailIsValid = validator.allReqsMet(validateEmail) === true;
 	const usernameIsValid = validator.allReqsMet(validateUsername) === true;
@@ -30,6 +34,7 @@ export default function Register({
 	const retypedPasswordIsValid = validator.allReqsMet(
 		validateRetypedPassword
 	);
+	console.log(retypedPasswordIsValid)
 
 	const emailReqsNotMet = validator.reqsNotMet(validateEmail);
 	const usernameReqsNotMet = validator.reqsNotMet(validateUsername);
@@ -62,10 +67,6 @@ export default function Register({
 
 
 		if (
-			// !validator.allReqsMet(validateEmail)
-			// || !validator.allReqsMet(validateUsername)
-			// || !validator.allReqsMet(validatePassword)
-			// || !validator.allReqsMet(validateRetypedPassword)
 			!emailIsValid
 			|| !usernameIsValid
 			|| !passwordIsValid
@@ -76,8 +77,20 @@ export default function Register({
 					<p>Email:</p>
 					<Validations reqsNotMet={emailReqsNotMet} />
 				</>}
+				{!usernameIsValid && <>
+					<p>Username:</p>
+					<Validations reqsNotMet={usernameReqsNotMet} />
+				</>}
+				{!passwordIsValid && <>
+					<p>Password:</p>
+					<Validations reqsNotMet={passwordReqsNotMet} />
+				</>}
+				{!retypedPasswordIsValid && <>
+					<p>Retyped password:</p>
+					<Validations reqsNotMet={retypedPasswordReqsNotMet} />
+				</>}
 			</>;
-			// pushAlert('invalid');
+			
 			pushAlert(alertBody);
 			return;
 		}
@@ -98,7 +111,8 @@ export default function Register({
 			}
 		} catch (err) {
 			if (err.response && err.response.status === 500) {
-				window.alert('Sorry, please try again.');
+				// window.alert('Sorry, please try again.');
+				pushAlert('Internal server error. Please try again.');
 			}
 		}
 	}
