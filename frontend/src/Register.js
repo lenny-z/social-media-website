@@ -85,13 +85,13 @@ export default function Register({
 				<ContentHeader>
 					Register
 				</ContentHeader>
-				<RegisterProgress
+				{/* <RegisterProgress
 					emailIsValid={validator.allReqsMet(emailReqs)}
 					usernameIsValid={validator.allReqsMet(usernameReqs)}
 					passwordIsValid={validator.allReqsMet(passwordReqs)}
-				/>
+				/> */}
 				<ContentBody>
-					<Outlet context={[			// Indices:
+					{/* <Outlet context={[			// Indices:
 						showValid,				// 0
 						email,					// 1
 						handleEmail,			// 2
@@ -105,7 +105,16 @@ export default function Register({
 						handleRetypePassword,	// 10
 						passwordReqs,			// 11
 						handleSubmit			// 12
-					]} />
+					]} /> */}
+					<form onSubmit={handleSubmit}>
+						<label htmlFor='email-input'>Email:</label>
+						<input
+							id='email-input'
+							type='text'
+							value={email}
+							onChange={handleEmail}
+						/>
+					</form>
 				</ContentBody>
 			</>}
 		</>

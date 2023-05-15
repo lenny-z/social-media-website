@@ -18,7 +18,7 @@ export default function NavPanel({ isAuthorized, username }) {
 					&& <li><Link to={'/settings'}>Settings</Link></li>
 				}
 				{!isAuthorized && <li><Link to={'/login'}>Log In</Link></li>}
-				{!isAuthorized && <li><Link to={'/register/email'}>Register</Link></li>}
+				{!isAuthorized && <li><Link to={'/register'}>Register</Link></li>}
 			</ol>
 		</nav>
 	);

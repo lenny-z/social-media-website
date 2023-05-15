@@ -62,20 +62,20 @@ function Index() {
 						setAuthorized={setAuthorized}
 						setReturnedUsername={setUsername}
 					/>,
-					children: [
-						{
-							path: 'email',
-							element: <RegisterEmail />
-						},
-						{
-							path: 'username',
-							element: <RegisterUsername />
-						},
-						{
-							path: 'password',
-							element: <RegisterPassword />
-						}
-					]
+					// children: [
+					// 	{
+					// 		path: 'email',
+					// 		element: <RegisterEmail />
+					// 	},
+					// 	{
+					// 		path: 'username',
+					// 		element: <RegisterUsername />
+					// 	},
+					// 	{
+					// 		path: 'password',
+					// 		element: <RegisterPassword />
+					// 	}
+					// ]
 				},
 				{
 					path: '/',
