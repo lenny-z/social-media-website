@@ -28,8 +28,3 @@ input[value='Register'] {
 .validations {
 	padding-bottom: var(--padding);
 }
-
-/* .validations>li { */
-	/* list-style-position: inside; */
-	/* list-style-type: disc; */
-/* } */

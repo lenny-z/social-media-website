@@ -15,7 +15,5 @@
 }
 
 #nav-panel>ol>li>a {
-	/* display: block; */
-	/* padding-top: var(--padding); */
 	font-size: var(--medium-font-size);
 }

@@ -99,10 +99,6 @@ exports.password = (password) => {
 			description: 'Must be valid sequence of characters.',
 			value: false
 		},
-		// isMatch: {
-		// 	description: 'Retyped password must match password.',
-		// 	value: false
-		// },
 		lengthAtLeast14: {
 			description: 'Must be at least 14 characters long.',
 			value: false
@@ -118,10 +114,6 @@ exports.password = (password) => {
 	} else {
 		return reqs;
 	}
-
-	// if (password === retypedPassword) {
-	// 	reqs.isMatch.value = true;
-	// }
 
 	if (password.length >= 14) {
 		reqs.lengthAtLeast14.value = true;

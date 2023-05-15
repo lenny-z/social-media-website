@@ -4,7 +4,6 @@ import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
 import Validations from './Validations.js';
-// import './css/Register.css';
 import './css/Auth.css';
 
 const validator = require('@lenny_zhou/validator');
@@ -19,27 +18,32 @@ export default function Register({
 	const [password, setPassword] = useState('');
 	const [retypedPassword, setRetypedPassword] = useState('');
 
+	const validateEmail = validator.email(email);
+	const validateUsername = validator.username(username);
+	const validatePassword = validator.password(password);
+	const validateRetypedPassword = validator.retypedPassword(retypedPassword);
+
 	const emailReqsNotMet = validator.reqsNotMet(
-		validator.email(email)
+		// validator.email(email)
+		validateEmail
 	);
 
 	const usernameReqsNotMet = validator.reqsNotMet(
-		validator.username(username)
+		// validator.username(username)
+		validateUsername
 	);
 
 	const passwordReqsNotMet = validator.reqsNotMet(
-		validator.password(password)
+		// validator.password(password)
+		validatePassword
 	);
 
 	const retypedPasswordReqsNotMet = validator.reqsNotMet(
-		validator.retypedPassword(password, retypedPassword)
+		// validator.retypedPassword(password, retypedPassword)
+		validateRetypedPassword
 	);
 
 	const pushAlert = useOutletContext()[0];
-
-	// function showValid(label, condition) {
-	// 	return `${label}: ${condition === true ? '✅' : '❌'}`;
-	// }
 
 	function handleEmail(event) {
 		setEmail(event.target.value);
@@ -61,9 +65,14 @@ export default function Register({
 		event.preventDefault();
 
 		if (
-			!validator.allReqsMet(emailReqsNotMet)
-			|| !validator.allReqsMet(usernameReqsNotMet)
-			|| !validator.allReqsMet(passwordReqsNotMet)
+			// !validator.allReqsMet(emailReqsNotMet)
+			// || !validator.allReqsMet(usernameReqsNotMet)
+			// || !validator.allReqsMet(passwordReqsNotMet)
+			// || !validator.allReqsMet()
+			!validator.allReqsMet(validateEmail)
+			|| !validator.allReqsMet(validateUsername)
+			|| !validator.allReqsMet(validatePassword)
+			|| !validator.allReqsMet(validateRetypedPassword)
 		) {
 			pushAlert('invalid');
 			return;
