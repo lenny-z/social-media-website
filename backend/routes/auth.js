@@ -71,22 +71,58 @@ router.post('/logout', authorize, (req, res) => {
 router.post('/register', async (req, res) => {
 	console.log('POST to /register:');
 
-	const emailReqsMet = validator.reqsMet(
-		validator.email(req.body.email)
+	// const emailReqsMet = validator.reqsMet(
+	// 	validator.email(req.body.email)
+	// );
+
+	// const usernameReqsMet = validator.reqsMet(
+	// 	validator.username(req.body.username)
+	// );
+
+	// const passwordReqsMet = validator.reqsMet(
+	// 	validator.password(req.body.password)
+	// );
+
+	const validateEmail = validator.email(req.body.email);
+	const validateUsername = validator.username(req.body.username);
+	const validatePassword = validator.password(req.body.password);
+
+	const validateRetypedPassword = validator.retypedPassword(
+		req.body.password,
+		req.body.retypedPassword
 	);
 
-	const usernameReqsMet = validator.reqsMet(
-		validator.username(req.body.username)
-	);
+	const emailIsValid = validator.allReqsMet(
+		// validator.email(req.body.email)
+		validateEmail
+	) === true;
 
-	const passwordReqsMet = validator.reqsMet(
-		validator.password(req.body.password)
-	);
+	const usernameIsValid = validator.allReqsMet(
+		// validator.username(req.body.username)
+		validateUsername
+	) === true;
+
+	const passwordIsValid = validator.allReqsMet(
+		// validator.password(req.body.password)
+		validatePassword
+	) === true;
+
+	const retypedPasswordIsValid = validator.allReqsMet(
+		// validator.retypedPassword(
+		// 	req.body.password,
+		// 	req.body.retypedPassword
+		// )
+		validateRetypedPassword
+	) === true;
 
 	if (
-		validator.allReqsMet(emailReqsMet)
-		&& validator.allReqsMet(usernameReqsMet)
-		&& validator.allReqsMet(passwordReqsMet)
+		// validator.allReqsMet(emailReqsMet)
+		// && validator.allReqsMet(usernameReqsMet)
+		// && validator.allReqsMet(passwordReqsMet)
+		emailIsValid === true
+		&& usernameIsValid === true
+		&& passwordIsValid === true
+		&& retypedPasswordIsValid === true
 	) {
 		try {
 			const userID = await queries.getUserID(req.body.email)
@@ -114,9 +150,13 @@ router.post('/register', async (req, res) => {
 		}
 	} else {
 		const resBody = {
-			email: emailReqsMet.notMet,
-			username: usernameReqsMet.notMet,
-			password: passwordReqsMet.notMet
+			// email: validator.reqsNotMet(validateEmail)
+			// username: usernameReqsMet.notMet,
+			// password: passwordReqsMet.notMet
+			email: validator.reqsNotMet(validateEmail),
+			username: validator.reqsNotMet(validateUsername),
+			password: validator.reqsNotMet(validatePassword),
+			retypedPassword: validator.reqsNotMet(validateRetypedPassword)
 		}
 
 		res.status(400).send(resBody);

@@ -124,15 +124,28 @@ exports.password = (password) => {
 	}
 
 	return reqs;
-}
+};
 
-exports.retypedPassword = (password, retypedPassword) => {
+function retypedPassword(password, retypedPassword) {
 	const reqs = {
 		isMatch: {
 			description: 'Retyped password must match password.',
 			value: password === retypedPassword
 		}
-	}
+	};
 
 	return reqs;
 }
+
+// exports.retypedPassword = function (password, retypedPassword) {
+// 	const reqs = {
+// 		isMatch: {
+// 			description: 'Retyped password must match password.',
+// 			value: password === retypedPassword
+// 		}
+// 	};
+
+// 	return reqs;
+// };
+
+exports.retypedPassword = retypedPassword;

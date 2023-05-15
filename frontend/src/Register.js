@@ -90,7 +90,7 @@ export default function Register({
 					<Validations reqsNotMet={retypedPasswordReqsNotMet} />
 				</>}
 			</>;
-			
+
 			pushAlert(alertBody);
 			return;
 		}
@@ -98,7 +98,8 @@ export default function Register({
 		const user = {
 			email: email,
 			username: username,
-			password: password
+			password: password,
+			retypedPassword: retypedPassword
 		};
 
 		try {
@@ -111,7 +112,6 @@ export default function Register({
 			}
 		} catch (err) {
 			if (err.response && err.response.status === 500) {
-				// window.alert('Sorry, please try again.');
 				pushAlert('Internal server error. Please try again.');
 			}
 		}
