@@ -3,7 +3,8 @@ import { Navigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
-import './css/Login.css';
+// import './css/Login.css';
+import './css/Auth.css';
 
 export default function Login({ isAuthorized, setAuthorized, setUsername }) {
 	const [identifier, setIdentifier] = useState('');
@@ -70,7 +71,7 @@ export default function Login({ isAuthorized, setAuthorized, setUsername }) {
 							value='Log In'
 						/>
 					</form>
-					<Link to={'/register/email'}>Register</Link>
+					<Link to={'/register'}>Register</Link>
 				</ContentBody>
 			</>}
 			{isAuthorized === true && <Navigate to='/' />}

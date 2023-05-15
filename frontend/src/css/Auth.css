@@ -1,0 +1,29 @@
+label[for='identifier-input'],
+label[for='email-input'],
+label[for='username-input'],
+label[for='password-input'],
+label[for='retyped-password-input'] {
+	display: block;
+	padding-bottom: var(--padding);
+}
+
+#identifier-input,
+#email-input,
+#username-input,
+#password-input,
+#retyped-password-input {
+	margin-bottom: var(--padding);
+	width: var(--id-password-width);
+	padding: var(--padding);
+}
+
+input[value='Log In'],
+input[value='Register'] {
+	display: block;
+	margin-bottom: var(--padding);
+	padding: var(--padding);
+}
+
+/* a[href='/register'] {
+	text-align: center;
+} */

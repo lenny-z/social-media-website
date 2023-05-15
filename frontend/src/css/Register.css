@@ -1,4 +1,4 @@
-#register-progress-nav {
+/* #register-progress-nav {
 	flex-grow: 0;
 	flex-shrink: 0;
 	flex-basis: auto;
@@ -14,7 +14,7 @@
 
 #register-progress-nav>ol>.active {
 	background: #dfffdf;
-}
+} */
 
 label[for='email-input'],
 label[for='username-input'],

@@ -3,8 +3,8 @@ import { Navigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
-// import RegisterProgress from './RegisterProgress.js';
-import './css/Register.css';
+// import './css/Register.css';
+import './css/Auth.css';
 
 const validator = require('@lenny_zhou/validator');
 
@@ -107,9 +107,9 @@ export default function Register({
 							value={password}
 							onChange={handlePassword}
 						/>
-						<label htmlFor='retype-password-input'>Retype password:</label>
+						<label htmlFor='retyped-password-input'>Retype password:</label>
 						<input
-							id='retype-password-input'
+							id='retyped-password-input'
 							type='password'
 							value={retypedPassword}
 							onChange={handleRetypedPassword}
@@ -117,6 +117,7 @@ export default function Register({
 						<input
 							type='submit'
 							value='Register'
+							className='hoverable'
 						/>
 					</form>
 				</ContentBody>
