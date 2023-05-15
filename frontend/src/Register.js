@@ -23,23 +23,19 @@ export default function Register({
 	const validatePassword = validator.password(password);
 	const validateRetypedPassword = validator.retypedPassword(retypedPassword);
 
-	const emailReqsNotMet = validator.reqsNotMet(
-		// validator.email(email)
-		validateEmail
+	const emailIsValid = validator.allReqsMet(validateEmail) === true;
+	const usernameIsValid = validator.allReqsMet(validateUsername) === true;
+	const passwordIsValid = validator.allReqsMet(validatePassword) === true;
+
+	const retypedPasswordIsValid = validator.allReqsMet(
+		validateRetypedPassword
 	);
 
-	const usernameReqsNotMet = validator.reqsNotMet(
-		// validator.username(username)
-		validateUsername
-	);
-
-	const passwordReqsNotMet = validator.reqsNotMet(
-		// validator.password(password)
-		validatePassword
-	);
+	const emailReqsNotMet = validator.reqsNotMet(validateEmail);
+	const usernameReqsNotMet = validator.reqsNotMet(validateUsername);
+	const passwordReqsNotMet = validator.reqsNotMet(validatePassword);
 
 	const retypedPasswordReqsNotMet = validator.reqsNotMet(
-		// validator.retypedPassword(password, retypedPassword)
 		validateRetypedPassword
 	);
 
@@ -64,17 +60,25 @@ export default function Register({
 	async function handleSubmit(event) {
 		event.preventDefault();
 
+
 		if (
-			// !validator.allReqsMet(emailReqsNotMet)
-			// || !validator.allReqsMet(usernameReqsNotMet)
-			// || !validator.allReqsMet(passwordReqsNotMet)
-			// || !validator.allReqsMet()
-			!validator.allReqsMet(validateEmail)
-			|| !validator.allReqsMet(validateUsername)
-			|| !validator.allReqsMet(validatePassword)
-			|| !validator.allReqsMet(validateRetypedPassword)
+			// !validator.allReqsMet(validateEmail)
+			// || !validator.allReqsMet(validateUsername)
+			// || !validator.allReqsMet(validatePassword)
+			// || !validator.allReqsMet(validateRetypedPassword)
+			!emailIsValid
+			|| !usernameIsValid
+			|| !passwordIsValid
+			|| !retypedPasswordIsValid
 		) {
-			pushAlert('invalid');
+			const alertBody = <>
+				{!emailIsValid && <>
+					<p>Email:</p>
+					<Validations reqsNotMet={emailReqsNotMet} />
+				</>}
+			</>;
+			// pushAlert('invalid');
+			pushAlert(alertBody);
 			return;
 		}
 
@@ -115,7 +119,9 @@ export default function Register({
 							value={email}
 							onChange={handleEmail}
 						/>
-						<Validations reqsNotMet={emailReqsNotMet} />
+						{!emailIsValid &&
+							<Validations reqsNotMet={emailReqsNotMet} />
+						}
 						<label htmlFor='username-input'>Username:</label>
 						<input
 							id='username-input'
@@ -123,7 +129,9 @@ export default function Register({
 							value={username}
 							onChange={handleUsername}
 						/>
-						<Validations reqsNotMet={usernameReqsNotMet} />
+						{!usernameIsValid &&
+							<Validations reqsNotMet={usernameReqsNotMet} />
+						}
 						<label htmlFor='password-input'>Password:</label>
 						<input
 							id='password-input'
@@ -131,7 +139,9 @@ export default function Register({
 							value={password}
 							onChange={handlePassword}
 						/>
-						<Validations reqsNotMet={passwordReqsNotMet} />
+						{!passwordIsValid &&
+							<Validations reqsNotMet={passwordReqsNotMet} />
+						}
 						<label htmlFor='retyped-password-input'>Retype password:</label>
 						<input
 							id='retyped-password-input'
@@ -139,7 +149,9 @@ export default function Register({
 							value={retypedPassword}
 							onChange={handleRetypedPassword}
 						/>
-						<Validations reqsNotMet={retypedPasswordReqsNotMet} />
+						{!retypedPasswordIsValid &&
+							<Validations reqsNotMet={retypedPasswordReqsNotMet} />
+						}
 						<input
 							type='submit'
 							value='Register'
