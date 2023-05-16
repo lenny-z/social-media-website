@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const queries = require('../lib/queries.js');
-// const util = require('@lenny_zhou/util');
+// const queries = require('../lib/queries.js');
+const queries = require('../lib/queries/follows.js');
 const authorize = require('./auth.js').authorize;
 
 router.post('/', authorize, async (req, res) => {

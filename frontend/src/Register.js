@@ -34,7 +34,6 @@ export default function Register({
 	const retypedPasswordIsValid = validator.allReqsMet(
 		validateRetypedPassword
 	);
-	console.log(retypedPasswordIsValid)
 
 	const emailReqsNotMet = validator.reqsNotMet(validateEmail);
 	const usernameReqsNotMet = validator.reqsNotMet(validateUsername);

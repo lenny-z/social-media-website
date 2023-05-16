@@ -71,18 +71,6 @@ router.post('/logout', authorize, (req, res) => {
 router.post('/register', async (req, res) => {
 	console.log('POST to /register:');
 
-	// const emailReqsMet = validator.reqsMet(
-	// 	validator.email(req.body.email)
-	// );
-
-	// const usernameReqsMet = validator.reqsMet(
-	// 	validator.username(req.body.username)
-	// );
-
-	// const passwordReqsMet = validator.reqsMet(
-	// 	validator.password(req.body.password)
-	// );
-
 	const validateEmail = validator.email(req.body.email);
 	const validateUsername = validator.username(req.body.username);
 	const validatePassword = validator.password(req.body.password);
@@ -92,33 +80,15 @@ router.post('/register', async (req, res) => {
 		req.body.retypedPassword
 	);
 
-	const emailIsValid = validator.allReqsMet(
-		// validator.email(req.body.email)
-		validateEmail
-	) === true;
-
-	const usernameIsValid = validator.allReqsMet(
-		// validator.username(req.body.username)
-		validateUsername
-	) === true;
-
-	const passwordIsValid = validator.allReqsMet(
-		// validator.password(req.body.password)
-		validatePassword
-	) === true;
+	const emailIsValid = validator.allReqsMet(validateEmail) === true;
+	const usernameIsValid = validator.allReqsMet(validateUsername) === true;
+	const passwordIsValid = validator.allReqsMet(validatePassword) === true;
 
 	const retypedPasswordIsValid = validator.allReqsMet(
-		// validator.retypedPassword(
-		// 	req.body.password,
-		// 	req.body.retypedPassword
-		// )
 		validateRetypedPassword
 	) === true;
 
 	if (
-		// validator.allReqsMet(emailReqsMet)
-		// && validator.allReqsMet(usernameReqsMet)
-		// && validator.allReqsMet(passwordReqsMet)
 		emailIsValid === true
 		&& usernameIsValid === true
 		&& passwordIsValid === true
@@ -150,9 +120,6 @@ router.post('/register', async (req, res) => {
 		}
 	} else {
 		const resBody = {
-			// email: validator.reqsNotMet(validateEmail)
-			// username: usernameReqsMet.notMet,
-			// password: passwordReqsMet.notMet
 			email: validator.reqsNotMet(validateEmail),
 			username: validator.reqsNotMet(validateUsername),
 			password: validator.reqsNotMet(validatePassword),
