@@ -9,7 +9,7 @@ exports.makeFollow = async (followerID, followedUsername) => {
 	try {
 		await pool.query(query, params);
 	} catch (err) {
-		console.error(err);
+		// console.error(err);
 		throw err;
 	}
 }
@@ -24,7 +24,7 @@ exports.getFollow = async (followerID, followedUsername) => {
 		const res = await pool.query(query, params);
 		return res.rows[0].exists === true;
 	} catch (err) {
-		console.error(err);
+		// console.error(err);
 		throw err;
 	}
 };
@@ -38,7 +38,7 @@ exports.deleteFollow = async (followerID, followedUsername) => {
 	try {
 		await pool.query(query, params);
 	} catch (err) {
-		console.error(err);
+		// console.error(err);
 		throw err;
 	}
 };

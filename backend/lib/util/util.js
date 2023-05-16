@@ -1,11 +1,15 @@
-const PRETTY_JSON_MAX_LENGTH = 256;
+// const PRETTY_JSON_MAX_LENGTH = 256;
 const IS_DEV = process.env.NODE_ENV === 'development';
 
-function prettyJSON(jsonObj) {
+function prettyJSON(jsonObj, maxLength = null) {
 	const out = JSON.stringify(jsonObj, null, '\t');
 
-	if (out.length > PRETTY_JSON_MAX_LENGTH) {
-		return `${out.substring(0, PRETTY_JSON_MAX_LENGTH)} ...\n`;
+	// if (out.length > PRETTY_JSON_MAX_LENGTH) {
+	// 	return `${out.substring(0, PRETTY_JSON_MAX_LENGTH)} ...\n`;
+	// }
+
+	if (typeof maxLength === 'number' && out.length > maxLength) {
+		return `${out.substring(0, maxLength)} ...\n`;
 	}
 
 	return `${out}\n`;

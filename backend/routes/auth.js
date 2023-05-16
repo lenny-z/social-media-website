@@ -130,4 +130,10 @@ router.post('/register', async (req, res) => {
 	}
 });
 
+router.get('/username-exists/:username', async (req, res) => {
+	console.log('GET to /username-exists')
+	const dbRes = await queries.usernameExists(req.params.username);
+	console.log(dbRes);
+});
+
 exports.router = router;

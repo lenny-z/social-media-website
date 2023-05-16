@@ -1,7 +1,8 @@
 const pool = require('./pool.js');
-const util = require('@lenny_zhou/util');
+const validator = require('@lenny_zhou/validator');
 
-const emailRegex = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/);
+// const emailRegex = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/);
+const emailRegex = validator.emailRegex;
 
 async function testConnect() {
 	const query = 'SELECT $1::text as message;';
@@ -17,8 +18,31 @@ async function testConnect() {
 
 testConnect();
 
+exports.emailExists = async(email) => {
+	const query = `SELECT EXISTS(SELECT 1 FROM users WHERE email = $1);`;
+	const params = [email];
+
+	try{
+		const res = await pool.query(query, params);
+		return res.rows[0].exists === true;
+	}catch(err){
+		throw err;
+	}
+}
+
+exports.usernameExists = async (username) => {
+	const query = `SELECT EXISTS(SELECT 1 FROM users WHERE username = $1);`;
+	const params = [username];
+
+	try{
+		const res = await pool.query(query, params);
+		return res.rows[0].exists === true;
+	}catch(err){
+		throw err;
+	}
+}
+
 exports.getUserID = async (identifier) => {
-	util.log('getUserID:');
 	var identifierCol = '';
 
 	if (emailRegex.test(identifier)) {
@@ -132,45 +156,45 @@ exports.getIdentifiers = async () => {
 	}
 };
 
-exports.makeFollow = async (followerID, followedUsername) => {
-	const query = `INSERT INTO follows(follower_id, followed_id)
-		VALUES($1, (SELECT id FROM users WHERE username = $2));`;
+// exports.makeFollow = async (followerID, followedUsername) => {
+// 	const query = `INSERT INTO follows(follower_id, followed_id)
+// 		VALUES($1, (SELECT id FROM users WHERE username = $2));`;
 
-	const params = [followerID, followedUsername];
+// 	const params = [followerID, followedUsername];
 
-	try {
-		await pool.query(query, params);
-	} catch (err) {
-		console.error(err);
-		throw err;
-	}
-}
+// 	try {
+// 		await pool.query(query, params);
+// 	} catch (err) {
+// 		console.error(err);
+// 		throw err;
+// 	}
+// }
 
-exports.getFollow = async (followerID, followedUsername) => {
-	const query = `SELECT EXISTS(SELECT 1 FROM follows WHERE follower_id = $1
-		AND followed_id = (SELECT id FROM users WHERE username = $2));`;
+// exports.getFollow = async (followerID, followedUsername) => {
+// 	const query = `SELECT EXISTS(SELECT 1 FROM follows WHERE follower_id = $1
+// 		AND followed_id = (SELECT id FROM users WHERE username = $2));`;
 
-	const params = [followerID, followedUsername];
+// 	const params = [followerID, followedUsername];
 
-	try {
-		const res = await pool.query(query, params);
-		return res.rows[0].exists === true;
-	} catch (err) {
-		console.error(err);
-		throw err;
-	}
-};
+// 	try {
+// 		const res = await pool.query(query, params);
+// 		return res.rows[0].exists === true;
+// 	} catch (err) {
+// 		console.error(err);
+// 		throw err;
+// 	}
+// };
 
-exports.deleteFollow = async (followerID, followedUsername) => {
-	const query = `DELETE FROM follows WHERE follower_id = $1 AND followed_id
-		= (SELECT id FROM users WHERE username = $2);`;
+// exports.deleteFollow = async (followerID, followedUsername) => {
+// 	const query = `DELETE FROM follows WHERE follower_id = $1 AND followed_id
+// 		= (SELECT id FROM users WHERE username = $2);`;
 
-	const params = [followerID, followedUsername];
+// 	const params = [followerID, followedUsername];
 
-	try {
-		await pool.query(query, params);
-	} catch (err) {
-		console.error(err);
-		throw err;
-	}
-};
+// 	try {
+// 		await pool.query(query, params);
+// 	} catch (err) {
+// 		console.error(err);
+// 		throw err;
+// 	}
+// };
