@@ -1,16 +1,21 @@
+// import * as validator from './validator.js';
 const validator = require('./validator.js');
 const util = require('@lenny_zhou/util');
+// import util from '@lenny_zhou/util';
 
 async function runTest() {
-	const username = process.argv[2];
+	console.log('runTest');
+	const email = process.argv[2];
+	const username = process.argv[3];
+	const emailValidation = await validator.email(email);
+	const emailIsValid = validator.allReqsMet(emailValidation);
 	const usernameValidation = await validator.username(username);
 	const usernameIsValid = validator.allReqsMet(usernameValidation);
-	// const reqsMet = validator.reqsMet(validator.username(username));
-	// const allReqsMet = validator.allReqsMet(reqsMet);
-	console.log(`username: ${util.pretty(username)}`)
-	// console.log(`reqsMet: ${util.pretty(reqsMet)}`);
+	console.log(`email: ${util.pretty(email)}`);
+	console.log(`emailValidation: ${util.pretty(emailValidation)}`);
+	console.log(`emailIsValid: ${emailIsValid}`);
+	console.log(`username: ${util.pretty(username)}`);
 	console.log(`usernameValidation: ${util.pretty(usernameValidation)}`);
-	// console.log(`allReqsMet: ${allReqsMet}`)
 	console.log(`usernameIsValid: ${usernameIsValid}`);
 	return;
 }

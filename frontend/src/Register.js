@@ -6,7 +6,9 @@ import ContentBody from './ContentBody.js';
 import Validations from './Validations.js';
 import './css/Auth.css';
 
-const validator = require('@lenny_zhou/validator');
+// const validator = require('@lenny_zhou/validator');
+const validator = require('./validator.js');
+// import * as validator from './validator.js';
 
 export default function Register({
 	isAuthorized,
