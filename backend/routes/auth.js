@@ -130,8 +130,10 @@ router.post('/register', async (req, res) => {
 	}
 });
 
-router.get('/username-exists/:username', async (req, res) => {
-	console.log('GET to /username-exists');
+router.get('/username-exists/:username?', async (req, res) => {
+	// console.log('GET to /username-exists');
+	// const username = req.params.username;
+	// console.log(`username: ${username}`);
 
 	try {
 		const dbRes = await queries.usernameExists(req.params.username);
@@ -142,8 +144,8 @@ router.get('/username-exists/:username', async (req, res) => {
 	}
 });
 
-router.get('/email-exists/:email', async (req, res) => {
-	console.log('GET to /email-exists');
+router.get('/email-exists/:email?', async (req, res) => {
+	// console.log('GET to /email-exists');
 
 	try {
 		const dbRes = await queries.emailExists(req.params.email);

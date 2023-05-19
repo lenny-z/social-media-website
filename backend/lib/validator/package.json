@@ -1,15 +1,16 @@
 {
-  "name": "@lenny_zhou/validator",
-  "version": "3.2.0",
-  "description": "",
-  "main": "validator.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@lenny_zhou/util": "^3.1.1",
-    "axios": "^1.4.0"
-  }
+	"name": "@lenny_zhou/validator",
+	"type": "module",
+	"version": "3.3.0",
+	"description": "",
+	"main": "validator.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@lenny_zhou/util": "^3.1.1",
+		"axios": "^1.4.0"
+	}
 }

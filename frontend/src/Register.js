@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import ContentHeader from './ContentHeader.js';
@@ -6,8 +6,9 @@ import ContentBody from './ContentBody.js';
 import Validations from './Validations.js';
 import './css/Auth.css';
 
-// const validator = require('@lenny_zhou/validator');
-const validator = require('./validator.js');
+const util = require('@lenny_zhou/util');
+const validator = require('@lenny_zhou/validator');
+// const validator = require('./validator.js');
 // import * as validator from './validator.js';
 
 export default function Register({
@@ -19,8 +20,26 @@ export default function Register({
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [retypedPassword, setRetypedPassword] = useState('');
+	const [emailReqsNotMet, setEmailReqsNotMet] = useState([]);
+	const [emailIsValid, setEmailIsValid] = useState(false);
 
-	const validateEmail = validator.email(email);
+	async function validateEmail() {
+		const emailValidation = await validator.email(email);
+		console.log(util.prettyJSON(emailValidation));
+		const emailIsValid = validator.allReqsMet(emailValidation) === true;
+		// setEmailIsValid(validator.allReqsMet(emailValidation) === true);
+		setEmailIsValid(emailIsValid);
+
+		if (!emailIsValid) {
+			setEmailReqsNotMet(validator.reqsNotMet(emailValidation));
+		}
+	}
+
+	useEffect(() => {
+		validateEmail();
+	}, [email]);
+
+	// const validateEmail = validator.email(email);
 	const validateUsername = validator.username(username);
 	const validatePassword = validator.password(password);
 
@@ -29,7 +48,7 @@ export default function Register({
 		retypedPassword
 	);
 
-	const emailIsValid = validator.allReqsMet(validateEmail) === true;
+	// const emailIsValid = validator.allReqsMet(validateEmail) === true;
 	const usernameIsValid = validator.allReqsMet(validateUsername) === true;
 	const passwordIsValid = validator.allReqsMet(validatePassword) === true;
 
@@ -37,7 +56,7 @@ export default function Register({
 		validateRetypedPassword
 	);
 
-	const emailReqsNotMet = validator.reqsNotMet(validateEmail);
+	// const emailReqsNotMet = validator.reqsNotMet(validateEmail);
 	const usernameReqsNotMet = validator.reqsNotMet(validateUsername);
 	const passwordReqsNotMet = validator.reqsNotMet(validatePassword);
 
@@ -70,6 +89,7 @@ export default function Register({
 		if (
 			!emailIsValid
 			|| !usernameIsValid
+			// !usernameIsValid
 			|| !passwordIsValid
 			|| !retypedPasswordIsValid
 		) {
@@ -137,6 +157,7 @@ export default function Register({
 						{!emailIsValid &&
 							<Validations reqsNotMet={emailReqsNotMet} />
 						}
+						{/* <Validations reqsNotMet={emailReqsNotMet} /> */}
 						<label htmlFor='username-input'>Username:</label>
 						<input
 							id='username-input'

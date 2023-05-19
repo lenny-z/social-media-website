@@ -1,6 +1,6 @@
 export default function Validations({ reqsNotMet }) {
-	const renderValidations = reqsNotMet.map(description =>
-		<li>
+	const renderValidations = reqsNotMet.map((description, index) =>
+		<li key={index}>
 			{description}
 		</li>
 	);
