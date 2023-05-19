@@ -7,7 +7,10 @@ import ContentBody from './ContentBody.js';
 import Validations from './Validations.js';
 import './css/Auth.css';
 
-function useRegistrationField(fieldValidator) {
+function useRegistrationField(
+	fieldValidator,
+	additionalDependencies = []
+) {
 	const [field, setField] = useState('');
 	const [isValid, setIsValid] = useState(false);
 	const [reqsNotMet, setReqsNotMet] = useState([]);
@@ -24,7 +27,7 @@ function useRegistrationField(fieldValidator) {
 
 	useEffect(() => {
 		validateField();
-	}, [field]);
+	}, [field].concat(additionalDependencies));
 
 	return [field, setField, isValid, reqsNotMet];
 }
@@ -40,67 +43,63 @@ export default function Register({
 	const [username, setUsername, usernameIsValid, usernameReqsNotMet]
 		= useRegistrationField(validator.username);
 
-	// const [username, setUsername] = useState('');
-	// const [usernameIsValid, setUsernameIsValid] = useState(false)
-	// const [usernameReqsNotMet, setUsernameReqsNotMet] = useState([]);
+	const [password, setPassword, passwordIsValid, passwordReqsNotMet]
+		= useRegistrationField(validator.password);
+	// const [password, setPassword] = useState('');
+	// const [passwordIsValid, setPasswordIsValid] = useState(false);
+	// const [passwordReqsNotMet, setPasswordReqsNotMet] = useState([]);
 
-	const [password, setPassword] = useState('');
-	const [passwordIsValid, setPasswordIsValid] = useState(false);
-	const [passwordReqsNotMet, setPasswordReqsNotMet] = useState([]);
+	// const [retypedPassword, setRetypedPassword] = useState('');
 
-	const [retypedPassword, setRetypedPassword] = useState('');
+	// const [retypedPasswordIsValid, setRetypedPasswordIsValid]
+	// 	= useState(false);
 
-	const [retypedPasswordIsValid, setRetypedPasswordIsValid]
-		= useState(false);
-
-	const [retypedPasswordReqsNotMet, setRetypedPasswordReqsNotMet]
-		= useState([]);
-
-	async function validateField(
-		field,
-		fieldValidator,
-		setIsValid,
-		setReqsNotMet
-	) {
-		const validation = await fieldValidator(field);
-		const isValid = validator.allReqsMet(validation) === true;
-		setIsValid(isValid);
-
-		if (!isValid) {
-			setReqsNotMet(validator.reqsNotMet(validation));
-		}
-	}
-
-	// useEffect(() => {
-	// 	validateField(
-	// 		username,
-	// 		validator.username,
-	// 		setUsernameIsValid,
-	// 		setUsernameReqsNotMet
-	// 	);
-	// }, [username]);
-
-	useEffect(() => {
-		validateField(
-			password,
-			validator.password,
-			setPasswordIsValid,
-			setPasswordReqsNotMet
-		);
-	}, [password]);
+	// const [retypedPasswordReqsNotMet, setRetypedPasswordReqsNotMet]
+	// 	= useState([]);
 
 	function retypedPasswordValidator(retypedPassword) {
 		return validator.retypedPassword(password, retypedPassword);
 	}
 
-	useEffect(() => {
-		validateField(
-			retypedPassword,
-			retypedPasswordValidator,
-			setRetypedPasswordIsValid,
-			setRetypedPasswordReqsNotMet
-		);
-	}, [password, retypedPassword]);
+	const [
+		retypedPassword,
+		setRetypedPassword,
+		retypedPasswordIsValid,
+		retypedPasswordReqsNotMet
+	] = useRegistrationField(retypedPasswordValidator, [password]);
+	// async function validateField(
+	// 	field,
+	// 	fieldValidator,
+	// 	setIsValid,
+	// 	setReqsNotMet
+	// ) {
+	// 	const validation = await fieldValidator(field);
+	// 	const isValid = validator.allReqsMet(validation) === true;
+	// 	setIsValid(isValid);
+
+	// 	if (!isValid) {
+	// 		setReqsNotMet(validator.reqsNotMet(validation));
+	// 	}
+	// }
+
+	// useEffect(() => {
+	// 	validateField(
+	// 		password,
+	// 		validator.password,
+	// 		setPasswordIsValid,
+	// 		setPasswordReqsNotMet
+	// 	);
+	// }, [password]);
+
+
+	// useEffect(() => {
+	// 	validateField(
+	// 		retypedPassword,
+	// 		retypedPasswordValidator,
+	// 		setRetypedPasswordIsValid,
+	// 		setRetypedPasswordReqsNotMet
+	// 	);
+	// }, [password, retypedPassword]);
 
 	const pushAlert = useOutletContext()[0];
 
