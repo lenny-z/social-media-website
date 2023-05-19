@@ -13,13 +13,24 @@ export default function Register({
 	setReturnedUsername
 }) {
 	const [email, setEmail] = useState('');
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
-	const [retypedPassword, setRetypedPassword] = useState('');
 	const [emailIsValid, setEmailIsValid] = useState(false);
 	const [emailReqsNotMet, setEmailReqsNotMet] = useState([]);
+
+	const [username, setUsername] = useState('');
 	const [usernameIsValid, setUsernameIsValid] = useState(false)
 	const [usernameReqsNotMet, setUsernameReqsNotMet] = useState([]);
+
+	const [password, setPassword] = useState('');
+	const [passwordIsValid, setPasswordIsValid] = useState(false);
+	const [passwordReqsNotMet, setPasswordReqsNotMet] = useState([]);
+
+	const [retypedPassword, setRetypedPassword] = useState('');
+
+	const [retypedPasswordIsValid, setRetypedPasswordIsValid]
+		= useState(false);
+
+	const [retypedPasswordReqsNotMet, setRetypedPasswordReqsNotMet]
+		= useState([]);
 
 	async function validateField(
 		field,
@@ -36,62 +47,65 @@ export default function Register({
 		}
 	}
 
-	// async function validateEmail() {
-	// 	const emailValidation = await validator.email(email);
-	// 	const emailIsValid = validator.allReqsMet(emailValidation) === true;
-	// 	setEmailIsValid(emailIsValid);
-
-	// 	if (!emailIsValid) {
-	// 		setEmailReqsNotMet(validator.reqsNotMet(emailValidation));
-	// 	}
-	// }
-
-	// useEffect(() => {
-	// 	validateEmail();
-	// }, [email]);
-
 	useEffect(() => {
-		validateField(email, validator.email, setEmailIsValid, setEmailReqsNotMet);
+		validateField(
+			email,
+			validator.email,
+			setEmailIsValid,
+			setEmailReqsNotMet
+		);
 	}, [email]);
 
-	// async function validateUsername() {
-	// 	const usernameValidation = await validator.username(username);
-	// 	const usernameIsValid = validator.allReqsMet(usernameValidation);
-	// 	setUsernameIsValid(usernameIsValid);
-
-	// 	if (!usernameIsValid) {
-	// 		setUsernameReqsNotMet(validator.reqsNotMet(usernameValidation));
-	// 	}
-	// }
-
-	// useEffect(() => {
-	// 	validateUsername();
-	// }, [username])
 	useEffect(() => {
-		validateField(username, validator.username, setUsernameIsValid, setUsernameReqsNotMet);
+		validateField(
+			username,
+			validator.username,
+			setUsernameIsValid,
+			setUsernameReqsNotMet
+		);
 	}, [username]);
 
-	// const validateUsername = validator.username(username);
-	const validatePassword = validator.password(password);
+	useEffect(() => {
+		validateField(
+			password,
+			validator.password,
+			setPasswordIsValid,
+			setPasswordReqsNotMet
+		);
+	}, [password]);
 
-	const validateRetypedPassword = validator.retypedPassword(
-		password,
-		retypedPassword
-	);
+	function retypedPasswordValidator(retypedPassword){
+		return validator.retypedPassword(password, retypedPassword);
+	}
 
-	// const usernameIsValid = validator.allReqsMet(validateUsername) === true;
-	const passwordIsValid = validator.allReqsMet(validatePassword) === true;
+	useEffect(() => {
+		validateField(
+			retypedPassword,
+			// validator.retypedPassword,
+			retypedPasswordValidator,
+			setRetypedPasswordIsValid,
+			setRetypedPasswordReqsNotMet
+		);
+	}, [password, retypedPassword]);
 
-	const retypedPasswordIsValid = validator.allReqsMet(
-		validateRetypedPassword
-	);
+	// const validatePassword = validator.password(password);
 
-	// const usernameReqsNotMet = validator.reqsNotMet(validateUsername);
-	const passwordReqsNotMet = validator.reqsNotMet(validatePassword);
+	// const validateRetypedPassword = validator.retypedPassword(
+	// 	password,
+	// 	retypedPassword
+	// );
 
-	const retypedPasswordReqsNotMet = validator.reqsNotMet(
-		validateRetypedPassword
-	);
+	// const passwordIsValid = validator.allReqsMet(validatePassword) === true;
+
+	// const retypedPasswordIsValid = validator.allReqsMet(
+	// 	validateRetypedPassword
+	// );
+
+	// const passwordReqsNotMet = validator.reqsNotMet(validatePassword);
+
+	// const retypedPasswordReqsNotMet = validator.reqsNotMet(
+	// 	validateRetypedPassword
+	// );
 
 	const pushAlert = useOutletContext()[0];
 
