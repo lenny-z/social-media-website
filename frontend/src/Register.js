@@ -21,6 +21,21 @@ export default function Register({
 	const [usernameIsValid, setUsernameIsValid] = useState(false)
 	const [usernameReqsNotMet, setUsernameReqsNotMet] = useState([]);
 
+	async function validateField(
+		field,
+		fieldValidator,
+		setIsValid,
+		setReqsNotMet
+	){
+		const validation = await fieldValidator(field);
+		const isValid = validator.allReqsMet(validation) === true;
+		setIsValid(isValid);
+	
+		if(!isValid){
+			setReqsNotMet(validator.reqsNotMet(validation));
+		}
+	}
+
 	async function validateEmail() {
 		const emailValidation = await validator.email(email);
 		const emailIsValid = validator.allReqsMet(emailValidation) === true;
@@ -31,8 +46,12 @@ export default function Register({
 		}
 	}
 
-	useEffect(() => {
-		validateEmail();
+	// useEffect(() => {
+	// 	validateEmail();
+	// }, [email]);
+
+	useEffect(()=>{
+		validateField(email, validator.email, setEmailIsValid, setEmailReqsNotMet);
 	}, [email]);
 
 	async function validateUsername() {
@@ -48,6 +67,7 @@ export default function Register({
 	useEffect(() => {
 		validateUsername();
 	}, [username])
+
 
 	// const validateUsername = validator.username(username);
 	const validatePassword = validator.password(password);
