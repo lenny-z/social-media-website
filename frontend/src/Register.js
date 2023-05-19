@@ -7,14 +7,38 @@ import ContentBody from './ContentBody.js';
 import Validations from './Validations.js';
 import './css/Auth.css';
 
+function useRegistrationField(fieldValidator) {
+	const [field, setField] = useState('');
+	const [isValid, setIsValid] = useState(false);
+	const [reqsNotMet, setReqsNotMet] = useState([]);
+
+	async function validateField() {
+		const validation = await fieldValidator(field);
+		const isValid = validator.allReqsMet(validation) === true;
+		setIsValid(isValid);
+
+		if (!isValid) {
+			setReqsNotMet(validator.reqsNotMet(validation));
+		}
+	}
+
+	useEffect(() => {
+		validateField();
+	}, [field]);
+	// const reqsNotMet = validator.reqsNotMet(validation);
+
+	return [field, setField, isValid, reqsNotMet];
+}
+
 export default function Register({
 	isAuthorized,
 	setAuthorized,
 	setReturnedUsername
 }) {
-	const [email, setEmail] = useState('');
-	const [emailIsValid, setEmailIsValid] = useState(false);
-	const [emailReqsNotMet, setEmailReqsNotMet] = useState([]);
+	// const [email, setEmail] = useState('');
+	// const [emailIsValid, setEmailIsValid] = useState(false);
+	// const [emailReqsNotMet, setEmailReqsNotMet] = useState([]);
+	const [email, setEmail, emailIsValid, emailReqsNotMet] = useRegistrationField(validator.email);
 
 	const [username, setUsername] = useState('');
 	const [usernameIsValid, setUsernameIsValid] = useState(false)
@@ -47,14 +71,14 @@ export default function Register({
 		}
 	}
 
-	useEffect(() => {
-		validateField(
-			email,
-			validator.email,
-			setEmailIsValid,
-			setEmailReqsNotMet
-		);
-	}, [email]);
+	// useEffect(() => {
+	// 	validateField(
+	// 		email,
+	// 		validator.email,
+	// 		setEmailIsValid,
+	// 		setEmailReqsNotMet
+	// 	);
+	// }, [email]);
 
 	useEffect(() => {
 		validateField(
@@ -74,38 +98,18 @@ export default function Register({
 		);
 	}, [password]);
 
-	function retypedPasswordValidator(retypedPassword){
+	function retypedPasswordValidator(retypedPassword) {
 		return validator.retypedPassword(password, retypedPassword);
 	}
 
 	useEffect(() => {
 		validateField(
 			retypedPassword,
-			// validator.retypedPassword,
 			retypedPasswordValidator,
 			setRetypedPasswordIsValid,
 			setRetypedPasswordReqsNotMet
 		);
 	}, [password, retypedPassword]);
-
-	// const validatePassword = validator.password(password);
-
-	// const validateRetypedPassword = validator.retypedPassword(
-	// 	password,
-	// 	retypedPassword
-	// );
-
-	// const passwordIsValid = validator.allReqsMet(validatePassword) === true;
-
-	// const retypedPasswordIsValid = validator.allReqsMet(
-	// 	validateRetypedPassword
-	// );
-
-	// const passwordReqsNotMet = validator.reqsNotMet(validatePassword);
-
-	// const retypedPasswordReqsNotMet = validator.reqsNotMet(
-	// 	validateRetypedPassword
-	// );
 
 	const pushAlert = useOutletContext()[0];
 
@@ -127,7 +131,6 @@ export default function Register({
 
 	async function handleSubmit(event) {
 		event.preventDefault();
-
 
 		if (
 			!emailIsValid
