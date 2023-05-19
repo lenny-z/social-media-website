@@ -1,9 +1,5 @@
-// import * as validator from './validator.js';
-// const validator = require('./validator.js');
 import * as validator from './validator.js';
-// const util = require('@lenny_zhou/util');
 import util from '@lenny_zhou/util';
-// import util from '@lenny_zhou/util';
 
 async function runTest() {
 	console.log('runTest');

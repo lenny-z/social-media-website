@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Navigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
+import * as validator from '@lenny_zhou/validator';
 import ContentHeader from './ContentHeader.js';
 import ContentBody from './ContentBody.js';
 import Validations from './Validations.js';
 import './css/Auth.css';
-
-const util = require('@lenny_zhou/util');
-const validator = require('@lenny_zhou/validator');
-// const validator = require('./validator.js');
-// import * as validator from './validator.js';
 
 export default function Register({
 	isAuthorized,
@@ -20,14 +16,14 @@ export default function Register({
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [retypedPassword, setRetypedPassword] = useState('');
-	const [emailReqsNotMet, setEmailReqsNotMet] = useState([]);
 	const [emailIsValid, setEmailIsValid] = useState(false);
+	const [emailReqsNotMet, setEmailReqsNotMet] = useState([]);
+	const [usernameIsValid, setUsernameIsValid] = useState(false)
+	const [usernameReqsNotMet, setUsernameReqsNotMet] = useState([]);
 
 	async function validateEmail() {
 		const emailValidation = await validator.email(email);
-		console.log(util.prettyJSON(emailValidation));
 		const emailIsValid = validator.allReqsMet(emailValidation) === true;
-		// setEmailIsValid(validator.allReqsMet(emailValidation) === true);
 		setEmailIsValid(emailIsValid);
 
 		if (!emailIsValid) {
@@ -39,8 +35,21 @@ export default function Register({
 		validateEmail();
 	}, [email]);
 
-	// const validateEmail = validator.email(email);
-	const validateUsername = validator.username(username);
+	async function validateUsername() {
+		const usernameValidation = await validator.username(username);
+		const usernameIsValid = validator.allReqsMet(usernameValidation);
+		setUsernameIsValid(usernameIsValid);
+
+		if (!usernameIsValid) {
+			setUsernameReqsNotMet(validator.reqsNotMet(usernameValidation));
+		}
+	}
+
+	useEffect(() => {
+		validateUsername();
+	}, [username])
+
+	// const validateUsername = validator.username(username);
 	const validatePassword = validator.password(password);
 
 	const validateRetypedPassword = validator.retypedPassword(
@@ -48,16 +57,14 @@ export default function Register({
 		retypedPassword
 	);
 
-	// const emailIsValid = validator.allReqsMet(validateEmail) === true;
-	const usernameIsValid = validator.allReqsMet(validateUsername) === true;
+	// const usernameIsValid = validator.allReqsMet(validateUsername) === true;
 	const passwordIsValid = validator.allReqsMet(validatePassword) === true;
 
 	const retypedPasswordIsValid = validator.allReqsMet(
 		validateRetypedPassword
 	);
 
-	// const emailReqsNotMet = validator.reqsNotMet(validateEmail);
-	const usernameReqsNotMet = validator.reqsNotMet(validateUsername);
+	// const usernameReqsNotMet = validator.reqsNotMet(validateUsername);
 	const passwordReqsNotMet = validator.reqsNotMet(validatePassword);
 
 	const retypedPasswordReqsNotMet = validator.reqsNotMet(
