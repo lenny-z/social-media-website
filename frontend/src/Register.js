@@ -26,48 +26,50 @@ export default function Register({
 		fieldValidator,
 		setIsValid,
 		setReqsNotMet
-	){
+	) {
 		const validation = await fieldValidator(field);
 		const isValid = validator.allReqsMet(validation) === true;
 		setIsValid(isValid);
-	
-		if(!isValid){
+
+		if (!isValid) {
 			setReqsNotMet(validator.reqsNotMet(validation));
 		}
 	}
 
-	async function validateEmail() {
-		const emailValidation = await validator.email(email);
-		const emailIsValid = validator.allReqsMet(emailValidation) === true;
-		setEmailIsValid(emailIsValid);
+	// async function validateEmail() {
+	// 	const emailValidation = await validator.email(email);
+	// 	const emailIsValid = validator.allReqsMet(emailValidation) === true;
+	// 	setEmailIsValid(emailIsValid);
 
-		if (!emailIsValid) {
-			setEmailReqsNotMet(validator.reqsNotMet(emailValidation));
-		}
-	}
+	// 	if (!emailIsValid) {
+	// 		setEmailReqsNotMet(validator.reqsNotMet(emailValidation));
+	// 	}
+	// }
 
 	// useEffect(() => {
 	// 	validateEmail();
 	// }, [email]);
 
-	useEffect(()=>{
+	useEffect(() => {
 		validateField(email, validator.email, setEmailIsValid, setEmailReqsNotMet);
 	}, [email]);
 
-	async function validateUsername() {
-		const usernameValidation = await validator.username(username);
-		const usernameIsValid = validator.allReqsMet(usernameValidation);
-		setUsernameIsValid(usernameIsValid);
+	// async function validateUsername() {
+	// 	const usernameValidation = await validator.username(username);
+	// 	const usernameIsValid = validator.allReqsMet(usernameValidation);
+	// 	setUsernameIsValid(usernameIsValid);
 
-		if (!usernameIsValid) {
-			setUsernameReqsNotMet(validator.reqsNotMet(usernameValidation));
-		}
-	}
+	// 	if (!usernameIsValid) {
+	// 		setUsernameReqsNotMet(validator.reqsNotMet(usernameValidation));
+	// 	}
+	// }
 
+	// useEffect(() => {
+	// 	validateUsername();
+	// }, [username])
 	useEffect(() => {
-		validateUsername();
-	}, [username])
-
+		validateField(username, validator.username, setUsernameIsValid, setUsernameReqsNotMet);
+	}, [username]);
 
 	// const validateUsername = validator.username(username);
 	const validatePassword = validator.password(password);
@@ -116,7 +118,6 @@ export default function Register({
 		if (
 			!emailIsValid
 			|| !usernameIsValid
-			// !usernameIsValid
 			|| !passwordIsValid
 			|| !retypedPasswordIsValid
 		) {
@@ -184,7 +185,6 @@ export default function Register({
 						{!emailIsValid &&
 							<Validations reqsNotMet={emailReqsNotMet} />
 						}
-						{/* <Validations reqsNotMet={emailReqsNotMet} /> */}
 						<label htmlFor='username-input'>Username:</label>
 						<input
 							id='username-input'
