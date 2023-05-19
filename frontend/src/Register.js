@@ -29,7 +29,11 @@ function useRegistrationField(
 		validateField();
 	}, [field].concat(additionalDependencies));
 
-	return [field, setField, isValid, reqsNotMet];
+	function handleField(event) {
+		setField(event.target.value);
+	}
+
+	return [field, handleField, isValid, reqsNotMet];
 }
 
 export default function Register({
@@ -37,25 +41,14 @@ export default function Register({
 	setAuthorized,
 	setReturnedUsername
 }) {
-	const [email, setEmail, emailIsValid, emailReqsNotMet]
+	const [email, handleEmail, emailIsValid, emailReqsNotMet]
 		= useRegistrationField(validator.email);
 
-	const [username, setUsername, usernameIsValid, usernameReqsNotMet]
+	const [username, handleUsername, usernameIsValid, usernameReqsNotMet]
 		= useRegistrationField(validator.username);
 
-	const [password, setPassword, passwordIsValid, passwordReqsNotMet]
+	const [password, handlePassword, passwordIsValid, passwordReqsNotMet]
 		= useRegistrationField(validator.password);
-	// const [password, setPassword] = useState('');
-	// const [passwordIsValid, setPasswordIsValid] = useState(false);
-	// const [passwordReqsNotMet, setPasswordReqsNotMet] = useState([]);
-
-	// const [retypedPassword, setRetypedPassword] = useState('');
-
-	// const [retypedPasswordIsValid, setRetypedPasswordIsValid]
-	// 	= useState(false);
-
-	// const [retypedPasswordReqsNotMet, setRetypedPasswordReqsNotMet]
-	// 	= useState([]);
 
 	function retypedPasswordValidator(retypedPassword) {
 		return validator.retypedPassword(password, retypedPassword);
@@ -63,61 +56,28 @@ export default function Register({
 
 	const [
 		retypedPassword,
-		setRetypedPassword,
+		handleRetypedPassword,
 		retypedPasswordIsValid,
 		retypedPasswordReqsNotMet
 	] = useRegistrationField(retypedPasswordValidator, [password]);
-	// async function validateField(
-	// 	field,
-	// 	fieldValidator,
-	// 	setIsValid,
-	// 	setReqsNotMet
-	// ) {
-	// 	const validation = await fieldValidator(field);
-	// 	const isValid = validator.allReqsMet(validation) === true;
-	// 	setIsValid(isValid);
-
-	// 	if (!isValid) {
-	// 		setReqsNotMet(validator.reqsNotMet(validation));
-	// 	}
-	// }
-
-	// useEffect(() => {
-	// 	validateField(
-	// 		password,
-	// 		validator.password,
-	// 		setPasswordIsValid,
-	// 		setPasswordReqsNotMet
-	// 	);
-	// }, [password]);
-
-
-	// useEffect(() => {
-	// 	validateField(
-	// 		retypedPassword,
-	// 		retypedPasswordValidator,
-	// 		setRetypedPasswordIsValid,
-	// 		setRetypedPasswordReqsNotMet
-	// 	);
-	// }, [password, retypedPassword]);
 
 	const pushAlert = useOutletContext()[0];
 
-	function handleEmail(event) {
-		setEmail(event.target.value);
-	}
+	// function handleEmail(event) {
+	// 	setEmail(event.target.value);
+	// }
 
-	function handleUsername(event) {
-		setUsername(event.target.value);
-	}
+	// function handleUsername(event) {
+	// 	setUsername(event.target.value);
+	// }
 
-	function handlePassword(event) {
-		setPassword(event.target.value);
-	}
+	// function handlePassword(event) {
+	// 	setPassword(event.target.value);
+	// }
 
-	function handleRetypedPassword(event) {
-		setRetypedPassword(event.target.value);
-	}
+	// function handleRetypedPassword(event) {
+	// 	setRetypedPassword(event.target.value);
+	// }
 
 	async function handleSubmit(event) {
 		event.preventDefault();
