@@ -25,7 +25,6 @@ function useRegistrationField(fieldValidator) {
 	useEffect(() => {
 		validateField();
 	}, [field]);
-	// const reqsNotMet = validator.reqsNotMet(validation);
 
 	return [field, setField, isValid, reqsNotMet];
 }
@@ -35,14 +34,15 @@ export default function Register({
 	setAuthorized,
 	setReturnedUsername
 }) {
-	// const [email, setEmail] = useState('');
-	// const [emailIsValid, setEmailIsValid] = useState(false);
-	// const [emailReqsNotMet, setEmailReqsNotMet] = useState([]);
-	const [email, setEmail, emailIsValid, emailReqsNotMet] = useRegistrationField(validator.email);
+	const [email, setEmail, emailIsValid, emailReqsNotMet]
+		= useRegistrationField(validator.email);
 
-	const [username, setUsername] = useState('');
-	const [usernameIsValid, setUsernameIsValid] = useState(false)
-	const [usernameReqsNotMet, setUsernameReqsNotMet] = useState([]);
+	const [username, setUsername, usernameIsValid, usernameReqsNotMet]
+		= useRegistrationField(validator.username);
+
+	// const [username, setUsername] = useState('');
+	// const [usernameIsValid, setUsernameIsValid] = useState(false)
+	// const [usernameReqsNotMet, setUsernameReqsNotMet] = useState([]);
 
 	const [password, setPassword] = useState('');
 	const [passwordIsValid, setPasswordIsValid] = useState(false);
@@ -73,21 +73,12 @@ export default function Register({
 
 	// useEffect(() => {
 	// 	validateField(
-	// 		email,
-	// 		validator.email,
-	// 		setEmailIsValid,
-	// 		setEmailReqsNotMet
+	// 		username,
+	// 		validator.username,
+	// 		setUsernameIsValid,
+	// 		setUsernameReqsNotMet
 	// 	);
-	// }, [email]);
-
-	useEffect(() => {
-		validateField(
-			username,
-			validator.username,
-			setUsernameIsValid,
-			setUsernameReqsNotMet
-		);
-	}, [username]);
+	// }, [username]);
 
 	useEffect(() => {
 		validateField(
