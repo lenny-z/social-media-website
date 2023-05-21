@@ -2,7 +2,8 @@ const router = require('express').Router();
 const queries = require('../lib/queries.js');
 const argon2 = require('argon2');
 const session = require('../lib/session.js');
-const validator = require('@lenny_zhou/validator');
+// const validator = require('@lenny_zhou/validator');
+import * as validator from '@lenny_zhou/validator';
 
 function authorize(req, res, next) {
 	if (req.session && req.session.userID) {
@@ -71,21 +72,21 @@ router.post('/logout', authorize, (req, res) => {
 router.post('/register', async (req, res) => {
 	console.log('POST to /register:');
 
-	const validateEmail = validator.email(req.body.email);
-	const validateUsername = validator.username(req.body.username);
-	const validatePassword = validator.password(req.body.password);
+	const emailValidation = await validator.email(req.body.email);
+	const usernameValidation = await validator.username(req.body.username);
+	const passwordValidation = validator.password(req.body.password);
 
-	const validateRetypedPassword = validator.retypedPassword(
+	const retypedPasswordValidation = validator.retypedPassword(
 		req.body.password,
 		req.body.retypedPassword
 	);
 
-	const emailIsValid = validator.allReqsMet(validateEmail) === true;
-	const usernameIsValid = validator.allReqsMet(validateUsername) === true;
-	const passwordIsValid = validator.allReqsMet(validatePassword) === true;
+	const emailIsValid = validator.allReqsMet(emailValidation) === true;
+	const usernameIsValid = validator.allReqsMet(usernameValidation) === true;
+	const passwordIsValid = validator.allReqsMet(passwordValidation) === true;
 
 	const retypedPasswordIsValid = validator.allReqsMet(
-		validateRetypedPassword
+		retypedPasswordValidation
 	) === true;
 
 	if (
@@ -120,10 +121,10 @@ router.post('/register', async (req, res) => {
 		}
 	} else {
 		const resBody = {
-			email: validator.reqsNotMet(validateEmail),
-			username: validator.reqsNotMet(validateUsername),
-			password: validator.reqsNotMet(validatePassword),
-			retypedPassword: validator.reqsNotMet(validateRetypedPassword)
+			email: validator.reqsNotMet(emailValidation),
+			username: validator.reqsNotMet(usernameValidation),
+			password: validator.reqsNotMet(passwordValidation),
+			retypedPassword: validator.reqsNotMet(retypedPasswordValidation)
 		}
 
 		res.status(400).send(resBody);
