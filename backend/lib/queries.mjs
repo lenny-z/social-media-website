@@ -1,9 +1,6 @@
-// const pool = require('./pool.js');
 import pool from './pool.mjs';
-// const validator = require('@lenny_zhou/validator');
 import * as validator from '@lenny_zhou/validator';
 
-// const emailRegex = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/);
 const emailRegex = validator.emailRegex;
 
 async function testConnect() {
@@ -20,7 +17,6 @@ async function testConnect() {
 
 testConnect();
 
-// exports.emailExists = async (email) => {
 export async function emailExists(email) {
 	const query = `SELECT EXISTS(SELECT 1 FROM users WHERE email = $1);`;
 	const params = [email];
@@ -33,7 +29,6 @@ export async function emailExists(email) {
 	}
 }
 
-// exports.usernameExists = async (username) => {
 export async function usernameExists(username) {
 	const query = `SELECT EXISTS(SELECT 1 FROM users WHERE username = $1);`;
 	const params = [username];
@@ -46,7 +41,6 @@ export async function usernameExists(username) {
 	}
 }
 
-// exports.getUserID = async (identifier) => {
 export async function getUserID(identifier) {
 	var identifierCol = '';
 
@@ -73,7 +67,6 @@ export async function getUserID(identifier) {
 	}
 };
 
-// exports.getUsername = async (id) => {
 export async function getUsername(id) {
 	const query = `SELECT username FROM users WHERE id = $1;`;
 	const params = [id];
@@ -92,7 +85,6 @@ export async function getUsername(id) {
 	}
 };
 
-// exports.getSaltedPasswordHash = async (userID) => {
 export async function getSaltedPasswordHash(userID) {
 	const query = `SELECT salted_password_hash FROM salted_password_hashes
 		WHERE user_id = $1;`;
@@ -113,7 +105,6 @@ export async function getSaltedPasswordHash(userID) {
 	}
 };
 
-// exports.registerUser = async (email, username, saltedPasswordHash) => {
 export async function registerUser(email, username, saltedPasswordHash) {
 	var client;
 
@@ -147,7 +138,6 @@ export async function registerUser(email, username, saltedPasswordHash) {
 	}
 };
 
-// exports.getIdentifiers = async () => {
 export async function getIdentifiers() {
 	// const query = `SELECT ${EMAIL_COL} AS identifier FROM ${USERS_TABLE} UNION
 	// 	SELECT ${USERNAME_COL} FROM ${USERS_TABLE};`;

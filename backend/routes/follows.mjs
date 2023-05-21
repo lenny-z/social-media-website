@@ -1,11 +1,8 @@
-// const router = require('express').Router();
 import express from 'express';
-const router = express.Router();
-// const queries = require('../lib/queries.js');
-// const queries = require('../lib/queries/follows.js');
 import * as queries from '../lib/queries/follows.mjs';
-// const authorize = require('./auth.mjs').authorize;
 import { authorize } from './auth.mjs';
+
+const router = express.Router();
 
 router.post('/', authorize, async (req, res) => {
 	try {
@@ -50,5 +47,4 @@ router.delete('/:username', authorize, async (req, res) => {
 	}
 });
 
-// module.exports = router;
 export { router }

@@ -1,7 +1,5 @@
-// const pool = require('../pool.mjs');
 import pool from '../pool.mjs';
 
-// exports.makeFollow = async (followerID, followedUsername) => {
 export async function makeFollow(followerID, followedUsername) {
 	const query = `INSERT INTO follows(follower_id, followed_id)
 		VALUES($1, (SELECT id FROM users WHERE username = $2));`;
@@ -16,7 +14,6 @@ export async function makeFollow(followerID, followedUsername) {
 	}
 }
 
-// exports.getFollow = async (followerID, followedUsername) => {
 export async function getFollow(followerID, followedUsername) {
 	const query = `SELECT EXISTS(SELECT 1 FROM follows WHERE follower_id = $1
 		AND followed_id = (SELECT id FROM users WHERE username = $2));`;
@@ -32,7 +29,6 @@ export async function getFollow(followerID, followedUsername) {
 	}
 };
 
-// exports.deleteFollow = async (followerID, followedUsername) => {
 export async function deleteFollow(followerID, followedUsername) {
 	const query = `DELETE FROM follows WHERE follower_id = $1 AND followed_id
 		= (SELECT id FROM users WHERE username = $2);`;

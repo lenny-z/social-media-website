@@ -1,11 +1,8 @@
-// const router = require('express').Router();
 import express from 'express';
-const router = express.Router();
-// const queries = require('../lib/queries/posts.js');
 import * as queries from '../lib/queries/posts.mjs';
-// const util = require('@lenny_zhou/util');
-// const authorize = require('./auth.mjs').authorize;
 import { authorize } from './auth.mjs';
+
+const router = express.Router();
 
 router.post('/', authorize, async (req, res) => {
 	try {
@@ -58,5 +55,4 @@ router.get('/replies/:postID', async (req, res) => {
 	}
 });
 
-// module.exports = router;
 export { router };
