@@ -1,6 +1,8 @@
-const pool = require('../pool.js');
+// const pool = require('../pool.mjs');
+import pool from '../pool.mjs';
 
-exports.makePost = async (userID, parentID, body, timePosted) => {
+// exports.makePost = async (userID, parentID, body, timePosted) => {
+export async function makePost(userID, parentID, body, timePosted) {
 	const query = `INSERT INTO posts(poster_id, parent_id, body, time_posted)
 		VALUES($1, $2, $3, to_timestamp($4 / 1000.0));`;
 
@@ -14,7 +16,8 @@ exports.makePost = async (userID, parentID, body, timePosted) => {
 	}
 };
 
-exports.getFeedPosts = async (userID) => {
+// exports.getFeedPosts = async (userID) => {
+export async function getFeedPosts(userID) {
 	const query = `SELECT id, poster_username, time_posted, body, num_replies
 		FROM posts_view WHERE parent_id IS NULL AND poster_id
 		IN (SELECT followed_id FROM follows WHERE follower_id
@@ -31,7 +34,8 @@ exports.getFeedPosts = async (userID) => {
 	}
 };
 
-exports.getProfilePosts = async (username) => {
+// exports.getProfilePosts = async (username) => {
+export async function getProfilePosts(username) {
 	const query = `SELECT id, poster_username, time_posted, body, num_replies
 		FROM posts_view WHERE parent_id IS NULL AND poster_username = $1;`;
 
@@ -46,7 +50,8 @@ exports.getProfilePosts = async (username) => {
 	}
 };
 
-exports.getAllPosts = async () => {
+// exports.getAllPosts = async () => {
+export async function getAllPosts() {
 	const query = `SELECT id, poster_username, time_posted, body, num_replies
 		FROM posts_view WHERE parent_id IS NULL;`;
 
@@ -59,7 +64,8 @@ exports.getAllPosts = async () => {
 	}
 }
 
-exports.getReplyPosts = async (parentID) => {
+// exports.getReplyPosts = async (parentID) => {
+export async function getReplyPosts(parentID) {
 	const query = `SELECT id, poster_username, time_posted, body, num_replies
 		FROM posts_view WHERE parent_id = $1;`;
 

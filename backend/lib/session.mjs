@@ -1,8 +1,15 @@
-require('dotenv').config();
-const redis = require('redis');
-const RedisStore = require('connect-redis').default;
-const session = require('express-session');
-const util = require('@lenny_zhou/util');
+// require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
+// const redis = require('redis');
+import redis from 'redis';
+// const RedisStore = require('connect-redis').default;
+// import connectRedis from 'connect-redis';
+// const RedisStore = connectRedis;
+import RedisStore from 'connect-redis';
+// const session = require('express-session');
+import session from 'express-session';
+// const util = require('@lenny_zhou/util');
 
 const redisClient = redis.createClient({
 	socket: {
@@ -35,9 +42,14 @@ const sessionOptions = {
 	}
 };
 
-exports.manager = session(sessionOptions);
+export const manager = session(sessionOptions);
+// exports.manager = session(sessionOptions);
+// export session(sessionOptions) as manager;
+// export {session(sessionOptions) as manager};
+// export {manager;
 
-exports.set = (req, userID) => {
+// exports.set = (req, userID) => {
+export function set(req, userID) {
 	// util.log(`session.set:`);
 	return new Promise((resolve, reject) => {
 		req.session.regenerate((err) => {
@@ -46,7 +58,7 @@ exports.set = (req, userID) => {
 				reject(false);
 			} else {
 				req.session.userID = userID;
-				util.log(`req.session.userID: ${req.session.userID}`, 1);
+				// util.log(`req.session.userID: ${req.session.userID}`, 1);
 
 				req.session.save((err) => {
 					if (err) {

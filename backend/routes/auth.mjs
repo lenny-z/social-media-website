@@ -1,11 +1,17 @@
-const router = require('express').Router();
-const queries = require('../lib/queries.js');
-const argon2 = require('argon2');
-const session = require('../lib/session.js');
+import express from 'express';
+// const router = require('express').Router();
+const router = express.Router();
+// const queries = require('../lib/queries.js');
+import * as queries from '../lib/queries.mjs';
+// const argon2 = require('argon2');
+import argon2 from 'argon2';
+// const session = require('../lib/session.mjs');
+import * as session from '../lib/session.mjs';
 // const validator = require('@lenny_zhou/validator');
+// const validator = await import('@lenny_zhou/validator');
 import * as validator from '@lenny_zhou/validator';
 
-function authorize(req, res, next) {
+export function authorize(req, res, next) {
 	if (req.session && req.session.userID) {
 		next();
 	} else {
@@ -13,7 +19,7 @@ function authorize(req, res, next) {
 	}
 }
 
-exports.authorize = authorize;
+// exports.authorize = authorize;
 
 router.get('/authorize', authorize, async (req, res) => {
 	try {
@@ -151,4 +157,5 @@ router.get('/email-exists/:email?', async (req, res) => {
 	}
 });
 
-exports.router = router;
+// exports.router = router;
+export { router };

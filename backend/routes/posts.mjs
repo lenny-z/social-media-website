@@ -1,7 +1,11 @@
-const router = require('express').Router();
-const queries = require('../lib/queries/posts.js');
+// const router = require('express').Router();
+import express from 'express';
+const router = express.Router();
+// const queries = require('../lib/queries/posts.js');
+import * as queries from '../lib/queries/posts.mjs';
 // const util = require('@lenny_zhou/util');
-const authorize = require('./auth.js').authorize;
+// const authorize = require('./auth.mjs').authorize;
+import { authorize } from './auth.mjs';
 
 router.post('/', authorize, async (req, res) => {
 	try {
@@ -54,4 +58,5 @@ router.get('/replies/:postID', async (req, res) => {
 	}
 });
 
-module.exports = router;
+// module.exports = router;
+export { router };
