@@ -1,44 +1,51 @@
 import * as validator from './validator.js';
 import util from '@lenny_zhou/util';
+import fs from 'fs';
 
-async function testField(field, fieldValue, fieldValidator) {
+async function testField(field, fieldValue, fieldValidator, echoValue = true) {
 	console.log(`Field: ${field}`);
-	console.log(`Field value: ${util.pretty(fieldValue)}`);
+
+	if (echoValue === true) {
+		console.log(`Field value: ${util.pretty(fieldValue)}`);
+	}
+
 	const validation = await fieldValidator(fieldValue);
-	// console.log(`Validation: ${util.pretty(fieldValidator(fieldValue))}`);
 	console.log(`Validation: ${util.pretty(validation)}`);
 	console.log(`Is valid: ${validator.allReqsMet(validation)}`);
 }
 
 async function runTest() {
-	// console.log('runTest');
 	const flag = process.argv[2];
 
 	switch (flag) {
 		case '-e': // Email
 			console.log(`emailRegex: ${validator.emailRegex}`);
-			// const email = process.argv[3];
-			// const emailValidation = await validator.email(email);
-			// const emailIsValid = validator.allReqsMet(emailValidation);
-			// console.log(`email: ${util.pretty(email)}`);
-			// console.log(`emailValidation: ${util.pretty(emailValidation)}`);
-			// console.log(`emailIsValid: ${emailIsValid}`);
 			await testField('email', process.argv[3], validator.email);
 			break;
 
 		case '-u': // Username
-			// const username = process.argv[3];
-			// const usernameValidation = await validator.username(username);
-			// const usernameIsValid = validator.allReqsMet(usernameValidation);
-			// console.log(`username: ${util.pretty(username)}`);
-			// console.log(`usernameValidation: ${util.pretty(usernameValidation)}`);
-			// console.log(`usernameIsValid: ${usernameIsValid}`);
 			await testField('username', process.argv[3], validator.username);
 			break;
 
 		case '-p': // Post
-			// const post = process
 			await testField('post', process.argv[3], validator.post);
+			break;
+
+		case '-p[lorem-ipsum]': // Post with lorem ipsum body
+			// try {
+			// 	const body = fs.readFile('./lorem-ipsum.txt');
+			// 	await testField('post', body, validator.post);
+			// } catch (err) {
+			// 	console.error(err);
+			// }
+			fs.readFile('./lorem-ipsum.txt', 'utf8', async (err, body) => {
+				if (err) {
+					console.error(err);
+				} else {
+					await testField('post', body, validator.post, false);
+				}
+			})
+
 			break;
 
 		default:
@@ -46,7 +53,6 @@ async function runTest() {
 			break;
 	}
 
-	// const email = process.argv[2];
 	return;
 }
 
