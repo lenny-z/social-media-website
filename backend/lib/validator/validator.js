@@ -174,3 +174,36 @@ export function retypedPassword(password, retypedPassword) {
 
 	return reqs;
 };
+
+export function post(body) {
+	const reqs = {
+		isString: {
+			description: 'Must be valid sequence of characters.',
+			value: false
+		},
+		lengthAtLeast1: {
+			description: 'Must be at least 1 character long.',
+			value: false
+		},
+		lengthAtMost40000: {
+			description: 'Must be at most 40,000 characters long.',
+			value: false
+		}
+	}
+
+	if (typeof body === 'string') {
+		reqs.isString.value = true;
+	} else {
+		return reqs;
+	}
+
+	if (body.length >= 1) {
+		reqs.lengthAtLeast1.value = true;
+	}
+
+	if (body.length <= 40000) {
+		reqs.lengthAtMost40000.value = true;
+	}
+
+	return reqs;
+}
