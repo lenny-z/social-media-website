@@ -32,12 +32,6 @@ async function runTest() {
 			break;
 
 		case '-p[lorem-ipsum]': // Post with lorem ipsum body
-			// try {
-			// 	const body = fs.readFile('./lorem-ipsum.txt');
-			// 	await testField('post', body, validator.post);
-			// } catch (err) {
-			// 	console.error(err);
-			// }
 			fs.readFile('./lorem-ipsum.txt', 'utf8', async (err, body) => {
 				if (err) {
 					console.error(err);
