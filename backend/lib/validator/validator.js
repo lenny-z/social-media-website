@@ -1,12 +1,8 @@
-// const axios = require('axios');
 import axios from 'axios';
 
-const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+export const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 const usernameCharsRegex = /^[a-zA-Z0-9_-]*$/;
 
-// exports.emailRegex = emailRegex;
-
-// exports.allReqsMet = (validation) => {
 export function allReqsMet(validation) {
 	const reqs = Object.keys(validation);
 
@@ -19,7 +15,6 @@ export function allReqsMet(validation) {
 	return true;
 };
 
-// exports.reqsNotMet = (validation) => {
 export function reqsNotMet(validation) {
 	const reqs = Object.keys(validation);
 	const reqsNotMet = [];
@@ -43,7 +38,6 @@ async function usernameIsTaken(username, route) {
 	return res.data;
 }
 
-// exports.email = async (email) => {
 export async function email(email) {
 	const reqs = {
 		isValid: {
@@ -66,7 +60,6 @@ export async function email(email) {
 	return reqs;
 };
 
-// exports.username = async (username) => {
 export async function username(username) {
 	const protectedNames = [
 		'login',
@@ -138,7 +131,6 @@ export async function username(username) {
 	return reqs;
 };
 
-// exports.password = (password) => {
 export function password(password) {
 	const reqs = {
 		isString: {
@@ -172,7 +164,6 @@ export function password(password) {
 	return reqs;
 };
 
-// exports.retypedPassword = (password, retypedPassword) => {
 export function retypedPassword(password, retypedPassword) {
 	const reqs = {
 		isMatch: {

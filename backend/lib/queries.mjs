@@ -2,6 +2,7 @@ import pool from './pool.mjs';
 import * as validator from '@lenny_zhou/validator';
 
 const emailRegex = validator.emailRegex;
+console.log(emailRegex);
 
 async function testConnect() {
 	const query = 'SELECT $1::text as message;';

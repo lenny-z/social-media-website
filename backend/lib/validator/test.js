@@ -9,6 +9,7 @@ async function runTest() {
 	const emailIsValid = validator.allReqsMet(emailValidation);
 	const usernameValidation = await validator.username(username);
 	const usernameIsValid = validator.allReqsMet(usernameValidation);
+	console.log(`emailRegex: ${validator.emailRegex}`);
 	console.log(`email: ${util.pretty(email)}`);
 	console.log(`emailValidation: ${util.pretty(emailValidation)}`);
 	console.log(`emailIsValid: ${emailIsValid}`);
