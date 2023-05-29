@@ -12,8 +12,9 @@ export default function Editor({ getAndShowPosts, parentPostID }) {
 	async function handleSubmit(event) {
 		event.preventDefault();
 		const validation = await validator.post(body);
+		const isValid = validator.allReqsMet(validation) === true;
 
-		if (!validator.allReqsMet(validation)) {
+		if (!isValid) {
 			const alertBody = <>
 				<p>Post:</p>
 				<Validations reqsNotMet={validator.reqsNotMet(validation)} />

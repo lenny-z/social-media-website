@@ -1,21 +1,30 @@
 import express from 'express';
 import * as queries from '../lib/queries/posts.mjs';
+import * as validator from '@lenny_zhou/validator';
 import { authorize } from './auth.mjs';
 
 const router = express.Router();
 
 router.post('/', authorize, async (req, res) => {
-	try {
-		await queries.makePost(
-			req.session.userID,
-			req.body.parentID,
-			req.body.body,
-			Date.now()
-		);
+	const validation = validator.post(req.body.body);
 
-		res.sendStatus(201); // 201 Created
-	} catch (err) {
-		res.sendStatus(500); // 500 Internal Server Error
+	if (validator.allReqsMet(validation) === true) {
+		try {
+			await queries.makePost(
+				req.session.userID,
+				req.body.parentID,
+				req.body.body,
+				Date.now()
+			);
+
+			res.sendStatus(201); // 201 Created
+		} catch (err) {
+			res.sendStatus(500); // 500 Internal Server Error
+		}
+	} else {
+		res.status(400).send({
+			post: validator.reqsNotMet(validation)
+		});
 	}
 });
 
