@@ -1,4 +1,4 @@
-#post-form{
+#post-form {
 	flex-grow: 0;
 	flex-shrink: 0;
 	flex-basis: auto;
@@ -10,6 +10,7 @@
 	height: var(--post-input-height);
 	padding: var(--padding);
 	resize: vertical;
+	overflow-y: scroll;
 }
 
 input[value='Post'] {
